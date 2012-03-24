@@ -15,8 +15,8 @@ public class EntityManager
 		elements = new Group ();
 		
 		addSprite ( 0, 0, "Star.png" );
-		addSprite ( 0, 15, "Star.png" );
-		addSprite ( 0, 10, "Star.png" );
+		addSprite ( 14, 14, "Star.png" );
+		addSprite ( 0, 5, "Star.png" );
 
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );
@@ -24,10 +24,12 @@ public class EntityManager
 		scene.add(elements);
 	}
 	
-	private void addSprite ( int x, int y, String name )
+	private void addSprite ( int tx, int ty, String name )
 	{
 		ImageSprite star = new ImageSprite ( name, 0, 0);
-		star.setLocation ( x, y );
+		int px = TilemapManager.tileXToPixel(tx);
+		int py = TilemapManager.tileYToPixel(ty);
+		star.setLocation ( px, py );
 		// star.setLocation ( x - star.getImage ().getWidth () / 2, y- star.getImage ().getWidth () / 2 );
         // star.angle.set(rand(Math.PI*2));
         elements.add(star);

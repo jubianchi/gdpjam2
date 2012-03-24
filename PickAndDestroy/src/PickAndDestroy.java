@@ -24,8 +24,8 @@ public class PickAndDestroy extends Scene2D
         // musicManager = new MusicManager();
         // musicManager.load ();
         
-        // entityManager = new EntityManager ();
-        // entityManager.load ( this );
+        entityManager = new EntityManager ();
+        entityManager.load ( this );
            
         characterManager = new CharacterManager();
         characterManager.load(this);
