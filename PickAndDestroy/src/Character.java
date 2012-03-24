@@ -6,8 +6,6 @@ import pulpcore.sprite.ImageSprite;
 
 public class Character {
 	public static final int MOVE_STEP = 4;
-	public static final int SPRITE_WIDTH = 81;
-	public static final int SPRITE_HEIGHT = 74;
 	
 	private ImageSprite sprite;
 	private int currentDirection = 0;
@@ -16,8 +14,7 @@ public class Character {
 	private Playback stepPlayback;
 	
 	public Character() {
-		sprite = new ImageSprite("ecureuil/frise_face.png", 5, 5);
-		sprite.setSize(SPRITE_WIDTH, SPRITE_HEIGHT);
+		sprite = new ImageSprite("ecureuil/frise_face.png", 5, 5);		
 		
 		stepSound = Sound.load("Bruit de pas.wav");
 		stepPlayback = stepSound.play();
@@ -61,10 +58,10 @@ public class Character {
 		if(currentDirection != 0) sprite.setImage("ecureuil/frise_dos.png");
 		currentDirection = 0;
 		
-		int limit = (int)(sprite.height.get() / 2);
-		
-		if(this.getSprite().y.getAsInt() - MOVE_STEP > limit) {			
-			this.getSprite().y.set(this.getSprite().y.getAsInt() - MOVE_STEP);
+		int limit = (int)(sprite.height.get() / 2);		
+		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
+		if(this.getSprite().y.getAsInt() - step > limit) {			
+			this.getSprite().y.set(this.getSprite().y.getAsInt() - step);
 		}		
 	}
 	
@@ -75,9 +72,9 @@ public class Character {
 		currentDirection = 1;
 		
 		int limit = (Stage.getHeight() - (int)(sprite.height.get() / 2));
-		
-		if(this.getSprite().y.getAsInt() + MOVE_STEP < limit) {
-			this.getSprite().y.set(this.getSprite().y.getAsInt() + MOVE_STEP);
+		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
+		if(this.getSprite().y.getAsInt() + step < limit) {
+			this.getSprite().y.set(this.getSprite().y.getAsInt() + step);
 		}
 	}
 	
@@ -88,9 +85,9 @@ public class Character {
 		currentDirection = 2;
 		
 		int limit = (int)(sprite.width.get() / 2);
-		
-		if(this.getSprite().x.getAsInt() - MOVE_STEP > limit) {			
-			this.getSprite().x.set(this.getSprite().x.getAsInt() - MOVE_STEP);
+		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
+		if(this.getSprite().x.getAsInt() - step > limit) {			
+			this.getSprite().x.set(this.getSprite().x.getAsInt() - step);
 		}
 	}
 	
@@ -101,9 +98,9 @@ public class Character {
 		currentDirection = 3;
 		
 		int limit = (Stage.getWidth() - (int)(sprite.width.get() / 2));
-		
-		if(this.getSprite().x.getAsInt() + MOVE_STEP < limit) {
-			this.getSprite().x.set(this.getSprite().x.getAsInt() + MOVE_STEP);
+		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
+		if(this.getSprite().x.getAsInt() + step < limit) {
+			this.getSprite().x.set(this.getSprite().x.getAsInt() + step);
 		}
 	}
 }

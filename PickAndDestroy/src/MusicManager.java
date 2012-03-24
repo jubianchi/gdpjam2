@@ -13,15 +13,9 @@ public class MusicManager
 	
 	private Playback quietMusicPlayback;
 	private Sound quietMusic;
-	private static int MIN_QUIET_PLAYTIME = 5000;
-	private static int MAX_QUIET_PLAYTIME = 10000;
-	private static int QUIET_SPAN_PLAYTIME = 1000;
 	
 	private Playback brutalMusicPlayback;
 	private Sound brutalMusic;
-	private static int MIN_BRUTAL_PLAYTIME = 5000;
-	private static int MAX_BRUTAL_PLAYTIME = 10000;
-	private static int BRUTAL_SPAN_PLAYTIME = 1000;
 	
 	public final void load()
 	{
@@ -72,8 +66,8 @@ public class MusicManager
 		System.out.println("Playing quiet music...");
 		
 		musicPlayback = quietMusicPlayback;
-		musicSwitchTime = MIN_QUIET_PLAYTIME;
-		musicSpanTime = QUIET_SPAN_PLAYTIME;
+		musicSwitchTime = ConfigManager.gameModesConfig.getValue("minQuietPlaytime");
+		musicSpanTime = ConfigManager.gameModesConfig.getValue("quietSpanPlaytime");
 		musicPlayback.setPaused ( false );
 	}
 	
@@ -84,8 +78,8 @@ public class MusicManager
 		System.out.println("Playing brutal music...");
 		
 		musicPlayback = brutalMusicPlayback;
-		musicSwitchTime = MIN_BRUTAL_PLAYTIME;
-		musicSpanTime = BRUTAL_SPAN_PLAYTIME;
+		musicSwitchTime = ConfigManager.gameModesConfig.getValue("minBrutalPlaytime");
+		musicSpanTime = ConfigManager.gameModesConfig.getValue("brutalSpanPlaytime");;
 		musicPlayback.setPaused ( false );
 	}
 }
