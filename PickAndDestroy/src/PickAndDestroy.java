@@ -1,12 +1,4 @@
-import com.jcraft.jorbis.JOrbisException;
-
 import pulpcore.scene.Scene2D;
-import pulpcore.sprite.FilledSprite;
-import pulpcore.sprite.ImageSprite;
-import pulpcore.sprite.Label;
-import pulpcore.animation.Fixed;
-import pulpcore.image.Colors;
-
 
 public class PickAndDestroy extends Scene2D
 {
