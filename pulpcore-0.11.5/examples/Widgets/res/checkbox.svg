@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="72" height="48" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+  <linearGradient id="pressed-fill" gradientTransform="rotate(45)">
+    <stop offset="0%" stop-color="#7f7f7f" />
+    <stop offset="100%" stop-color="#fff" />
+  </linearGradient>
+</defs>
+    
+<!-- Normal -->
+<g transform="translate(0, 0)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="1" stroke="#333" fill="#fff" />
+</g>
+
+<!-- Hover -->
+<g transform="translate(24, 0)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="2" stroke="#1d5ef2" fill="#fff" />
+</g>
+
+<!-- Pressed -->
+<g transform="translate(48, 0)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="2" stroke="#1d5ef2"
+    fill="url(#pressed-fill)" />
+</g>
+
+<!-- Normal - checked -->
+<g transform="translate(0, 24)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="1" stroke="#333" fill="#fff" />
+<polyline points="4.5,12.5, 10,18, 20,4" stroke-width="4" stroke="#1d5ef2" fill-opacity="0" />
+</g>
+
+<!-- Hover - checked  -->
+<g transform="translate(24, 24)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="2" stroke="#1d5ef2" fill="#fff" />
+<polyline points="4.5,12.5, 10,18, 20,4" stroke-width="4" stroke="#1d5ef2" fill-opacity="0" />
+</g>
+
+<!-- Pressed - checked  -->
+<g transform="translate(48, 24)">
+<rect x="1" y="1" rx="4" ry="4" width="22" height="22" stroke-width="2" stroke="#1d5ef2"
+    fill="url(#pressed-fill)" />
+<polyline points="4.5,12.5, 10,18, 20,4" stroke-width="4" stroke="#1d5ef2" fill-opacity="0" />
+</g>
+
+
+</svg>

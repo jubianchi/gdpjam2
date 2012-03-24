@@ -1,0 +1,451 @@
+0.11.5 (April 15, 2009)
+  * API: Added Sprite.setFilter(), pulpcore.image.filter package (Florent Dupont).
+    Note - When setDirty(true) is called, the filter is updated. If you are creating
+    custom Sprites, call setDirty(true) when the contents of the Sprite change.
+    Also, if you change the pixels of an ImageSprite's CoreImage, call
+    setDirty(true) on the ImageSprite.
+  * API: Added Timeline.after() and Timeline.after(time) for appending
+    animations to the end of the timeline.
+  * API: Added Sprite.getTag(), Sprite.setTag(Object) and Group.findWithTag().
+  * API: Group.drawSprite() is now final. To do custom drawing, subclass Sprite.
+  * API: Bindings can now be bi-directional. See Int.bindWithInverse(Int) and
+    Fixed.bindWithInverse(Fixed).
+  * API: pulpcore.math.Path can now parse any SVG path data string, including
+    relative commands, quadratic curves, and arcs. (The Path class is used
+    for moving Sprites along a path, not for rendering).
+  * API: Added anchorX and anchorY properties and
+    setAnchor(double, double) method to Sprite. This means more exact anchors
+    can be chosen (not limited to the 8 compass directions and CENTER) and
+    the anchor can animate. The old setSprite(int anchor)
+    method is deprecated, and will be removed in 0.12. (Piotr Korzuszek)
+  * Templates: Ant templates updated. Requires Ant 1.7.1.
+        - Examples now have src/res/lib/build structure
+        - Targets "debug" and "profile" included for NetBeans (Doug Holton)
+        - Scala template has a "docs" target (Doug Holton)
+        - Scala template now supports Java+Scala mixing.
+  * Examples: 
+        - Added Physics example using JBox2D.
+        - Added PathMotion example.
+        - Added Filters example.
+        - Added ScalaLanguage example.
+        - Starfield: added MotionBlur to the stars.
+        - Text: added Stroke and DropShadow filters.
+  * Core: Adjustment for displays with 59hz or 61hz refresh rates: Default frame rate is now
+    the device's refresh rate if it is near 60hz.
+  * Core: pulpcore.js updated to install 6u13 for IE users without Java.
+  * Fixed bug: Groups with a back buffer were drawn incorrectly in some cases.
+  * Fixed bug: Viewport dimensions were incorrect when it contained sub-groups.
+  * Fixed bug: TimelineEvents only executed the first time in a looping timeline.
+  * Fixed bug: Events at the end of a looping timeline sometimes didn't fire.
+  * Fixed bug: Saving a cookie was broken in pulpcore.js.
+  * Fixed bug: Catch AccessControlException that happens on some Java 5 + XP machines.
+  * Fixed bug: Drawing vertical and horizontal lines when the transform is set.
+  * Fixed bug: Fixes for exception reports at pulpgames.net:
+        - Prevented rare NullPointerException at AppletAppContext.pollInput
+        - Prevented rare IllegalThreadStateException in SystemTimer.
+        - Caught exceptions in JOrbis (NullPointerExceptions on IBM 1.4 VMs,
+          and rare ArrayIndexOutOfBoundsExceptions). Be sure to get the latest
+          JOrbisAdapter.
+
+0.11.4 (Dec 12, 2008)
+  * API: Added StretchableSprite (based off of code from Christoffer Lerno).
+  * API: Added ScrollPane.
+  * API: Added Viewport (useful for scrolly worlds).
+  * API: Added Label.setFont()
+  * API: Added Group.isAncestorOf(sprite)
+  * API: Added Group.add(index, sprite)
+  * API: Added Sprite.removeFromParent()
+  * API: Added CoreGraphics.setEdgeClamp() to choose between hard and soft edges when scaling
+    with bilinear interpolation.
+  * API: Added CoreImage.getARGB(x, y)
+  * API: Added Button.isPressedDown()
+  * API: Added all Porter-Duff modes to BlendMode (Florent Dupont).
+  * API: Made public: Colors.premultiply() and unpremultiply()
+  * API: Removed CoreGraphics.setFractionalMetrics(). PulpCore always keeps it enabled, and
+    the extra testing was cumbersome.
+  * Examples: Added DragMe example.
+  * Templates: Scala script updated. Now requires Scala 2.7.2.
+  * Tools: Font creator can now render fonts with anti-aliasing disabled.
+  * Tools: Console output from the Player will now display in NetBeans' Ant output.
+  * Core: Tinted fonts are now cached.
+  * Core: The "pulpcore_use_bufferstrategy" applet param can now be specified. Valid values are
+    "true" (always use), "false" (never use) or "default" (PulpCore chooses the best). Most 
+    developers won't need to change this value.
+  * Core: pulpcore.js fix for Google Chrome
+  * Core: Default loading scene now uses colors pulpcore_bgcolor and pulpcore_fgcolor.
+  * Core: sound engine is now loaded asynchronously.
+  * Fixed bug: Fixed overflow in some Tuple2i methods, which fixed 
+    intersection tests between large, rotated sprites.
+  * Fixed bug: rendering was incorrect when rotating at or near 90 or 270 degrees. It was
+    offset by half a pixel, causing minor blurriness.
+  * Fixed bug: string representation of fixed-point numbers between -1 < f < 0.
+  * Fixed bug: borders when drawing images with a large scale weren't correct.
+  * Fixed bug: custom splash gifs weren't working properly.
+  * Fixed bug: added null check in Stage when destroying the app when there is no Scene.
+  * Fixed bug: key releases were not correct for shift, alt, ctrl when both left and right 
+    versions were pressed.
+  * Fixed bug: setTransparentColor() was broken on AnimatedImage
+  * Fixed bug: inverseTransformY() was broken if the scale-y and scale-x were different, and there 
+    was no rotation. This affected pixel-level intersections, sprite.getLocalY(), and 
+    sprite.contains() (Issue 10).
+  
+0.11.3 (May 4, 2008) 
+  * API: Added CoreSystem.isJava16u10orNewer()
+  * API: Added Sprite getViewX() and getViewY(). 
+  * API: Sprite getLocalX() and getLocalY() now take doubles and return doubles.
+  * API: Added Stage.invokeOnShutdown(Runnable) (Issue 7).
+  * Examples: Added Scala language support. See templates/scala.
+  * Core: Reduced memory usage of WAV files.
+  * Core: Allow LiveConnect on 1.6 update 10 (bug fixed as of 1.6u10 b22)
+  * Core: Labelled buttons: If the text is outside the button image, pixelLevelChecks is set to 
+    false by default (pixel level checks would be awkward when the mouse moves over the text).
+  * Contrib: Added Java2DSprite.
+  * Tools: A game.jar.pack.gz file is now automatically created on release mode.
+    (Used if the user has 6u10. The .pack.gz file is about 1/2 the size as the plain jar file.)
+  * Tools: pulpcore.js updates for 6u10 plugin2
+  * Tools: pulpcore.js chooses a name automatically (which is shown in the status bar of some
+    browsers). The name can be overridden by setting a "name" parameter.
+  * Tools: pulpcore.js now installs Java 5 (instead of Java 6) if the user has Windows 95/98/NT4.
+    Java 6 requires XP/Vista/2000.
+  * Fixed bug: fixed two Windows timing bugs that caused (1) occational acceleration or deccerlation
+    of system time and (2) key input lag on some systems. These mostly occured if other 
+    threads/processes used a lot of CPU, especially on single-core systems.
+  * Fixed bug: sometimes rendering was incorrect when dirty rectangles was disabled.
+  * Fixed bug: Nested back-buffered Groups was incorrect in some cases; removing a back-buffer and
+    then re-creating it at runtime was incorrect in some cases.
+  * Fixed bug: Property files that don't belong to an image (resource bundles) are now included in 
+    jar or zip (Issue 6).
+  * Fixed bug: Reverted back to AWT/PixelGrabber for JPG loading, which doesn't cause 404s on the 
+    server like ImageIO did.
+  * Fixed bug: Mac OS X Java Sound bug (requesting Providers on the server) only happens on 
+    startup and not once per minute.
+  * Fixed bug: nanoTime workaround for dual-core AMD systems.
+  * Fixed bug: thread issues when two of the same applet is loaded in the same VM instance.
+  
+0.11.2 (March 20, 2008)
+  * Examples: Updated Text example to show gradients and blurred shadows. 
+  * API: Added pulpcore.math.Tuple2i
+  * Core: App resizing now works automagically in all cases. No source changes required.
+  * Player: Added 'Full Screen' option (rebuild your app to enable this feature).
+  * Player: Added 'Capture Screenshot' option (rebuild your app to enable this feature).
+  * Player: Added several menu options previously only available via hotkeys.
+    (rebuild your app to enable this feature).
+  * Tools: Font creator: added gradient offset and shadow blur. Sped up rendering.
+  * Tools: Previously PNG optimization level was always set at '2' (valid values are from 0 to 5).
+    Now PNG optimization is set to '1' in 'debug' mode and '4' in 'release' mode. Do
+    'clean' before 'build' to apply the optimization.
+  * Fixed bug: Font creator: gradients didn't work; advance was wrong for big strokes or shadows.
+  * Fixed bug: TextField: detect meta key combinations on Mac OS X Leopoard 
+  * Fixed bug: Fixed FF/Linux download issue (same as FF/Windows bug fixed in 0.10.8)
+  
+0.11.1 (March 13, 2008)
+  * Examples: Added Images example, showing frame-based animated images and pixel-level collisions.
+  * Examples: Removed ImagesAndFonts example.
+  * Examples: Added Flashlight example, which shows a dynamic mask (group back buffers).
+  * Examples: Updated Widgets example to skin all UI components with SVG.
+  * Core: ImageSprites and Buttons now check if the mouse is over an opaque or transparent pixel. 
+    Buttons can now be non-rectangular (circles, stars, etc.). This feature is on
+    by default; it can be disabled with imageSprite.setPixelLevelChecks(false);
+  * Core: Sliders now automatically choose insets by default.
+  * API: Added Bool.toggle()
+  * API: Added sprite.intersects(sprite). ImageSprites check intersections at pixel-level.
+  * API: Added sprite.bindLocationTo(sprite) and sprite.bindSizeTo(sprite).
+  * API: Added a few convenience methods to Timeline.
+  * API: Groups can now have a back buffer: added group.createBackBuffer().
+  * Fixed bug: Loaded JPEG images didn't have an alpha component.
+  * Fixed bug: Assets class can now read zip files with no entry size information (7-zip, etc).
+
+0.11.0 (March 6, 2008)
+  * Examples: Added Clock example.
+  * Examples: Added Compositing examples; removed Colors example.
+  * Examples: Updated Widgets and Sketch examples.
+  * Core: CoreGraphics can now draw on translucent surfaces.
+  * Core: Scene2D and Group are now thread-safe, and Sprites can now remove themselves from
+    their parent. No more ConcurrentModificationExceptions!
+  * API: Added BlendMode enum-factory which allows ProGuard to remove unused blending modes.
+    This means PulpCore will get several new blend modes in the future, since it won't increase 
+    an app's jar size (unless a jar uses every blend mode).
+  * API: SoundClip is no longer available. To load sounds, use Sound.load() 
+  * API: Added Timeline.at(time) as an alternative for delayed animations. 
+  * API: Properties can now be bound to other properties, or to functions.
+  * API: Added Color property. FilledSprite now uses this property for it's fill color and border
+    color.
+  * API: Moved color constants (BLACK, RED, etc) from CoreGraphics to pulpcore.image.Colors.
+  * API: Added sprite.getParent() (Sprites now know their parent, which allows many new features).
+  * API: The 'enabled' Property (in Button, TextField, and Slider) is now in the Sprite class.
+  * API: The setCursor() method (in Button and TextField) is now in the Sprite class.
+    Any Sprite can now have it's own cursor, and Scene2D handles cursor mangement. This also
+    means there will be no more odd cursor display bugs. If a Sprite doesn't have a cursor defined,
+    the parent cursor is used. The setCursor() method is also added to Scene2D.
+  * API: Sprites no longer take input if their parent is not enabled. So, an entire Group of 
+    widgets can be disabled by using group.enabled.set(false);
+  * API: Added Group.pick() and Group.pickEnabledAndVisible().
+  * Core: CoreImages now have premultiplied alpha (this will not affect the vast majority of users).
+  * Core: Refactoring so that ProGuard can remove the SoundEngine if an app doesn't use sound.
+  * Core: Images, fonts, and sounds are cached (using WeakReferences) which will speed up loading
+    and reduce memory when loading the same asset multiple times. 
+  * Core: In a stack of Buttons, only the top-most button accepts mouse input.
+  * Core: If a Button is removed from the Scene, its isClicked() method no longer returns true.
+  * Tools: SVG -> PNG conversion is automatic.
+  * Tools: Updated to Retroweaver 2.0.5
+  * Fixed Bug: Ant script didn't include all of the Retroweaver runtime classes.
+  * Fixed Bug: nearest-neighbor interpolation when fractional metrics was enabled was throwing
+    Exceptions.
+  
+== Version 0.10 ==
+
+0.10.11 (February 7, 2008)
+  * Tools: the contrib/ dir is now included in the distribution archive.
+  * Fixed bug: Sprite.isMouseXXX() methods no longer return true if the mouse is outside the applet.
+  * Fixed bug: Fixed typo, renamed Stage.AUTO_STETCH to Stage.AUTO_STRETCH.
+  * Fixed bug: scene.unload() is now invoked when the browser window or tab is closed.
+  * Fixed bug: scaled rectangles weren't drawn correctly when pixelSnapping was false.
+  * Fixed bug: Frame rate calculation is now correct in release mode.
+  * Fixed bug: Fixed typo in pulpcore.js that prevented an applet from querying the browser version.
+  * Tools: pulpcore.js now specifies "-Dsun.awt.noerasebackground=true", which improves an applet's
+    appearance when another window is moved over it (Java 6uN, Windows, IE).
+  
+0.10.10 (January 13, 2008)
+  * API: Sound.play() now returns a Playback object that can be used to pause, stop, or
+    set the position of the sound while is it playing.
+  * API: Added a Slider widget. See the Widgets demo for an example.
+  * API: Added CoreSystem.getSoundVolume() and CoreSystem.setSoundVolume() for setting the master
+    volume.
+  * API: Properties can now have multiple listeners (implemented in a way that won't affect memory
+    usage for Properties with only one listener, which will be the vast majority of Properties).
+  * API: Added CoreMath.clamp(int n, int min, int max)
+  * API: Added Stage.setUncaughtExceptionScene(). See the project template for an example.
+  * Documentation: CoreSystem.uploadTalkBackFields() is documented and tested to work correctly.
+    See the project template for an example.
+  * Core: Scene2Ds now automatically remove all sprites, layers and timelines when unloaded.
+  * Core: Provided a yet another Mac OS X Leopard fix (using BufferStrategy on Firefox,
+    and BufferedImageSurface on Safari)
+  * Fixed bug: Ant build files had a minor issue for NetBeans 6 on Windows.
+
+0.10.9 (December 14, 2007)
+  * Examples: Project template now contains more scenes.
+  * Examples: Added SceneGraph example (fractal tree).
+  * Examples: Removed Scenes example (see Project template)
+  * Examples: Removed MultiThreaded example (moved example to JavaDoc)
+  * API: Added to Group: moveToTop(), moveToBottom(), moveUp(), moveDown().
+  * API: Added Assets.getAsStream().
+  * API: Added Label.createMultilineLabel() convenience functions.
+  * API: Added Input.isMouseMoving().
+  * Core: Retroweaver is now a normal part of the build process in the templates and examples.
+    For now, PulpCore itself still uses Java 1.4 code, just in case there are any problems with 
+    Retroweaver. All the examples now use Java 5 language features and have been tested to run
+    fine with Java 1.4.
+  * Fixed bug: another centering anchoring issue.
+  * Fixed bug: Surface is now correctly redrawn if another OS window was on top of it (occured 
+    on Java 6 + Windows when the Scene had no dirty rectangles).
+  * Fixed bug: ImageSprite now correctly detects if its AnimatedImage changed frames.
+  * Fixed bug: missing a dirty rectangle if a sprite is removed from a Group, added to the same
+    Group, and moved its position all in the same frame.
+  * Fixed bug: Font creator had a ArrayIndexOutOfBoundsException if monospace.numerals was true but 
+    the font contained no numerals.
+    
+0.10.8 (December 4, 2007)
+  * Examples: Added Text example, showing text animation, word wrapping, accent chars, etc.
+  * Tools: Font creator now uses GlyphMetrics for each character's left-side bearing and right-side 
+    bearing. This means special accent chars are drawn correctly, and fonts looks better overall. 
+  * Tools: The font properties "kerning.left.*" and "kerning.right.*" are now named 
+    "bearing.left.*" and "bearing.right.*"
+  * Core: Font tracking is not applied to special zero-width characters.
+  * Core: More accurately hitting the requested frame rate on Windows (reduces, but not eliminates,
+    vertical tearing)
+  * Fixed bug: Fixed Firefox issue: white flash is no longer shown when the applet first appears.
+  * Fixed bug: Fixed timeline bug caused some properties to be incorrectly set when looping.
+  * Fixed bug: there was a bug that prevented a 2nd PulpCore applet from loading resources if both
+    applets were on a virtual name-based host on Firefox (Windows). This bug was fixed by disabling
+    LiveConnect in this situation. (Using LiveConnect created a glitch in the access permissions
+    system). Ironically, getAppletContext().showDocument(new URL("javascript: someMethod();"));
+    works fine in Firefox and doesn't cause the glitch.
+  
+0.10.7 (November 21, 2007)
+  * Examples: Added Colors example, showing compositing modes.
+  * Examples: Added Sketch example, showing traditional graphics function calls (instead of
+    managed sprites).
+  * Fixed bug: Fixed possible StringIndexOutOfBoundsException if numDisplayChars > text length.
+  * Fixed bug: centered anchor was wrong for some fractional-width sprites.
+  * API: Added CoreMath.ceil(), renamed CoreMath.intPart() -> CoreMath.floor()
+  * API: Added Input.isMouseInside() to check if the mouse is inside the Stage.
+  * API: TextField now has a Bool enabled property (like Button).
+  * Graphics: optimized rotated rectangle rendering (there is still room for optimization)
+  * Graphics: added CoreGraphics.COMPOSITE_MULT.
+  * Graphics: drawLine() is now anti-aliased.
+  * Graphics: Updated FilledSprite and CoreGraphics to draw filled rectangles at fractional
+    locations (previously fractional rectangles were only enabled if the rectangle was rotated).
+
+0.10.6 (November 10, 2007)
+  * Documentation: added various JavaDocs here and there.
+  * Core: Provided a better Mac OS X Leopard fix (looks better, uses less processor).
+  * Core: Better assertions for checking for Group concurrent modification (multi-threaded apps).
+  * Fixed Bug: Issue #1
+  * Examples: The SoundEffects example now includes a mute button.
+  * Tools: Example HTML creator now puts the project name in the title.
+  * Tools: Example HTML creator now encodes special characters: & " < >
+  
+0.10.5 (November 4, 2007)
+  * Examples: Added TileMap example
+  * Examples: Updated Starfield and Widgets examples
+  * Core: provided a workaround for Java 5 on Mac OS X Leopard that dropped every other frame when 
+    running at 60fps (Forcing a max of 58fps in this situation).
+  * Core: fixed possible ArrayIndexOutOfBoundsException when scaling down and using fractional
+    metrics. (Most users won't notice because this bug was rare and the renderer automatically 
+    recovers from errors - PulpCore never stops because of a graphics error).
+  * Tools: pulpcore.js now asks the user to restart Firefox if Java 1.3 is installed and the user 
+    just installed Java 6 via the XPI.
+  * Fixed Bug: Fixed access from JavaScript (LiveConnect) when jars are obfuscated 
+    (see BubbleMark example)
+  * Fixed Bug: Scene2D rendering error when dirty rectangles is disabled.
+  * Fixed Bug: typo in pulpcore.js
+  
+0.10.4 (October 20, 2007)
+  * Fixed Bug: double-clicking an empty TextField caused an ArrayIndexOutOfBoundsException
+    (tulsidas).
+  * Tools: pulpcore_codebase can be defined for using a different codebase than the default.
+    See the "project" template for an example.
+  * Tools: pulpcore.js no longer allows Java 1.3 JREs to run PulpCore apps (Firefox issue).
+  * Tools: pulpcore.js provides a better Java installation on Firefox.
+  * Examples: templates now compile with source and target set to 1.4
+  
+0.10.3 (October 11, 2007)
+  * Fixed Bug: isolated and created a workarounds for JavaSound pop/click bugs on both Mac and
+    Windows. For Mac and Windows Java 1.4, the fix requires modifying the output sound, but it's 
+    not noticable for most sounds. Another Windows fix - which existed in 0.8 but was incorrectly  
+    removed from 0.9 - requires delaying a sound's playback by 10ms. A third fix exists only in
+    Windows Java 5 or newer.
+  * Applet Platform: sound is now muted gracefully when the app is exited.
+  * Core: sound level and pan changes are now interpolated for more natural audio changes.
+  * Core: updated default appearance of labeled buttons. See Button.createLabeledButton() and
+    Button.createLabeledToggleButton().
+  * Tools: PulpCorePlayer is more command-line friendly (setting Main-Class attribute in jar
+    manifest) and it can now load PulpCore apps from the internet (only if the <applet> tag is 
+    used - it can't load apps that use pulpcore.js)
+  * API: TimelineEvent is now a Runnable, so the API is more familiar to Swing/AWT developers.
+    Custom TimelineEvents will need to implement run() instead of trigger().
+  * API: Added TimelineEvent.hasExecuted()
+  * API: Added Scene2D.invokeLater(), invokeAndWait(), and addEventAndWait().
+  * API: SoundClip data is now stored in little-endian byte order instead of big-endian. 
+    (This only matters to developers doing sound synthesis or using Ogg Vorbis - be sure to get the 
+    latest JOrbisAdapter.java in SVN).
+  * API: Added TextField constructor: TextField(String text, int x, int y) which automatically 
+    chooses a width and height.
+  * API: Added Assets.getAssetNames()
+  * Examples: Added MultiThreaded example
+  
+0.10.2 (September 14, 2007)
+  * Examples: Added SoundEffects example
+  * Tools: New audio formats: mono and stereo, 8000Hz, 11025Hz, 22050Hz, 44100Hz. WAV and AU
+    file formats are supported. OGG is also supported if you have the jars (see the Wiki for info)
+  * API: Added SoundSequence to play a sequence of sounds togther.
+  * API: Both SoundClip and SoundSequence now extend the Sound base class. 
+  * API: Added Sound.play(level, pan) to pan a sound clip.
+
+0.10.1 (September 8, 2007)
+  * Examples: Added Starfield example to demo mouse wheel rotation
+  * Examples: All examples now have the default dimensions of 640x480.
+  * API: Removed Group.commitChanges() (it was required in some circumstances, but using it
+         was counter-intuitive, so the underlying algorithm was changed).
+  * API: Added Input.getMouseWheelRotation(), Input.getMouseWheelX(), Input.getMouseWheelY(), and
+         Sprite.isMouseWheelRotated()
+  * API: Renamed:
+         Stage.gotoInterruptedScene() -> Stage.popScene()
+	 Stage.interruptScene() -> Stage.pushScene()
+	 Stage.isInterrupted() -> Stage.canPopScene()
+  * API: Added Stage.replaceScene() (sets the scene without clearing the scene stack)
+  * Fixed Bug: possible NPE in Label if text is null.
+  * Fixed Bug: Scene2D now saves the cursor state on hide.
+  * Applet platform: Input.CURSOR_OFF now works.
+  * Applet platform: distiction between left and right Alt, Shift, Control, and Meta keys.
+  * Applet platform: distiction between mouse button 1, 2, and 3.
+  * Applet platform: Added "Get Java" message for Java 1.3 or older.
+  * Applet platform: Removed Java 1.1 classes ImageProducerScene, SunAudio, CoreAppletBeanInfo,  
+    CoreApplet$COMClassObject.
+  * Core: Now using the Java Collections framework (instead of Vector, Stack, Hashtable, and 
+    Enumeration).
+  * Core: Default font now has monospace numerals
+  * Core: Changed version number to 0.10
+  
+  
+== Version 0.9 (the last Java 1.1 compatible release) ==
+  
+
+0.9 b218 (September 4, 2007)
+  * Examples: Example jar files in distribution archive are obfuscated - this brings the jar of 
+    each example from 200K+ to about 84K. The total size of the distribution archive shrinks by 
+    about 900K.
+  * API: TextField.selectAll() is now public.
+  * Player: CoreSystem.showDocument() now works under PulpCorePlayer.
+  * Player: PulpCorePlayer can now open simple HTML files containing an applet tag (for Eclipse).
+  * Player: PulpCorePlayer now has a File->Reload command. Tested in Eclipse Europa, 
+    NetBeans 6, and jEdit 4.3/AntFarm 1.5. 
+  * Fixed Bug: CoreSystem.print(Object)
+  
+0.9 b217 (September 1, 2007)
+  * Examples: BubbleMark test now caps the frame rate by default.
+  * Examples: build files can now optionally use applet parameters.
+  * Examples: "project" template now accepts library jars in the lib folder.
+  * API: Prevent instantiation of static classes Base64, CoreMath, PNGWriter, and StringUtil.
+  * API: TextField.setText() is now public.
+  * API: Added CoreSystem.getAppProperty() for applet parameters. Also the PulpCorePlayer and
+    applet HTML generator were updated to accomodate. See the project template for an example.
+  * API: Added several CoreSystem.print() methods for printing ints, doubles, etc. to the log.
+  * Cleaned up some pulpcore.js issues found by JSLint.
+  
+0.9 b216 (August 23, 2007)
+  * Examples: Added BubbleMark
+  * Documentation: The platform implementation Javadocs are no longer included in the distribution 
+    archive. 
+  * Fixed Bug: Tweaked BufferStrategy usage for Mac OS X. Animations previously appeared jerky in 
+    some situations.
+  * Fixed Bug: Labels are now updated if any of its Property arguments change. (Previously, only
+    Int arguments were listened to for changes)
+  * Fixed Bug: Added null check for ImageSprite(CoreImage image) constructor.
+  * Fixed Bug: Fixed range of CoreMath.rand(int, int). 
+    CoreMath.rand(Integer.MIN_VALUE, Integer.MAX_VALUE) now works correctly.
+  * Tests: Added some unit tests (in Subversion repository)
+  * API: Removed CoreMath.log() and CoreMath.exp() due to inaccuracy. CoreMath.pow() was also 
+    removed because it depends on log() and exp().
+  * API: Added CoreApplet.getCurrentScene() for convenient access from JavaScript.
+  * API: Added Stage.getActualFrameRate() to programmatically access the displayed frame rate.
+    
+0.9 b215 (July 4, 2007)
+  * Examples: updated the Widgets example to show transformed widgets.
+  * Fixed Bug: Timelines didn't properly accept startDelay as a parameter in its constructor.
+  * Fixed Bug: Audio popping in Mac OS X.
+  * Fixed Bug: More logical handling of the add() and remove() methods of Group that will allow
+    for potential methods moveToTop(), moveToBottom(), moveDown(), moveUp(), etc.
+  * API: Sprite now has easier compass-style anchor names (NORTH, NORTHWEST, CENTER, etc.)
+  * API: Fixed typo in the API of the Sprite scale() and scaleTo() methods.
+  * API: Added constructors to each Sprite subclass to take doubles as parameters.
+  * API: Removed several public methods that took a float as a parameter when there was 
+    an identical method that took a double as a parameter.
+  * API: Removed Scene2D.hasTimelines() (Scene2D.getNumTimelines() is available).
+  * API: Renamed Scene2D.clearTimelines() -> Scene2D.removeAllTimelines().
+  * Documentation: More Javadocs in Assets and Scene2D.
+  
+0.9 b210 (June 25, 2007)
+  * API: Added CoreSystem.isWindows() and CoreSystem.isWindowsXPorNewer()
+  * Fixed Regression: Stage was still creating the Sound Engine even if it was not needed.
+  * Fixed Bug: Fixed keyboard focus: Java 5 + Windows XP + Firefox.
+  * Fixed Bug: Windows more accuratly hits 60fps, allowing for smoother animation. These
+    issues were focused on:
+    - More accurate sleep() function. This fix may need a change in Java 1.7 - keep watch of bug 
+      6435126. http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6435126
+    - Changed Platform.sleepUntilTimeMillis() to Platform.sleepUntilTimeMicros();
+    - Windows 9x and non-Windows platforms have no changes.
+
+0.9 b208 (June 17, 2007)
+  * API: Renamed StringUtil.formatString() -> StringUtil.format()
+  * API: Renamed StringUtil.wordWrapText() -> StringUtil.wordWrap()
+  * Fixed Regression: Sound Engine was created on a call to CoreSystem.getNumSoundsPlaying()
+  * Fixed Regression: bug that prevented PulpCore Player from emulating browsers cookies via 
+    LiveConnect.
+  * Fixed Bug: PulpCore Player didn't work correctly on Windows.
+  * Documentation: More explanation in build.properties
+  * Documentation: This file (CHANGES) is now included in the distribution archive.
+
+0.9 b202 (June 14, 2007)
+  * First public release
+  

@@ -1,0 +1,12 @@
+pulpcore
+pulpcore.animation
+pulpcore.animation.event
+pulpcore.image
+pulpcore.image.filter
+pulpcore.math
+pulpcore.net
+pulpcore.scene
+pulpcore.sound
+pulpcore.sprite
+pulpcore.util
+pulpcore.util.crypt
