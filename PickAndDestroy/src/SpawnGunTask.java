@@ -20,8 +20,6 @@ class SpawnGunTask extends TimerTask
 		int x = rand(1, ItemManager.GRID_WIDTH_CASES);
 		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
 		
-		System.out.println("Spawning in : " + x + ":" + y);
-		
 		ImageSprite sprite = new ImageSprite("pistolet.png", 5, 5);
 		sprite.setSize(0, 0);
 		sprite.setLocation((x * 53.3) - 50.3, (y * 40) - 35);
