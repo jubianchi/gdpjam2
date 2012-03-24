@@ -4,12 +4,14 @@ import pulpcore.sprite.ImageSprite;
 
 public class Character {
 	public static final int MOVE_STEP = 4;
+	public static final int SPRITE_WIDTH = 68;
+	public static final int SPRITE_HEIGHT = 43;
 	
 	private ImageSprite sprite;
 	
 	public Character() {
 		sprite = new ImageSprite("ecureuil/face/ecu01.png", 5, 5);
-		sprite.setSize(68, 43);
+		sprite.setSize(SPRITE_WIDTH, SPRITE_HEIGHT);
 	}
 	
 	public ImageSprite getSprite() {
@@ -27,7 +29,9 @@ public class Character {
 	public void moveBottom() {					
 		sprite.setImage("ecureuil/face/ecu01.png");
 		
-		if(this.getSprite().y.getAsInt() + MOVE_STEP < Stage.getWidth()) {
+		int limit = (Stage.getHeight() - SPRITE_HEIGHT);
+		
+		if(this.getSprite().y.getAsInt() + MOVE_STEP < limit) {
 			this.getSprite().y.set(this.getSprite().y.getAsInt() + MOVE_STEP);
 		}
 	}
@@ -43,7 +47,9 @@ public class Character {
 	public void moveRight() {
 		sprite.setImage("ecureuil/droite/ecu01.png");
 		
-		if(this.getSprite().x.getAsInt() + MOVE_STEP < Stage.getWidth()) {
+		int limit = (Stage.getWidth() - SPRITE_WIDTH);
+		
+		if(this.getSprite().x.getAsInt() + MOVE_STEP < limit) {
 			this.getSprite().x.set(this.getSprite().x.getAsInt() + MOVE_STEP);
 		}
 	}

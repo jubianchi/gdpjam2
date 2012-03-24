@@ -10,7 +10,7 @@ public class KeyManager {
 		this.player2 = player2;
 	}
 	
-	public void update() {
+	public void update(int elapsedTime) {
 		if(Input.isDown(Input.KEY_LEFT)) {	        
 	        player1.moveLeft();
         } else if(Input.isDown(Input.KEY_RIGHT)) {        	
