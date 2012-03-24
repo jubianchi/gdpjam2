@@ -13,12 +13,29 @@ public class Character {
 	private Sound stepSound;
 	private Playback stepPlayback;
 	
+	private int healthPoint = 0;
+	private int ammoPoint = 0;
+	
 	public Character() {
 		sprite = new ImageSprite("ecureuil/frise_face.png", 5, 5);		
 		
 		stepSound = Sound.load("Bruit de pas.wav");
 		stepPlayback = stepSound.play();
 		stepPlayback.setPaused ( true );	
+	}
+	
+	public void getAmmo(int nb) 
+	{
+		int maxAmmo = ConfigManager.gameModesConfig.getValue("maxAmmo");
+		
+		if(this.ammoPoint + nb <= maxAmmo)
+		{
+			this.ammoPoint += nb;
+		} 
+		else 
+		{
+			this.ammoPoint = maxAmmo;
+		}
 	}
 	
 	public ImageSprite getSprite() {
