@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 import pulpcore.Stage;
 import pulpcore.scene.Scene2D;
-import pulpcore.sprite.ImageSprite;
 
 
 public class CharacterManager 

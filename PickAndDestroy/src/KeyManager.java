@@ -12,13 +12,15 @@ public class KeyManager {
 	
 	public void update(int elapsedTime) {
 		if(Input.isDown(Input.KEY_LEFT)) {	        
-	        player1.moveLeft();
+	        player1.moveLeft();	        
         } else if(Input.isDown(Input.KEY_RIGHT)) {        	
         	player1.moveRight();
         } else if(Input.isDown(Input.KEY_UP)) {        	
         	player1.moveTop();
         } else if(Input.isDown(Input.KEY_DOWN)) {        	
         	player1.moveBottom();
+        } else {
+        	player1.moveStop();
         }
 		
 		if(Input.isDown(Input.KEY_Q)) {	        
@@ -29,6 +31,8 @@ public class KeyManager {
         	player2.moveTop();
         } else if(Input.isDown(Input.KEY_S)) {        	
         	player2.moveBottom();
+        } else {
+        	player2.moveStop();
         }
 	}
 }
