@@ -40,6 +40,7 @@ public class PickAndDestroy extends Scene2D
     	// entityManager.update ( elapsedTime );
     	keyManager.update ( elapsedTime );
     	configManager.update ( elapsedTime );
+    	itemManager.update(elapsedTime);
     }
     
 }
