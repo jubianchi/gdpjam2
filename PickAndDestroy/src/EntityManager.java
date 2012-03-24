@@ -14,9 +14,9 @@ public class EntityManager
 	{
 		elements = new Group ();
 		
-		addSprite ( 0, 0 );
-		addSprite ( 0, 15 );
-		addSprite ( 0, 10 );
+		addSprite ( 0, 0, "Star.png" );
+		addSprite ( 0, 15, "Star.png" );
+		addSprite ( 0, 10, "Star.png" );
 
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );
@@ -24,9 +24,9 @@ public class EntityManager
 		scene.add(elements);
 	}
 	
-	private void addSprite ( int x, int y )
+	private void addSprite ( int x, int y, String name )
 	{
-		ImageSprite star = new ImageSprite("star.png", 0, 0);
+		ImageSprite star = new ImageSprite ( name, 0, 0);
 		star.setLocation ( x, y );
 		// star.setLocation ( x - star.getImage ().getWidth () / 2, y- star.getImage ().getWidth () / 2 );
         // star.angle.set(rand(Math.PI*2));

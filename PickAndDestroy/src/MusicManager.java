@@ -25,8 +25,8 @@ public class MusicManager
 	
 	public final void load()
 	{
-		quietMusic = Sound.load("Happy Tree Friends Soundtrack - Intro.ogg");
-    	brutalMusic = Sound.load("Metal.ogg");
+		quietMusic = Sound.load("Bande son calme.ogg");
+    	brutalMusic = Sound.load("Bande son metal.ogg");
         
         quietMusicPlayback = quietMusic.play ();
         quietMusicPlayback.setPaused ( true );

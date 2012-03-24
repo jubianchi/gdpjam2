@@ -12,12 +12,12 @@ public class PickAndDestroy extends Scene2D
 {
 	MusicManager musicManager;
 	EntityManager entityManager;
+	TilemapManager tilemapManager;
 	
     public void load()
     {
-        add(new FilledSprite(Colors.WHITE));
-        add(new ImageSprite("success.png", 5, 5));
-        add(new Label("Hello World!", 26, 6));
+    	tilemapManager = new TilemapManager ();
+        tilemapManager.load ( this );
         
         // musicManager = new MusicManager();
         // musicManager.load ();
@@ -28,6 +28,7 @@ public class PickAndDestroy extends Scene2D
     
     public void update(int elapsedTime)
     {
+    	tilemapManager.update ( elapsedTime );
     	// musicManager.update ( elapsedTime );
     	// entityManager.update ( elapsedTime );
     }
