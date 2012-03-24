@@ -46,8 +46,9 @@ public class EntityManager
 		addSprite ( 11, 6, 1,1, "PtTableHz.png", 0,-10 );
 
 		// sprites angle bas droite
-		addSprite ( 11, 9, 1,1, "1x1ObjP2.png", -10,-20 );
+
 		addSprite ( 11, 8, 1,1, "PtTableHz.png", 0,-10 );
+		addSprite ( 11, 9, 1,1, "1x1ObjP2.png", -10,-20 );
 		addSprite ( 9, 9, 1,1, "PtTableVt.png", 0,-10 );
 		addSprite ( 10, 9, 1,1, "PtTableHz.png", 0,-10 );
 		
