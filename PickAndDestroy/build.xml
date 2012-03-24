@@ -321,6 +321,8 @@
         <zip destfile="${build}/${project.assets.zip}" filesonly="true"
             whenempty="create"
             basedir="${build.res}/zip" />
+    	
+    	<copy file="config/gamemodes.txt" tofile="${build}/gamemodes.txt"/>
     </target>
     
     
