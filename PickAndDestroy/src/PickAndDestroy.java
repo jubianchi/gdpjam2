@@ -7,6 +7,7 @@ public class PickAndDestroy extends Scene2D
 	TilemapManager tilemapManager;
 	KeyManager keyManager;
 	CharacterManager characterManager;
+	ConfigManager configManager;
 	
     public void load()
     {
@@ -23,6 +24,9 @@ public class PickAndDestroy extends Scene2D
         characterManager.load(this);
         
         keyManager = new KeyManager(characterManager.getPlayer(0), characterManager.getPlayer(1));
+        
+        configManager = new ConfigManager();
+        configManager.load(this);
     }
     
     public void update(int elapsedTime)
@@ -31,8 +35,8 @@ public class PickAndDestroy extends Scene2D
     	// musicManager.update ( elapsedTime );
     	// entityManager.update ( elapsedTime );
     	keyManager.update ( elapsedTime );
+    	configManager.update ( elapsedTime );
     }
-
     
 }
 

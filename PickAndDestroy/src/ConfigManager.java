@@ -1,48 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import pulpcore.CoreSystem;
+import pulpcore.Input;
 import pulpcore.scene.Scene2D;
-
 
 public class ConfigManager
 {
+	public final ConfigFile gameModesConfig = new ConfigFile ( "gamemodes.txt" );
+	
 	public final void load(Scene2D scene)
 	{
+		reloadFiles ();
 	}
 	
-	public final void reloadFile()
+	public final void update ( int elapsedTime )
 	{
-		String line;
-		URL url = null;
-		try
+		if ( Input.isDown(Input.KEY_F9) )
 		{
-			url = new URL( CoreSystem.getBaseURL(), "config.txt" );
-			
+			reloadFiles();
 		}
-		catch(MalformedURLException e)
-		{
-			
-		}
-		
-		try
-		{
-			InputStream in = url.openStream();
-			BufferedReader bf = new BufferedReader(new InputStreamReader(in));
-			
-			while((line = bf.readLine()) != null)
-			{
-				
-			}
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+	}
+	
+	public final void reloadFiles()
+	{
+		gameModesConfig.reloadFile ();
 	}
 	
 }
