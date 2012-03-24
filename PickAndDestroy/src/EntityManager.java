@@ -14,21 +14,29 @@ public class EntityManager
 	{
 		elements = new Group ();
 		
-		addSprite ( 0, 0, "Star.png" );
-		addSprite ( 14, 14, "Star.png" );
-		addSprite ( 0, 5, "Star.png" );
-
+		// sprites 2x2
+		addSprite ( 2, 2, 2,2, "2x2Obj_01.png", 0, -13 );
+		addSprite ( 10, 10, 2,2, "2x2Obj_01.png", 0,-13 );
+		addSprite ( 2, 10, 2,2, "2x2Obj_01.png", 0,-13 );
+		addSprite ( 10, 2, 2,2, "2x2Obj_01.png", 0,-13 );
+		
+		//
+		
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );
 
 		scene.add(elements);
 	}
 	
-	private void addSprite ( int tx, int ty, String name )
+	private void addSprite ( int x, int y, int sx ,int sy, String name, int tx, int ty )
 	{
 		ImageSprite star = new ImageSprite ( name, 0, 0);
-		int px = TilemapManager.tileXToPixel(tx);
-		int py = TilemapManager.tileYToPixel(ty);
+		int px = TilemapManager.tileXToPixel(x);
+		int py = TilemapManager.tileYToPixel(y);
+		px -= ( star.getImage().getWidth() - TilemapManager.tileXToPixel(sx) ) / 2;
+		py -= ( star.getImage().getHeight() - TilemapManager.tileXToPixel(sx) ) / 2;
+		px += tx;
+		py += ty;
 		star.setLocation ( px, py );
 		// star.setLocation ( x - star.getImage ().getWidth () / 2, y- star.getImage ().getWidth () / 2 );
         // star.angle.set(rand(Math.PI*2));
