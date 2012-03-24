@@ -1,8 +1,6 @@
+import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
-import static pulpcore.math.CoreMath.rand;
 import pulpcore.Input;
-import pulpcore.animation.Easing;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.ImageSprite;
 
@@ -14,9 +12,12 @@ public class ItemManager {
 	private Scene2D scene;
 	private int itemCount = 0;
 	private Timer spawnTimer;
+	private ArrayList<ImageSprite> sprites;
 	
 	public final void load(Scene2D scene)
 	{
+		this.sprites = new ArrayList<ImageSprite>();
+		
 		this.scene = scene;
 		this.spawnItem();
 	}
@@ -31,67 +32,25 @@ public class ItemManager {
 	{
 		if(this.itemCount > 20) return;
 		
+		this.sprites.add(item);
 		this.scene.add(item);
 		this.itemCount++;
 	}
 	
 	public void pickItem(ImageSprite item) 
 	{
+		this.sprites.remove(item);
 		this.scene.remove(item);
 	}
 	
-	class SpawnLifeTask extends TimerTask 
+	public void cleanItem() 
 	{
-		private ItemManager manager;
-		
-		public SpawnLifeTask(ItemManager manager) {
-			this.manager = manager;
-		}
-		
-		public void run()
+		for(ImageSprite item : this.sprites) 
 		{
-			if(rand(1, 100) <= 50) return;
-			
-			int x = rand(1, ItemManager.GRID_WIDTH_CASES);
-			int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
-			
-			System.out.println("Spawning in : " + x + ":" + y);
-			
-			ImageSprite sprite = new ImageSprite("coeur.png", 5, 5);
-			sprite.setSize(0, 0);
-			sprite.setLocation((x * 53.3) - 42.65, (y * 40) - 35);
-			sprite.setAnchor(0.5, 0.5);
-			manager.addItem(sprite);
-			
-			sprite.scaleTo(33, 30, 500, Easing.ELASTIC_IN_OUT);
+			this.scene.remove(item);
 		}
-	}
-	
-	class SpawnAmmoTask extends TimerTask 
-	{
-		private ItemManager manager;
 		
-		public SpawnAmmoTask(ItemManager manager) {
-			this.manager = manager;
-		}
-
-		public void run()
-		{
-			if(rand(1, 100) <= 50) return;
-			
-			int x = rand(1, ItemManager.GRID_WIDTH_CASES);
-			int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
-			
-			System.out.println("Spawning in : " + x + ":" + y);
-			
-			ImageSprite sprite = new ImageSprite("bullet.png", 5, 5);
-			sprite.setSize(0, 0);
-			sprite.setLocation((x * 53.3) - 32.65, (y * 40) - 35);
-			sprite.setAnchor(0.5, 0.5);
-			manager.addItem(sprite);
-			
-			sprite.scaleTo(13, 30, 500, Easing.ELASTIC_IN_OUT);
-		}
+		this.itemCount = 0;	
 	}
 	
 	public final void update(int elapsedTime)
@@ -100,7 +59,7 @@ public class ItemManager {
 			System.out.println("Switched to LifeSpawn");			
 			
 			this.spawnTimer.cancel();
-			this.itemCount = 0;
+			this.cleanItem();
 			
 			spawnTimer = new Timer();
 			spawnTimer.scheduleAtFixedRate(new SpawnLifeTask(this), 0, 2000);
@@ -108,7 +67,7 @@ public class ItemManager {
 			System.out.println("Switched to AmmoSpawn");
 			
 			this.spawnTimer.cancel();
-			this.itemCount = 0;
+			this.cleanItem();
 			
 			spawnTimer = new Timer();
 			spawnTimer.scheduleAtFixedRate(new SpawnAmmoTask(this), 0, 2000);
