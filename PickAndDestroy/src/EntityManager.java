@@ -71,12 +71,14 @@ public class EntityManager
 		(
 			name,
 			TilemapManager.tileXToPixel(sx),
-			TilemapManager.tileYToPixel(sy),
-			tx, ty
+			TilemapManager.tileYToPixel(sy)
 		);
+		entity.setTranslation ( tx, ty );
+		
 		int px = TilemapManager.tileXToPixel(x);
 		int py = TilemapManager.tileYToPixel(y);
 		entity.setLocation ( px, py );
+
 		elements.add(entity.getSprite());
 	}
 	
@@ -104,18 +106,23 @@ public class EntityManager
 
 class Entity
 {
-	ImageSprite sprite;
-	Rect rect;
-	int tx, ty;
+	private ImageSprite sprite;
+	private Rect rect;
+	private int tx, ty;
 	
 	public final ImageSprite getSprite() { return sprite; }
+	public final Rect getRect() { return rect; }
 	
-	Entity ( String name, int width, int height, int tx, int ty )
+	Entity ( String name, int width, int height )
 	{
 		sprite = new ImageSprite ( name, 0, 0 );
+		rect = new Rect ( 0,0, width, height );
+	}
+	
+	public final void setTranslation ( int tx, int ty )
+	{
 		this.tx = tx;
 		this.ty = ty;
-		rect = new Rect ( 0,0, width, height );
 	}
 	
 	public final void setLocation ( int x, int y )
