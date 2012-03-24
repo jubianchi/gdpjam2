@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="256" height="256" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+    <radialGradient id="glow" gradientUnits="userSpaceOnUse"
+        cx="128" cy="128" r="128" fx="128" fy="128">
+        <stop offset="0%"   stop-color="#FFC" stop-opacity="0.7"/>
+        <stop offset="10%"  stop-color="#FFC" stop-opacity="0.7" />
+        <stop offset="11%"  stop-color="#FFC" stop-opacity="1.0" />
+        <stop offset="40%"  stop-color="#FFC" stop-opacity="0.5" />
+        <stop offset="77%"  stop-color="#FFC" stop-opacity="0.5" />
+        <stop offset="80%"  stop-color="#FFC" stop-opacity="0.8" />
+        <stop offset="86%"  stop-color="#FFC" stop-opacity="0.8" />
+        <stop offset="90%"  stop-color="#FFC" stop-opacity="0.4" />
+        <stop offset="95%"  stop-color="#FFC" stop-opacity="0.2" />
+        <stop offset="100%" stop-color="#FFC" stop-opacity="0" />
+    </radialGradient>
+</defs>
+
+<circle cx="128" cy="128" r="128" fill="url(#glow)" />
+
+</svg>

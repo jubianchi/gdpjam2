@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <style type="text/css">
+    body {
+        background: @BGCOLOR@; 
+        color: @FGCOLOR@; 
+        font-family: sans-serif; 
+        text-align: center; 
+        margin-top: 5em;
+    }
+    a:link {color: #F88113; text-decoration: none}
+    a:visited {color: #ad5a0d; text-decoration: none}
+    a:active {color: #F88113; text-decoration: none}
+    a:hover {color: #F88113; text-decoration: underline}
+    </style>
+    <title>@TITLE@</title>
+</head>
+  
+<body>
+
+<div id="game">
+<script type="text/javascript"><!--
+@APPLET_PARAMS@
+//--> 
+</script> 
+<script type="text/javascript" src="pulpcore.js"></script>
+<noscript><p>To play, enable JavaScript from the Options or Preferences menu.</p></noscript>
+</div>
+
+<div id="demoControls" style="margin-top: .5em">
+        <label for="cap"><input id="cap" type="checkbox" checked="checked" 
+        onclick="pulpcore_object0.getCurrentScene().setCapFrameRate(this.checked);"/>Cap
+        Frame Rate</label> &nbsp;&nbsp;&nbsp;
+        <label for="pixelsnap"><input id="pixelsnap" type="checkbox" 
+        onclick="pulpcore_object0.getCurrentScene().setPixelSnapping(this.checked);"/>Pixel
+        Snapping</label> &nbsp;&nbsp;&nbsp;
+        <label for="dirtyrects"><input id="dirtyrects" type="checkbox" checked="checked" 
+        onclick="pulpcore_object0.getCurrentScene().setDirtyRectanglesEnabled(this.checked);"/>Dirty
+        Rectangles</label> &nbsp;&nbsp;&nbsp;
+        <select onchange="pulpcore_object0.getCurrentScene().setNumBalls(this.value);">
+            <option value="1" >1 Ball</option>
+            <option value="2">2 Balls</option>
+            <option value="4">4 Balls</option>
+            <option value="8">8 Balls</option>
+            <option value="16" selected="selected">16 Balls</option>
+            <option value="32">32 Balls</option>
+            <option value="64">64 Balls</option>
+            <option value="128">128 Balls</option>
+            <option value="256">256 Balls</option>
+            <option value="512">512 Balls</option>
+        </select><br />
+</div>
+
+<div id="source" style="margin: 5em auto 0 auto;">
+    <a href="http://www.interactivepulp.com/pulpcore/">Powered by PulpCore</a>
+    <blockquote style="margin-top: 5em; text-align: left">
+        <div>@SRC@</div>
+    </blockquote>
+</div>
+
+</body>
+</html>
