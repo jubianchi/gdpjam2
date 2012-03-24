@@ -18,9 +18,7 @@ class SpawnAmmoTask extends TimerTask
 		if(rand(1, 100) <= 50) return;
 		
 		int x = rand(1, ItemManager.GRID_WIDTH_CASES);
-		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
-		
-		System.out.println("Spawning in : " + x + ":" + y);
+		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);		
 		
 		ImageSprite sprite = new ImageSprite("bullet.png", 5, 5);
 		sprite.setSize(0, 0);
