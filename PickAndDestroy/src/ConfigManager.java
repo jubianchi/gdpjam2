@@ -3,7 +3,7 @@ import pulpcore.scene.Scene2D;
 
 public class ConfigManager
 {
-	public final ConfigFile gameModesConfig = new ConfigFile ( "gamemodes.txt" );
+	public static final ConfigFile gameModesConfig = new ConfigFile ( "gamemodes.txt" );
 	
 	public final void load(Scene2D scene)
 	{
