@@ -6,8 +6,8 @@ import pulpcore.sprite.ImageSprite;
 
 public class Character {
 	public static final int MOVE_STEP = 4;
-	public static final int SPRITE_WIDTH = 71;
-	public static final int SPRITE_HEIGHT = 44;
+	public static final int SPRITE_WIDTH = 81;
+	public static final int SPRITE_HEIGHT = 74;
 	
 	private ImageSprite sprite;
 	private int currentDirection = 0;

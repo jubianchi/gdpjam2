@@ -16,34 +16,34 @@ public class EntityManager
 		
 		// sprites 2x2
 		addSprite ( 2, 2, 2,2, "2x2Obj_01.png", 0, -13 );
-		addSprite ( 11, 11, 2,2, "2x2Obj_01.png", 0,-13 );
-		addSprite ( 2, 11, 2,2, "2x2Obj_01.png", 0,-13 );
-		addSprite ( 11, 2, 2,2, "2x2Obj_01.png", 0,-13 );
+		addSprite ( 11, 11, 2,2, "2x2Obj_01.png", 0, -13 );
+		addSprite ( 2, 11, 2,2, "2x2Obj_01.png", 0, -13 );
+		addSprite ( 11, 2, 2,2, "2x2Obj_01.png", 0, -13 );
 		
 		//sprites barre du haut
-		addSprite ( 5, 2, 1,1, "1x1ObjP2.png", -10,-20 );
-		addSprite ( 6, 2, 1,1, "PtTableHz.png", 0,-10 );
-		addSprite ( 7, 2, 1,1, "PtTableVt.png", 0,-10 );
-		addSprite ( 8, 2, 1,1, "PtTableHz.png", 0,-10 );
-		addSprite ( 9, 2, 1,1, "1x1ObjP2.png", -10,-20 );
+		addSprite ( 5, 2, 1,1, "1x1ObjP2.png", -10, -20 );
+		addSprite ( 6, 2, 1,1, "PtTableHz.png", 0, -10 );
+		addSprite ( 7, 2, 1,1, "PtTableVt.png", 0, -10 );
+		addSprite ( 8, 2, 1,1, "PtTableHz.png", 0, -10 );
+		addSprite ( 9, 2, 1,1, "1x1ObjP2.png", -10, -20 );
 		
 		// sprites angle haut gauche
-		addSprite ( 3, 5, 1,1, "1x1ObjP2.png", -10,-20 );
-		addSprite ( 3, 6, 1,1, "PtTableHz.png", 0,-10 );
-		addSprite ( 4, 5, 1,1, "PtTableVt.png", 0,-10 );
-		addSprite ( 5, 5, 1,1, "PtTableHz.png", 0,-10 );
+		addSprite ( 3, 5, 1,1, "1x1ObjP2.png", -10, -20 );
+		addSprite ( 3, 6, 1,1, "PtTableHz.png", 0, -10 );
+		addSprite ( 4, 5, 1,1, "PtTableVt.png", 0, -10 );
+		addSprite ( 5, 5, 1,1, "PtTableHz.png", 0, -10 );
 
 		// sprites angle bas gauche
-		addSprite ( 3, 8, 1,1, "PtTableHz.png", 0,-10 );
-		addSprite ( 3, 9, 1,1, "1x1ObjP2.png", -10,-20 );
-		addSprite ( 4, 9, 1,1, "PtTableVt.png", 0,-10 );
-		addSprite ( 5, 9, 1,1, "PtTableHz.png", 0,-10 );
+		addSprite ( 3, 8, 1,1, "PtTableHz.png", 0, -10 );
+		addSprite ( 3, 9, 1,1, "1x1ObjP2.png", -10, -20 );
+		addSprite ( 4, 9, 1,1, "PtTableVt.png", 0, -10 );
+		addSprite ( 5, 9, 1,1, "PtTableHz.png", 0, -10 );
 		
 		// sprites angle haut droite
-		addSprite ( 9, 5, 1,1, "PtTableHz.png", 0,-10 );
-		addSprite ( 10, 5, 1,1, "PtTableVt.png", 0,-10 );
-		addSprite ( 11, 5, 1,1, "1x1ObjP2.png", -10,-20 );
-		addSprite ( 11, 6, 1,1, "PtTableHz.png", 0,-10 );
+		addSprite ( 9, 5, 1,1, "PtTableHz.png", 0, -10 );
+		addSprite ( 10, 5, 1,1, "PtTableVt.png", 0, -10 );
+		addSprite ( 11, 5, 1,1, "1x1ObjP2.png", -10, -20 );
+		addSprite ( 11, 6, 1,1, "PtTableHz.png", 0, -10 );
 
 		// sprites angle bas droite
 
