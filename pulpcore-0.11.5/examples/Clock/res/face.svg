@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="480" height="480" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+    <radialGradient id="Clock-Border" gradientUnits="userSpaceOnUse"
+        cx="240" cy="240" r="240" fx="240" fy="240">
+        <stop offset="90%" stop-color="black" />
+        <stop offset="100%" stop-color="white" />
+    </radialGradient>
+</defs>
+
+<!-- Background -->
+<rect x="0" y="0" width="480" height="480" fill="black" />
+<circle cx="240" cy="240" r="230" stroke-width="10" stroke="url(#Clock-Border)" fill="white" />
+
+<!-- Labels -->
+<g transform="translate(240,240)">
+<g transform="rotate(0) translate(0,-200) rotate(0)">
+<text x="0" y="8" style="font-family: Helvetica; font-size: 24px; text-anchor: middle; fill: black">12</text>
+</g>
+<g transform="rotate(30) translate(0,-200) rotate(-30)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">1</text>
+</g>
+<g transform="rotate(60) translate(0,-200) rotate(-60)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">2</text>
+</g>
+<g transform="rotate(90) translate(0,-200) rotate(-90)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">3</text>
+</g>
+<g transform="rotate(120) translate(0,-200) rotate(-120)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">4</text>
+</g>
+<g transform="rotate(150) translate(0,-200) rotate(-150)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">5</text>
+</g>
+<g transform="rotate(180) translate(0,-200) rotate(-180)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">6</text>
+</g>
+<g transform="rotate(210) translate(0,-200) rotate(-210)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">7</text>
+</g>
+<g transform="rotate(240) translate(0,-200) rotate(-240)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">8</text>
+</g>
+<g transform="rotate(270) translate(0,-200) rotate(-270)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">9</text>
+</g>
+<g transform="rotate(300) translate(0,-200) rotate(-300)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">10</text>
+</g>
+<g transform="rotate(330) translate(0,-200) rotate(-330)">
+<text x="-8" y="8" style="font-family: Helvetica; font-size: 24px; fill: black">11</text>
+</g>
+</g>
+</svg>

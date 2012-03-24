@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="300" height="42" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+  <linearGradient id="button-fill" gradientTransform="rotate(90)">
+    <stop offset="0%" stop-color="#555555" />
+    <stop offset="3%" stop-color="#3A3A3A" />
+    <stop offset="49%" stop-color="#0f0f0f" />
+    <stop offset="50%" stop-color="#000000" />
+    <stop offset="100%" stop-color="#0E0E0E" />
+  </linearGradient>
+  <linearGradient id="pressed-fill" gradientTransform="rotate(90)">
+    <stop offset="0%" stop-color="#88AACC" />
+    <stop offset="49%" stop-color="#334488" />
+    <stop offset="50%" stop-color="#333366" />
+    <stop offset="100%" stop-color="#333366" />
+  </linearGradient>
+  <linearGradient id="hover-stroke" gradientTransform="rotate(90)">
+    <stop offset="0%" stop-color="#555555" />
+    <stop offset="100%" stop-color="#555555" />
+  </linearGradient>
+  <linearGradient id="pressed-stroke" gradientTransform="rotate(90)">
+    <stop offset="0%" stop-color="#000000" />
+    <stop offset="100%" stop-color="#5B5B5B" />
+  </linearGradient>
+</defs>
+    
+<!-- Normal -->
+<g>
+<rect x="1" y="1" rx="10" ry="10" width="98" height="40" fill="url(#button-fill)" />
+<text x="50" y="28" style="font-family: Helvetica; font-weight: normal; font-size: 24px; text-anchor: middle; fill: white; opacity:.8;">Ok</text>
+</g>
+
+<!-- Hover -->
+<g transform="translate(100, 0)">
+<rect x="1" y="1" rx="10" ry="10" width="98" height="40" fill="url(#button-fill)" 
+    stroke-width="1" stroke="#555555" />
+<text x="50" y="28" style="font-family: Helvetica; font-weight: normal; font-size: 24px; text-anchor: middle; fill: white; opacity:.9;">Ok</text>
+</g>
+
+<!-- Pressed -->
+<g transform="translate(200, 0)">
+<rect x="1" y="1" rx="10" ry="10" width="98" height="40" fill="url(#pressed-fill)" 
+    stroke-width="1" stroke="#555555"/>
+<text x="50" y="28" style="font-family: Helvetica; font-weight: normal; font-size: 24px; text-anchor: middle; fill: white; opacity:.9;">Ok</text>
+</g>
+</svg>

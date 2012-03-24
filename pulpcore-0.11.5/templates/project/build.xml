@@ -1,0 +1,404 @@
+<?xml version="1.0"?>
+
+<!--
+    Project template for PulpCore 0.11. Additonal features compared to the
+    "quick" template:
+    - Jar versioning (jar file name contains the app version).
+    - Automatic build number increment.
+    - Ability to put assets in the jar.
+    - Example code also shows a custom LoadingScene and talkback.
+    Requires Ant 1.7.1.
+-->
+<project name="PulpCore Project" default="build-and-run" basedir=".">
+
+    <property file="build.properties" />
+    
+    <!-- 
+        Edit these properties for your project:
+        
+        pulpcore.player.wait  If true, the PulpCore Player Ant task waits until the Player
+                              window is closed. Otherwise, the Ant task returns immediately. 
+                              Default is true.
+        include.src           If true, the source and resources are included as links in the
+                              applet HTML.
+        project.jar           The name of the project jar to create.
+        project.assets        The name of the project zip file to create.
+        project.scene         The name of the first scene to display.
+        project.width         The width of the applet.
+        project.height        The height of the applet.
+        project.params        The applet parameters (as JavaScript prop objects - see 
+                              build.properties)
+        project.codebase      The applet codebase (default is same path as the html document)
+        pulpcore.build        Build mode: "release" or "debug".
+                              For "debug" builds, these hotkeys are available:
+                              Ctrl-1  Slow-motion mode.
+                              Ctrl-2  Normal speed mode.
+                              Ctrl-3  Fast-forward mode.
+                              Ctrl-C  View the console. The console also appears when there is an 
+                                      uncaught exception.
+                              Ctrl-I  View frame rate and memory information. 
+                              Ctrl-X  View the Scene Selector.
+                              Ctrl-D  View dirty rectangles (Scene2D scenes only).
+                              For "release" builds, the resulting jar is obfucated if the Proguard 
+                              jar is available.
+        pulpcore.path         The path to the directory containing the PulpCore jars.
+        proguard.path         The path to the Proguard jar (Proguard 3.6 or newer).
+        library.path          The path to the jar or zip for the Java runtime. Required for Proguard. 
+                              To ensure maximum compatibility, use the Java 1.4 classes. Otherwise:
+                              For Windows, use "${java.home}/lib/rt.jar".
+                              For Max OS X, use "${java.home}/../Classes/classes.jar"
+    -->
+    <property name="pulpcore.player.wait" value="true" />
+    <property name="include.src" value="false" />
+    <property name="project.scene" value="HelloWorld" />
+    <property name="project.jar" value="${project.scene}.jar" />
+    <property name="project.assets.zip" value="${project.scene}.zip" />
+    <property name="project.width" value="640" />
+    <property name="project.height" value="480" />
+    <property name="project.params" value="" />
+    <property name="project.codebase" value="" />
+    <property name="project.version" value="1.0" />    
+    <property name="pulpcore.build" value="debug" />
+    <property name="pulpcore.path" value="../../build" />
+    <property name="proguard.path" value="" />
+    <property name="library.path" value="" /> 
+    
+    
+    <!--
+        Normally you won't need to edit anything below this line 
+    -->
+    
+    <property name="pulpcore.version" value="0.11" />
+    <property name="pulpcore.platform" value="applet" />
+    <property name="autoload.assets.zip" value="" />
+    
+    <!-- Java language to use. May be 1.4 or 1.5. If the value is 1.5, Retroweaver is used. -->
+    <property name="pulpcore.java.language" value="1.5" />
+
+    <!-- The path to an HTML file to use as the applet template.
+    If blank, a default HTML template is used.
+
+    The template should contain something similar to the following code. The
+    pulpcore-applet tool automatically converts  @APPLET_PARAMS@ to the
+    required params.
+
+    <script type="text/javascript">
+    @APPLET_PARAMS@
+    </script>
+    <script type="text/javascript" src="pulpcore.js"></script>
+    <noscript><p>To play, enable JavaScript from the Options or Preferences menu.</p></noscript>
+    -->
+    <property name="applet.template" value="" />
+    
+    <!-- Project paths -->
+    <property name="src" value="src" />
+    <property name="res" value="res" />
+    <property name="lib" value="lib" />
+    <property name="build" value="build/${pulpcore.platform}" />
+    <property name="build.temp" value="${build}/temp" />
+    <property name="build.classes" value="${build.temp}/classes" />
+    <property name="build.res" value="${build.temp}" />
+    
+    <!-- PulpCore paths -->
+    <property name="core.jar.file" value="${pulpcore.path}/pulpcore-${pulpcore.platform}-${pulpcore.build}-${pulpcore.version}.jar" />
+    <property name="tools.jar.file" value="${pulpcore.path}/pulpcore-assettools-${pulpcore.version}.jar" />
+    <property name="player.jar.file" value="${pulpcore.path}/pulpcore-player-${pulpcore.version}.jar" />
+    <property name="retroweaver.jar.file" value="${pulpcore.path}/retroweaver-all.jar" />
+    <property name="pack200.jar.file" value="${pulpcore.path}/Pack200Task.jar" />
+    
+    <!-- PulpCore tasks -->
+    <taskdef resource="tasks.properties" classpath="${tools.jar.file}"/>
+    <taskdef resource="tasks.properties" classpath="${player.jar.file}"/>
+
+    
+    <target name="clean" description="Deletes builds, compiled classes, and processed assets">
+        <delete dir="${build}" />
+    </target>
+
+
+    <!-- Cleans temp files used during build. Used by PulpCore's build.xml -->
+    <target name="-clean-temp">
+        <delete dir="${build.temp}" failonerror="false" />
+    </target>
+
+
+    <!-- Initials directories and checks for valid properties -->
+    <target name="-init">
+        <fail message="Required file not found: ${core.jar.file}">
+            <condition><not><available file="${core.jar.file}" /></not></condition>
+        </fail>
+
+        <fail message="Required file not found: ${tools.jar.file}">
+            <condition><not><available file="${tools.jar.file}" /></not></condition>
+        </fail>
+
+        <fail message="Required file not found: ${player.jar.file}">
+            <condition><not><available file="${player.jar.file}" /></not></condition>
+        </fail>
+        
+        <fail message="File not found: ${library.path}" >
+            <condition>
+                <and>
+                    <isset property="library.path" />
+                    <not><equals arg1="${library.path}" arg2="" /></not>
+                    <not><available file="${library.path}" /></not>
+                </and>
+            </condition>
+        </fail>
+        
+        <fail message="File not found: ${proguard.path}" >
+            <condition>
+                <and>
+                    <isset property="proguard.path" />
+                    <not><equals arg1="${proguard.path}" arg2="" /></not>
+                    <not><available file="${proguard.path}" /></not>
+                </and>
+            </condition>
+        </fail>            
+
+        <condition property="do.obfuscate">
+            <and>
+                <equals arg1="${pulpcore.build}" arg2="release" />
+                <available resource="proguard/ant/task.properties" classpath="${proguard.path}" />
+            </and>
+        </condition>
+        
+        <fail message="Required property library.path is not defined" >
+            <condition>
+                <and>
+                    <isset property="do.obfuscate" />
+                    <or>
+                        <not><isset property="library.path" /></not>
+                        <equals arg1="${library.path}" arg2="" />
+                    </or>
+                </and>
+            </condition>
+        </fail>
+        
+        <condition property="do.pack200">
+            <equals arg1="${pulpcore.build}" arg2="release" />
+        </condition>
+        
+        <condition property="do.applet.html">
+            <equals arg1="${pulpcore.platform}" arg2="applet" />
+        </condition>
+        
+        <condition property="do.retroweaver">
+            <equals arg1="${pulpcore.java.language}" arg2="1.5" />
+        </condition>
+
+        <condition property="bootclasspath" value="${library.path}" else="">
+            <equals arg1="${pulpcore.java.language}" arg2="1.4" />
+        </condition>
+        
+        <condition property="display.src" value="${src}/${project.scene}.java" else="">
+            <istrue value="${include.src}" />
+        </condition>
+
+        <!-- PNG Optimization. Possible values range from 0 to 5 -->
+        <condition property="optimizationLevel" value="4" else="1">
+            <equals arg1="${pulpcore.build}" arg2="release" />
+        </condition>
+
+        <buildnumber/>
+        <echo file="${src}/ProjectBuild.java"><![CDATA[
+        // Automatically generated file. Do not edit.
+
+        public interface ProjectBuild {
+            public static final String VERSION = "${project.version}";
+            public static final String BUILD_NUMBER = "${build.number}";
+        }
+        ]]></echo>        
+        
+        <delete dir="${build.classes}" failonerror="false" />
+        <mkdir dir="${build}" />
+        <mkdir dir="${build.temp}" />
+        <mkdir dir="${build.classes}" />
+        <mkdir dir="${build.res}" />
+    </target>
+    
+
+    <!-- Compiles the code -->
+    <target name="compile" depends="-init">
+        <javac srcdir="${src}"
+                destdir="${build.classes}"
+                source="${pulpcore.java.language}"
+                target="${pulpcore.java.language}"
+                debug="on"
+                deprecation="on"
+                bootclasspath="${bootclasspath}">
+
+            <include name="**/*.java"/>
+            <compilerarg line="-Xlint:all" />
+            
+            <classpath>
+                <pathelement location="${core.jar.file}"/>
+                <fileset dir="${lib}" erroronmissingdir="false">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+    
+
+    <!-- Creates a jar of the compiled code and libraries -->
+    <target name="jar" depends="compile">
+        <jar destfile="${build}/${project.jar}">
+            <fileset dir="${build.classes}" includes="**/*.class" />
+            <fileset dir="${build.res}/jar" />
+            <zipfileset src="${core.jar.file}" excludes="META-INF/**/*" />
+            <zipgroupfileset dir="${lib}" includes="**/*.jar" erroronmissingdir="false">
+                <exclude name="META-INF/**/*"/>
+            </zipgroupfileset>
+        </jar>
+    </target>
+   
+    
+    <!-- Prepares the jar for Java 1.4 -->
+    <target name="-retroweave" if="do.retroweaver" depends="jar">
+        <taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask"
+            classpath="${retroweaver.jar.file}" />
+            
+        <copy file="${build}/${project.jar}" tofile="${build}/in.jar"/>
+        
+        <retroweaver inputjar="${basedir}/${build}/in.jar" 
+            outputjar="${basedir}/${build}/in2.jar" />
+            
+        <jar destfile="${build}/${project.jar}">
+            <zipfileset src="${basedir}/${build}/in2.jar" />
+            <zipfileset src="${retroweaver.jar.file}">
+                <include name="net/sourceforge/retroweaver/runtime/**/*"/>
+                <include name="org/objectweb/asm/**/*"/>
+                <exclude name="org/objectweb/asm/commons/**/*"/>
+            </zipfileset>
+        </jar>
+            
+        <delete file="${build}/in.jar" />
+        <delete file="${build}/in2.jar" />
+    </target>
+
+
+    <!-- Obfuscates the jar using Proguard -->
+    <target name="-obfuscate" if="do.obfuscate" depends="-retroweave">
+        <taskdef resource="proguard/ant/task.properties" classpath="${proguard.path}" />
+            
+        <copy file="${build}/${project.jar}" tofile="${build}/in.jar"/>
+
+        <proguard
+                defaultpackage="" 
+                ignorewarnings="true"
+                allowaccessmodification="true"
+                printmapping="${build.temp}/proguard-mapping.txt"
+                printusage="${build.temp}/proguard-usage.txt"
+                printseeds="${build.temp}/proguard-seeds.txt"
+                >
+
+            <libraryjar name="${library.path}" /> 
+            <injar name="${build}/in.jar" />
+            <outjar name="${build}/${project.jar}" />
+            
+            <keep name="pulpcore.sound.JOrbisAdapter">
+                <!-- Keep the special method that can be accessed via reflection -->
+                <method name="decode" />
+            </keep>
+            <keep name="pulpcore.platform.applet.CoreApplet">
+                <!-- Keep the special method that can be accessed via JavaScript -->
+                <method name="getCurrentScene" />
+            </keep>
+            <keep name="${project.scene}" />
+        </proguard>
+        
+        <delete file="${build}/in.jar" />
+    </target>
+    
+    
+    <!-- Creates index.html, splash.gif, and pulpcore.js -->
+    <target name="-applet.html" depends="-init" if="do.applet.html">
+        <pulpcore-applet 
+            destDir="${build}"
+            archive="${project.jar}"
+            width="${project.width}"
+            height="${project.height}"
+            scene="${project.scene}"
+            assets="${autoload.assets.zip}"
+            params="${project.params}" 
+            codebase="${project.codebase}"
+            template="${applet.template}"
+            displaySource="${display.src}"/>
+    </target>
+
+    
+    <!-- Creates the assets zip file -->
+    <target name="res" depends="-init">
+        <pulpcore-assets srcDir="${res}/jar" destDir="${build.res}/jar" 
+            skipSourceFiles="false"
+            optimizationLevel="${optimizationLevel}" />
+            
+        <pulpcore-assets srcDir="${res}/zip" destDir="${build.res}/zip" 
+            skipSourceFiles="false"
+            optimizationLevel="${optimizationLevel}" />
+    
+        <delete file="${build}/${project.assets.zip}" failonerror="false" />
+        <zip destfile="${build}/${project.assets.zip}" filesonly="true"
+            whenempty="create"
+            basedir="${build.res}/zip" />
+    </target>
+    
+    
+    <target name="-pack200" depends="-obfuscate" if="do.pack200">
+        <taskdef name="pack200"
+            classname="com.sun.tools.apache.ant.pack200.Pack200Task"
+            classpath="${pack200.jar.file}"/>
+            
+        <pack200 src="${build}/${project.jar}" gzipoutput="true" effort="9"
+            destfile="${build}/${project.jar}.pack.gz"/>
+    </target>
+
+
+    <!-- Compiles the code and creates the assets zip -->
+    <target name="build" depends="res, -pack200, -applet.html" description="Build" />
+    
+    
+    <target name="build-and-run" depends="build, run" description="Build and Run" />
+    
+    
+    <target name="run" description="Runs in PulpCore Player">
+        <pulpcore-player path="${basedir}/${build}" archive="${project.jar}" 
+            width="${project.width}" height="${project.height}"
+            scene="${project.scene}" assets="${autoload.assets.zip}" 
+            params="${project.params}"
+            waitUntilClosed="${pulpcore.player.wait}" />
+    </target>
+    
+    
+    <target name="debug-nb" depends="build" if="netbeans.home">
+        <nbjpdastart addressproperty="jpda.address" name="PulpCore" transport="dt_socket">
+            <classpath>
+                <fileset dir="${build}"><include name="*.jar" /></fileset>
+            </classpath>
+            <sourcepath>
+                <dirset dir="${src}" />
+            </sourcepath>
+        </nbjpdastart>
+        <java jar="${ant.home}/lib/ant-launcher.jar" fork="true">
+            <arg value="run" />
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
+    </target>
+
+
+    <target name="profile-nb" depends="build" if="netbeans.home">
+        <nbprofiledirect>
+            <classpath>
+                <pathelement location="${build}/${project.jar}"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </nbprofiledirect>
+        <java jar="${ant.home}/lib/ant-launcher.jar" fork="true">
+            <arg value="run" />
+            <jvmarg value="${profiler.info.jvmargs.agent}"/>
+        </java>
+    </target>
+    
+</project>
