@@ -1,5 +1,3 @@
-import java.util.Iterator;
-
 import pulpcore.math.Rect;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.Group;
