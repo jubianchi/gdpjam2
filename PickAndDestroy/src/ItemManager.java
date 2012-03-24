@@ -25,7 +25,7 @@ public class ItemManager {
 	public void spawnItem() 
 	{
 		spawnTimer = new Timer();
-		spawnTimer.scheduleAtFixedRate(new SpawnLifeTask(this), 0, 2000);
+		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
 	}
 	
 	public void addItem(ImageSprite item) 
@@ -62,7 +62,7 @@ public class ItemManager {
 			this.cleanItem();
 			
 			spawnTimer = new Timer();
-			spawnTimer.scheduleAtFixedRate(new SpawnLifeTask(this), 0, 2000);
+			spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
 		} else if(Input.isDown(Input.KEY_F8)) {
 			System.out.println("Switched to AmmoSpawn");
 			
@@ -70,7 +70,7 @@ public class ItemManager {
 			this.cleanItem();
 			
 			spawnTimer = new Timer();
-			spawnTimer.scheduleAtFixedRate(new SpawnAmmoTask(this), 0, 2000);
+			spawnTimer.scheduleAtFixedRate(new SpawnGunTask(this), 0, 2000);
 		}
     }
 }
