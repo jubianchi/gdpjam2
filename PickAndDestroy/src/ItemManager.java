@@ -5,18 +5,19 @@ import pulpcore.scene.Scene2D;
 import pulpcore.sprite.ImageSprite;
 
 
-public class ItemManager {
-	public static final int GRID_WIDTH_CASES = 15;
-	public static final int GRID_HEIGHT_CASES = 15; 
+public class ItemManager
+{
+	// public static final int GRID_WIDTH_CASES = 15;
+	// public static final int GRID_HEIGHT_CASES = 15; 
 	
 	private Scene2D scene;
 	private int itemCount = 0;
 	private Timer spawnTimer;
-	private ArrayList<ImageSprite> sprites;
+	private ArrayList<Entity> sprites;
 	
 	public final void load(Scene2D scene)
 	{
-		this.sprites = new ArrayList<ImageSprite>();
+		this.sprites = new ArrayList<Entity>();
 		
 		this.scene = scene;
 		this.spawnItem();
@@ -28,26 +29,26 @@ public class ItemManager {
 		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
 	}
 	
-	public void addItem(ImageSprite item) 
+	public void addItem(Entity item) 
 	{
 		if(this.itemCount > 20) return;
 		
 		this.sprites.add(item);
-		this.scene.add(item);
+		this.scene.add(item.getSprite ());
 		this.itemCount++;
 	}
 	
-	public void pickItem(ImageSprite item) 
+	public void pickItem(Entity item) 
 	{
 		this.sprites.remove(item);
-		this.scene.remove(item);
+		this.scene.remove(item.getSprite ());
 	}
 	
 	public void cleanItem() 
 	{
-		for(ImageSprite item : this.sprites) 
+		for(Entity item : this.sprites) 
 		{
-			this.scene.remove(item);
+			this.scene.remove(item.getSprite ());
 		}
 		
 		this.itemCount = 0;	

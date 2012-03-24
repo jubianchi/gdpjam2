@@ -17,24 +17,31 @@ class SpawnGoodiesTask extends TimerTask
 	{
 		if(rand(1, 100) <= 50) return;
 		
-		int x = rand(1, ItemManager.GRID_WIDTH_CASES);
-		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
+		int x = rand(1, TilemapManager.GRID_WIDTH);
+		int y = rand(1, TilemapManager.GRID_HEIGHT);
 
-		ImageSprite sprite;
-		if(rand(1, 10) <= 5) {
-			sprite = new ImageSprite("coeur.png", 5, 5);
-		} else {
-			sprite = new ImageSprite("bullet.png", 5, 5);
+		int w = 40;
+		int h = 30;
+		
+		Entity sprite;
+		// ImageSprite sprite;
+		if(rand(1, 10) <= 5)
+		{
+			// sprite = new ImageSprite("coeur.png", 5, 5);
+			sprite = new Entity("coeur.png", w, h);
+		}
+		else
+		{
+			// sprite = new ImageSprite("bullet.png", 5, 5);
+			sprite = new Entity("bullet.png", w, h);
 		}		
 		
-		int w = (int)sprite.width.get();
-		int h = (int)sprite.height.get();
+		sprite.getSprite().setSize(0, 0);
+		// sprite.setCenterLocation ( (int) ( (x * 53.3) - (26.65 + (w / 2)) ), (y * 40) - (20 + (h / 2)) );
+		sprite.setLocationOnTilemap ( x, y );
+		sprite.getSprite().setAnchor(0.5, 0.5);
+		sprite.getSprite().scaleTo(w, h, 500, Easing.ELASTIC_IN_OUT);
 		
-		sprite.setSize(0, 0);
-		sprite.setLocation((x * 53.3) - (26.65 + (w / 2)), (y * 40) - (20 + (h / 2)));
-		sprite.setAnchor(0.5, 0.5);
 		manager.addItem(sprite);
-		
-		sprite.scaleTo(w, h, 500, Easing.ELASTIC_IN_OUT);
 	}
 }

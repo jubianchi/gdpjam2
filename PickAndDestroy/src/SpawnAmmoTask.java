@@ -17,15 +17,20 @@ class SpawnAmmoTask extends TimerTask
 	{
 		if(rand(1, 100) <= 50) return;
 		
-		int x = rand(1, ItemManager.GRID_WIDTH_CASES);
-		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);		
+		int x = rand(1, TilemapManager.GRID_WIDTH );
+		int y = rand(1, TilemapManager.GRID_HEIGHT);		
 		
-		ImageSprite sprite = new ImageSprite("bullet.png", 5, 5);
-		sprite.setSize(0, 0);
-		sprite.setLocation((x * 53.3) - 32.65, (y * 40) - 35);
-		sprite.setAnchor(0.5, 0.5);
+		Entity sprite = new Entity ( "bullet.png", 15, 15 );
+		sprite.setLocationOnTilemap ( x, y );
+		// sprite.setCenterLocation ( (int) ( x * 53.3 - 32.65 ), (int) ( y * 40 - 35 ) );
+		sprite.getSprite ().setAnchor ( 0.5, 0.5 );
+		
+		// ImageSprite sprite = new ImageSprite("bullet.png", 5, 5);
+		// sprite.setSize(0, 0);
+		// sprite.setLocation((x * 53.3) - 32.65, (y * 40) - 35);
+		// sprite.setAnchor(0.5, 0.5);
+		sprite.getSprite ().scaleTo(13, 30, 500, Easing.ELASTIC_IN_OUT);
+		
 		manager.addItem(sprite);
-		
-		sprite.scaleTo(13, 30, 500, Easing.ELASTIC_IN_OUT);
 	}
 }

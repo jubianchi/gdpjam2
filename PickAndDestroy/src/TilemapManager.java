@@ -4,6 +4,9 @@ import pulpcore.sprite.ImageSprite;
 
 public class TilemapManager
 {
+	public static final int GRID_WIDTH = 15;
+	public static final int GRID_HEIGHT = 15;
+	
 	public static final int TILE_WIDTH = 53;
 	public static final int TILE_HEIGHT = 40;
 	

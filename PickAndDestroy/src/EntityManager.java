@@ -73,7 +73,13 @@ public class EntityManager
 			TilemapManager.tileXToPixel(sx),
 			TilemapManager.tileYToPixel(sy)
 		);
-		entity.setTranslation ( tx, ty );
+		
+		double anchorX = -(double)tx / (double)entity.getSprite ().getImage ().getWidth ();
+		double anchorY = -(double)ty / (double)entity.getSprite ().getImage ().getHeight ();
+		entity.getSprite().setAnchor ( anchorX, anchorY );
+		
+		// entity.getSprite ().getImage ().width
+		// entity.setTranslation ( tx, ty );
 		
 		int px = TilemapManager.tileXToPixel(x);
 		int py = TilemapManager.tileYToPixel(y);
@@ -108,7 +114,6 @@ class Entity
 {
 	private ImageSprite sprite;
 	private Rect rect;
-	private int tx, ty;
 	
 	public final ImageSprite getSprite() { return sprite; }
 	public final Rect getRect() { return rect; }
@@ -116,13 +121,8 @@ class Entity
 	Entity ( String name, int width, int height )
 	{
 		sprite = new ImageSprite ( name, 0, 0 );
+		sprite.setAnchor(0.5, 0.5);
 		rect = new Rect ( 0,0, width, height );
-	}
-	
-	public final void setTranslation ( int tx, int ty )
-	{
-		this.tx = tx;
-		this.ty = ty;
 	}
 	
 	public final void setLocation ( int x, int y )
@@ -132,9 +132,16 @@ class Entity
 		
 		x -= ( sprite.getImage().getWidth() - rect.width ) / 2;
 		y -= ( sprite.getImage().getHeight() - rect.height ) / 2;
-		x += tx;
-		y += ty;
 		
 		sprite.setLocation ( x, y );
+	}
+	
+	public final void setLocationOnTilemap ( int tx, int ty )
+	{
+		setLocation
+		(
+			( tx * TilemapManager.TILE_WIDTH ) + ( TilemapManager.TILE_WIDTH - getRect ().width ),
+			( ty * TilemapManager.TILE_HEIGHT ) + ( TilemapManager.TILE_HEIGHT - getRect ().height )
+		);
 	}
 }
