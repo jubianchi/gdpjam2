@@ -19,9 +19,7 @@ class SpawnGoodiesTask extends TimerTask
 		
 		int x = rand(1, ItemManager.GRID_WIDTH_CASES);
 		int y = rand(1, ItemManager.GRID_HEIGHT_CASES);
-		
-		System.out.println("Spawning in : " + x + ":" + y);
-		
+
 		ImageSprite sprite;
 		if(rand(1, 10) <= 5) {
 			sprite = new ImageSprite("coeur.png", 5, 5);
@@ -29,12 +27,14 @@ class SpawnGoodiesTask extends TimerTask
 			sprite = new ImageSprite("bullet.png", 5, 5);
 		}		
 		
+		int w = (int)sprite.width.get();
+		int h = (int)sprite.height.get();
 		
 		sprite.setSize(0, 0);
-		sprite.setLocation((x * 53.3) - 42.65, (y * 40) - 35);
+		sprite.setLocation((x * 53.3) - (26.65 + (w / 2)), (y * 40) - (20 + (h / 2)));
 		sprite.setAnchor(0.5, 0.5);
 		manager.addItem(sprite);
 		
-		sprite.scaleTo(33, 30, 500, Easing.ELASTIC_IN_OUT);
+		sprite.scaleTo(w, h, 500, Easing.ELASTIC_IN_OUT);
 	}
 }

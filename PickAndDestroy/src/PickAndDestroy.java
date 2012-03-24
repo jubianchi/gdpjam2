@@ -37,7 +37,7 @@ public class PickAndDestroy extends Scene2D
     {
     	tilemapManager.update ( elapsedTime );
     	// musicManager.update ( elapsedTime );
-    	// entityManager.update ( elapsedTime );
+    	entityManager.update ( elapsedTime );
     	keyManager.update ( elapsedTime );
     	configManager.update ( elapsedTime );
     	itemManager.update(elapsedTime);
