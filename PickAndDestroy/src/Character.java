@@ -38,6 +38,36 @@ public class Character {
 		}
 	}
 	
+	public void getHealth(int nb) 
+	{
+		int maxHealth = ConfigManager.gameModesConfig.getValue("maxHealth");
+		
+		if(this.healthPoint + nb <= maxHealth)
+		{
+			this.healthPoint += nb;
+		} 
+		else 
+		{
+			this.healthPoint = maxHealth;
+		}
+	}
+	
+	public void removeAmmo(int nb) {
+		this.ammoPoint -= nb;
+	}
+	
+	public void removeHealth(int nb) {
+		if(this.healthPoint - nb <= 0) {
+			this.healthPoint = 0;
+			
+			//DIE MOTHER FUCKER!!!!
+			stepSound = Sound.load("mort.wav");
+			stepPlayback = stepSound.play();
+		} else {
+			this.healthPoint -= nb;
+		}
+	}
+	
 	public ImageSprite getSprite() {
 		return sprite;
 	}

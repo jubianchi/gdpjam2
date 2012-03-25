@@ -57,9 +57,7 @@ public class EntityManager
 		addSprite ( 6, 12, 1,1, "PtTableHz.png", 0,-5 );
 		addSprite ( 7, 12, 1,1, "PtTableVt.png", 0,-5 );
 		addSprite ( 8, 12, 1,1, "PtTableHz.png", 0,-5 );
-		addSprite ( 9, 12, 1,1, "1x1ObjP2.png", -23,-10 );
-		
-		
+		addSprite ( 9, 12, 1,1, "1x1ObjP2.png", -23,-10 );			
 		
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );

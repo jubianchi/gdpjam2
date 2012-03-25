@@ -35,6 +35,6 @@ class SpawnGoodiesTask extends TimerTask
 		sprite.setAnchor(0.5, 0.5);
 		manager.addItem(sprite);
 		
-		sprite.scaleTo(w, h, 500, Easing.ELASTIC_IN_OUT);
+		sprite.scaleTo(w, h, 1000, Easing.ELASTIC_IN_OUT);
 	}
 }

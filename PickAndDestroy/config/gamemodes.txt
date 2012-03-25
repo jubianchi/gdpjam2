@@ -1,6 +1,8 @@
 enableSound = 1
 
 characterMoveStep = 4
+maxAmmo = 10
+maxHealth = 10
 
 minQuietPlaytime = 10000
 maxQuietPlaytime = 20000
