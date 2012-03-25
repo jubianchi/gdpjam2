@@ -166,7 +166,7 @@ public class Character extends Entity
 
 	public void addBullets()
 	{
-		ammoPoint += 1;
+		getAmmo(1);
 	}
 
 	public void addGun()
@@ -176,6 +176,6 @@ public class Character extends Entity
 
 	public void addHeart()
 	{
-		healthPoint += 1;
+		getHealth(1);
 	}
 }

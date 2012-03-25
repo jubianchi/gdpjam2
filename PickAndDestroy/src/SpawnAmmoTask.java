@@ -15,7 +15,7 @@ class SpawnAmmoTask extends TimerTask
 
 	public void run()
 	{
-		if(rand(1, 100) <= 50) return;
+		if(rand(1, 10) <= 5) return;
 		
 		int x = rand(1, TilemapManager.GRID_WIDTH );
 		int y = rand(1, TilemapManager.GRID_HEIGHT);		
