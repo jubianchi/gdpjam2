@@ -1,5 +1,7 @@
 enableSound = 1
 
+spawnDelay = 1000
+
 characterMoveStep = 4
 startAmmo = 6
 startHealth = 6

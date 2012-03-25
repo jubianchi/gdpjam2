@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
+
 import pulpcore.Input;
 import pulpcore.scene.Scene2D;
 
@@ -17,6 +19,8 @@ public class ItemManager
 	private ArrayList<Item> items;
 	private EntityManager entityManager;
 	
+	private int spawnDelay = ConfigManager.gameModesConfig.getValue("spawnDelay");
+	
 	public final List<Item> getItems() { return items; }
 	
 	public final void load(Scene2D scene, EntityManager entityManager)
@@ -31,7 +35,7 @@ public class ItemManager
 	public void spawnItem() 
 	{
 		spawnTimer = new Timer();
-		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
+		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, spawnDelay);
 	}
 	
 	public void addItem(Item item) 
@@ -45,12 +49,34 @@ public class ItemManager
 	
 	public void removeItem(Item item)
 	{
-		this.items.remove(item);
+		this.items.remove(item);		
 		entityManager.removeEntity ( item );
+		this.itemCount--;
 	}
 	
-	public void cleanItem() 
+	public void cleanItem() { this.cleanItem(0); }
+	public void cleanItem(int delay) 
 	{
+		final Timer cleanTimer = new Timer();
+		final ArrayList<Item> items = this.items;
+		
+		cleanTimer.schedule(new TimerTask() {									
+			@Override
+			public void run() {
+				cleanTimer.cancel();
+				
+				for(int i = 0, limit = items.size(); i < limit; i++)
+				{					
+					entityManager.removeEntity ( items.get(i) );								
+				}
+				
+				items.clear();
+				itemCount = 0;	
+			}
+			
+		}, spawnDelay);
+		
+		/*
 		for(int i = 0, limit = this.items.size(); i < limit; i++)
 		{					
 			entityManager.removeEntity ( this.items.get(i) );								
@@ -58,27 +84,28 @@ public class ItemManager
 		
 		this.items.clear();
 		this.itemCount = 0;	
+		*/
+	}
+	
+	public void spawnQuietItem() {
+		this.spawnTimer.cancel();
+		this.cleanItem();
+		
+		spawnTimer = new Timer();
+		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, spawnDelay);
+	}
+	
+	public void spawnBrutalItem() {
+		this.spawnTimer.cancel();
+		this.cleanItem();
+		
+		spawnTimer = new Timer();
+		spawnTimer.scheduleAtFixedRate(new SpawnGunTask(this), 0, spawnDelay);
 	}
 	
 	public final void update(int elapsedTime)
     {
-		if(Input.isDown(Input.KEY_F7)) {
-			System.out.println("Switched to LifeSpawn");			
-			
-			this.spawnTimer.cancel();
-			this.cleanItem();
-			
-			spawnTimer = new Timer();
-			spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
-		} else if(Input.isDown(Input.KEY_F8)) {
-			System.out.println("Switched to AmmoSpawn");
-			
-			this.spawnTimer.cancel();
-			this.cleanItem();
-			
-			spawnTimer = new Timer();
-			spawnTimer.scheduleAtFixedRate(new SpawnGunTask(this), 0, 2000);
-		}
+
     }
 	
 	public final void checkCollisionsWithCharacter ( Character character )
