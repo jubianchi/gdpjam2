@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import pulpcore.math.Rect;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.Group;
+import pulpcore.sprite.ImageSprite;
 import pulpcore.sprite.Sprite;
 
 
@@ -67,51 +69,56 @@ public class EntityManager
 		// addSprite ( 200, 2100 );
 
 		scene.add(group);
+
+		/*
+		debugImage = new CoreImage ( 800, 600 );
+		CoreGraphics graphics = debugImage.createGraphics ();
+		graphics.setColor ( 0xFF00FF00 );
+		// graphics.setAlpha ( 0x00 );
+		graphics.fillRect ( 0,0,800,600 );
+		// graphics.clear ();
+		graphics.drawLine ( 0,0, 800, 600 );
+		debugImageSprite = new ImageSprite(debugImage,0,0);
+		debugGroup = new Group();
+		debugGroup.setBlendMode ( BlendMode.Add() );
+		debugGroup.add ( debugImageSprite );
+		scene.add ( debugGroup );
+		*/
 	}
 	
-	private int totalElapsedTime = 0;
+	private void addSprite ( int x, int y, int sx ,int sy, String name, int tx, int ty )
+	{
+		Entity entity = new Entity
+		(
+			name,
+			TilemapManager.tileXToPixel(sx),
+			TilemapManager.tileYToPixel(sy)
+		);
+		getEntities ().add ( entity );
+		
+		// entity.getSprite ().getImage ().width
+		// entity.setTranslation ( tx, ty );
+		
+		int px = TilemapManager.tileXToPixel(x);
+		int py = TilemapManager.tileYToPixel(y);
+		entity.setLocation ( px, py );
+
+		double anchorX = -(double)tx / (double)entity.getSprite ().getImage ().getWidth ();
+		double anchorY = -(double)ty / (double)entity.getSprite ().getImage ().getHeight ();
+		entity.getSprite().setAnchor ( 0.5 + anchorX, 0.5 + anchorY );
+
+		group.add(entity.getSprite());
+	}
 	
 	public void update(int elapsedTime)
     {
-		// dumpGroup ();
-		
-		int i = 1;
-		while ( i < group.size() )
-        {
-			Sprite sprite = group.get ( i );
-			
-			int j = i-1;
-			while ( j >= 0 )
-			{
-				Sprite previous = group.get ( j );
-				
-				int y = sprite.y.getAsInt ();
-				int previousY = previous.y.getAsInt ();
-				
-				if ( y < previousY )
-				{
-					// System.out.println ( "Moving " + y + " < " + previousY );
-					group.moveDown ( sprite );
-					// dumpGroup ();
-				}
-				else
-					break;
-				
-				j--;
-			}
-			i++;
-        }
-		
-		// dumpGroup ();
-		
-		/*
 		int i = 0;
 		while ( i < group.size() )
         {
 			Sprite element = group.get ( i );
 			Sprite lastElement = group.get ( group.size () - 1 );
 			int elementY =element.y.getAsInt ();
-			int lastElementY = lastElement.y.getAsInt ();
+			int lastElementY =lastElement.y.getAsInt ();
 			if ( elementY > lastElementY )
 			{
 				group.moveToTop ( element );
@@ -121,21 +128,7 @@ public class EntityManager
 				i++;
 			}
         }
-		*/
     }
-
-	private void dumpGroup()
-	{
-		System.out.println("---");
-		int i;
-		i = 0;
-		while ( i < group.size() )
-        {
-			Sprite element = group.get ( i );
-			System.out.println("At " + i + " y = " + element.y.getAsInt () );
-			i++;
-        }
-	}
 
 	public void addEntity(Entity entity)
 	{
