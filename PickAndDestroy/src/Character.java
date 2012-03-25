@@ -13,6 +13,8 @@ public class Character extends Entity
 	private int healthPoint;
 	private int ammoPoint;
 	
+	private String currentGun = "pistolet";
+	
 	public Character()
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );

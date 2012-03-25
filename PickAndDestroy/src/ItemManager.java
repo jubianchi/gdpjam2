@@ -51,11 +51,12 @@ public class ItemManager
 	
 	public void cleanItem() 
 	{
-		for(Entity item : this.items) 
-		{
-			this.scene.remove(item.getSprite ());
+		for(int i = 0, limit = this.items.size(); i < limit; i++)
+		{					
+			entityManager.removeEntity ( this.items.get(i) );								
 		}
 		
+		this.items.clear();
 		this.itemCount = 0;	
 	}
 	
