@@ -12,6 +12,9 @@ public class Character extends Entity
 	
 	private Sound stepSound;
 	private Playback stepPlayback;
+
+	private int healthPoint = 5;
+	private int ammoPoint = 6;
 	
 	public Character()
 	{
@@ -20,11 +23,63 @@ public class Character extends Entity
 		stepPlayback = stepSound.play();
 		stepPlayback.setPaused ( true );	
 	}
-	
+
 	public void setImage ( String name )
 	{
 		getSprite().setImage(name);
 		getSprite ().setAnchor ( 0.5, 0.65 );
+	}
+	
+	public void getAmmo(int nb) 
+	{
+		int maxAmmo = ConfigManager.gameModesConfig.getValue("maxAmmo");
+		
+		if(this.ammoPoint + nb <= maxAmmo)
+		{
+			this.ammoPoint += nb;
+		} 
+		else 
+		{
+			this.ammoPoint = maxAmmo;
+		}
+	}
+	
+	public int getNbAmmo() {
+		return this.ammoPoint;
+	}
+	
+	public void getHealth(int nb) 
+	{
+		int maxHealth = ConfigManager.gameModesConfig.getValue("maxHealth");
+		
+		if(this.healthPoint + nb <= maxHealth)
+		{
+			this.healthPoint += nb;
+		} 
+		else 
+		{
+			this.healthPoint = maxHealth;
+		}
+	}
+	
+	public int getNbHealth() {
+		return this.healthPoint;
+	}
+	
+	public void removeAmmo(int nb) {
+		this.ammoPoint -= nb;
+	}
+	
+	public void removeHealth(int nb) {
+		if(this.healthPoint - nb <= 0) {
+			this.healthPoint = 0;
+			
+			//DIE MOTHER FUCKER!!!!
+			//stepSound = Sound.load("mort.wav");
+			//stepPlayback = stepSound.play();
+		} else {
+			this.healthPoint -= nb;
+		}
 	}
 	
 	public void moveStop() 

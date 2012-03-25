@@ -3,7 +3,6 @@ import static pulpcore.math.CoreMath.rand;
 import java.util.TimerTask;
 
 import pulpcore.animation.Easing;
-import pulpcore.sprite.ImageSprite;
 
 class SpawnGoodiesTask extends TimerTask 
 {
@@ -36,8 +35,8 @@ class SpawnGoodiesTask extends TimerTask
 		entity.getSprite().setSize(0, 0);
 		entity.setLocationOnTilemap ( x, y );
 		entity.getSprite().setAnchor(0.5, 0.5);
-		entity.getSprite().scaleTo(w, h, 500, Easing.ELASTIC_IN_OUT);
-		
+		entity.getSprite().scaleTo(w, h, 1000, Easing.ELASTIC_IN_OUT);
+
 		itemManager.addItem(entity);
 	}
 }
