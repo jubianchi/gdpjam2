@@ -7,10 +7,10 @@ import pulpcore.sprite.ImageSprite;
 
 class SpawnGunTask extends TimerTask 
 {
-	private ItemManager manager;
+	private ItemManager itemManager;
 	
 	public SpawnGunTask(ItemManager manager) {
-		this.manager = manager;
+		this.itemManager = manager;
 	}
 
 	public void run()
@@ -20,14 +20,12 @@ class SpawnGunTask extends TimerTask
 		int x = rand(1, TilemapManager.GRID_WIDTH);
 		int y = rand(1, TilemapManager.GRID_HEIGHT);
 		
-		Entity sprite = new Entity ( "pistolet.png", 40, 30 );
-		// ImageSprite sprite = new ImageSprite("pistolet.png", 5, 5);
-		sprite.getSprite().setSize(0, 0);
-		// sprite.setCenterLocation ( (int) ( (x * 53.3) - 50.3 ), ( (y * 40) - 35 ) );
-		sprite.setLocationOnTilemap ( x, y );
-		sprite.getSprite().setAnchor(0.5, 0.5);
-		sprite.getSprite().scaleTo(47.25, 30, 500, Easing.ELASTIC_IN_OUT);
+		Entity entity = new Entity ( "pistolet.png", 40, 30 );
+		entity.getSprite().setSize(0, 0);
+		entity.setLocationOnTilemap ( x, y );
+		entity.getSprite().setAnchor(0.5, 0.5);
+		entity.getSprite().scaleTo(47.25, 30, 500, Easing.ELASTIC_IN_OUT);
 		
-		manager.addItem(sprite);
+		itemManager.addItem(entity);
 	}
 }

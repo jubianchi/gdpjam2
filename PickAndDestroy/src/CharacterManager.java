@@ -7,9 +7,11 @@ import pulpcore.scene.Scene2D;
 public class CharacterManager 
 {
 	private ArrayList<Character> characters;
+	private EntityManager entityManager;
 	
-	public final void load(Scene2D scene)
+	public final void load(Scene2D scene, EntityManager entityManager)
 	{
+		this.entityManager = entityManager;
 		this.characters = new ArrayList<Character>();
 		
 		Character p1 = new Character();
@@ -22,21 +24,21 @@ public class CharacterManager
 	public void addCharacter(Scene2D scene, Character character) {	
 		switch(this.characters.size()) {
 			case 1:
-				character.getSprite().setLocation(Stage.getWidth() - 47, Stage.getHeight() - 47);
+				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, TilemapManager.GRID_HEIGHT-1 );
 				break;
 			case 2:
-				character.getSprite().setLocation(7, Stage.getHeight() - 47);
+				character.setLocationOnTilemap ( 0, TilemapManager.GRID_HEIGHT-1 );
 				break;
 			case 3:
-				character.getSprite().setLocation(Stage.getWidth() - 47, 7);
+				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, 0 );
 				break;
 			default:
-				character.getSprite().setLocation(7, 7);
+				character.setLocationOnTilemap ( 0,0 );
 				break;
 		}
 		
 		this.characters.add(character);
-		scene.add(character.getSprite());
+		entityManager.addEntity ( character );
 	}
 	
 	public Character getPlayer(int index)

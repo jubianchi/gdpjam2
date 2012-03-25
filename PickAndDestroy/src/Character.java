@@ -1,7 +1,6 @@
 import pulpcore.Stage;
 import pulpcore.sound.Playback;
 import pulpcore.sound.Sound;
-import pulpcore.sprite.ImageSprite;
 
 
 public class Character extends Entity
@@ -22,25 +21,27 @@ public class Character extends Entity
 		stepPlayback.setPaused ( true );	
 	}
 	
-/*	public ImageSprite getSprite() {
-		return sprite;
-	}*/
+	public void setImage ( String name )
+	{
+		getSprite().setImage(name);
+		getSprite ().setAnchor ( 0.5, 0.65 );
+	}
 	
 	public void moveStop() 
 	{
 		switch(this.currentDirection)
 		{
 			case 0:
-				getSprite().setImage("ecureuil/fixe_dos.png");
+				setImage("ecureuil/fixe_dos.png");
 				break;
 			case 1:
-				getSprite().setImage("ecureuil/fixe_face.png");
+				setImage("ecureuil/fixe_face.png");
 				break;
 			case 2:
-				getSprite().setImage("ecureuil/fixe_gauche.png");
+				setImage("ecureuil/fixe_gauche.png");
 				break;
 			case 3:
-				getSprite().setImage("ecureuil/fixe_droite.png");
+				setImage("ecureuil/fixe_droite.png");
 				break;				
 		}
 		
@@ -56,16 +57,16 @@ public class Character extends Entity
 	public void moveTop() {					
 		this.moveStart();
 		
-		if(currentDirection != 0) getSprite().setImage("ecureuil/frise_dos.png");
+		if(currentDirection != 0) setImage("ecureuil/frise_dos.png");
 		currentDirection = 0;
 		
 		int limit = getRect().height / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		if(this.getSprite().y.getAsInt() - step > limit) {			
-			this.getSprite().y.set(this.getSprite().y.getAsInt() - MOVE_STEP);
-		}		
+		
+		if ( this.getRect().y - step > limit )
+		{ this.moveOf ( 0, -MOVE_STEP ); }
 	}
-	
+
 	public void moveBottom() {					
 		this.moveStart();
 		
@@ -74,34 +75,34 @@ public class Character extends Entity
 		
 		int limit = (Stage.getHeight() - getRect().height / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		if(this.getSprite().y.getAsInt() + step < limit) {
-			this.getSprite().y.set(this.getSprite().y.getAsInt() + MOVE_STEP);
-		}
+		
+		if ( this.getRect().y + step < limit )
+		{ this.moveOf ( 0, +MOVE_STEP ); }
 	}
 	
 	public void moveLeft() {
 		this.moveStart();
 		
-		if(currentDirection != 2) getSprite().setImage("ecureuil/frise_gauche.png");
+		if(currentDirection != 2) setImage("ecureuil/frise_gauche.png");
 		currentDirection = 2;
 		
 		int limit = getRect().width / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		if(this.getSprite().x.getAsInt() - step > limit) {			
-			this.getSprite().x.set(this.getSprite().x.getAsInt() - MOVE_STEP);
-		}
+		
+		if ( this.getRect().x - step > limit )
+		{ this.moveOf ( -MOVE_STEP, 0 ); }
 	}
 	
 	public void moveRight() {
 		this.moveStart();
 		
-		if(currentDirection != 3) getSprite().setImage("ecureuil/frise_droite.png");
+		if(currentDirection != 3) setImage("ecureuil/frise_droite.png");
 		currentDirection = 3;
 		
 		int limit = (Stage.getWidth() - getRect().width / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		if(this.getSprite().x.getAsInt() + step < limit) {
-			this.getSprite().x.set(this.getSprite().x.getAsInt() + MOVE_STEP);
-		}
+		
+		if ( this.getRect().x + step < limit )
+		{ this.moveOf ( +MOVE_STEP, 0 ); }
 	}
 }

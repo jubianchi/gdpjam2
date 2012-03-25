@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import pulpcore.math.Rect;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.Group;
@@ -7,11 +10,14 @@ import pulpcore.sprite.Sprite;
 
 public class EntityManager
 {
-	Group elements;
+	private final ArrayList<Entity> entities = new ArrayList<Entity> ();
+	public final List<Entity> getEntities() { return entities; }
 	
+	private Group group;
+
 	public final void load( Scene2D scene )
 	{
-		elements = new Group ();
+		group = new Group ();
 
 		// sprites 2x2
 		addSprite ( 2, 2, 2,2, "2x2Obj_01.png", 0, 0 );
@@ -62,7 +68,22 @@ public class EntityManager
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );
 
-		scene.add(elements);
+		scene.add(group);
+
+		/*
+		debugImage = new CoreImage ( 800, 600 );
+		CoreGraphics graphics = debugImage.createGraphics ();
+		graphics.setColor ( 0xFF00FF00 );
+		// graphics.setAlpha ( 0x00 );
+		graphics.fillRect ( 0,0,800,600 );
+		// graphics.clear ();
+		graphics.drawLine ( 0,0, 800, 600 );
+		debugImageSprite = new ImageSprite(debugImage,0,0);
+		debugGroup = new Group();
+		debugGroup.setBlendMode ( BlendMode.Add() );
+		debugGroup.add ( debugImageSprite );
+		scene.add ( debugGroup );
+		*/
 	}
 	
 	private void addSprite ( int x, int y, int sx ,int sy, String name, int tx, int ty )
@@ -73,10 +94,7 @@ public class EntityManager
 			TilemapManager.tileXToPixel(sx),
 			TilemapManager.tileYToPixel(sy)
 		);
-		
-		double anchorX = -(double)tx / (double)entity.getSprite ().getImage ().getWidth ();
-		double anchorY = -(double)ty / (double)entity.getSprite ().getImage ().getHeight ();
-		entity.getSprite().setAnchor ( anchorX, anchorY );
+		getEntities ().add ( entity );
 		
 		// entity.getSprite ().getImage ().width
 		// entity.setTranslation ( tx, ty );
@@ -85,21 +103,25 @@ public class EntityManager
 		int py = TilemapManager.tileYToPixel(y);
 		entity.setLocation ( px, py );
 
-		elements.add(entity.getSprite());
+		double anchorX = -(double)tx / (double)entity.getSprite ().getImage ().getWidth ();
+		double anchorY = -(double)ty / (double)entity.getSprite ().getImage ().getHeight ();
+		entity.getSprite().setAnchor ( 0.5 + anchorX, 0.5 + anchorY );
+
+		group.add(entity.getSprite());
 	}
 	
 	public void update(int elapsedTime)
     {
 		int i = 0;
-		while ( i < elements.size() )
+		while ( i < group.size() )
         {
-			Sprite element = elements.get ( i );
-			Sprite lastElement = elements.get ( elements.size () - 1 );
+			Sprite element = group.get ( i );
+			Sprite lastElement = group.get ( group.size () - 1 );
 			int elementY =element.y.getAsInt ();
 			int lastElementY =lastElement.y.getAsInt ();
 			if ( elementY > lastElementY )
 			{
-				elements.moveToTop ( element );
+				group.moveToTop ( element );
 			}
 			else
 			{
@@ -107,7 +129,20 @@ public class EntityManager
 			}
         }
     }
+
+	public void addEntity(Entity entity)
+	{
+		entities.add ( entity );
+		group.add ( entity.getSprite () );
+	}
+
+	public void removeEntity(Entity entity)
+	{
+		group.remove ( entity.getSprite () );
+		entities.remove ( entity );
+	}
 }
+
 
 
 class Entity
@@ -117,8 +152,8 @@ class Entity
 	
 	public final ImageSprite getSprite() { return sprite; }
 	public final Rect getRect() { return rect; }
-	
-	Entity ( String name, int width, int height )
+
+	public Entity ( String name, int width, int height )
 	{
 		sprite = new ImageSprite ( name, 0, 0 );
 		sprite.setAnchor(0.5, 0.5);
@@ -129,19 +164,24 @@ class Entity
 	{
 		rect.x = x;
 		rect.y = y;
-		
-		x -= ( sprite.getImage().getWidth() - rect.width ) / 2;
-		y -= ( sprite.getImage().getHeight() - rect.height ) / 2;
-		
-		sprite.setLocation ( x, y );
+
+		sprite.setLocation ( rect.x + rect.width / 2, rect.y + rect.height / 2 );
+		sprite.setAnchor ( 0.5, 0.5 );
 	}
 	
 	public final void setLocationOnTilemap ( int tx, int ty )
 	{
 		setLocation
 		(
-			( tx * TilemapManager.TILE_WIDTH ) + ( TilemapManager.TILE_WIDTH - getRect ().width ),
-			( ty * TilemapManager.TILE_HEIGHT ) + ( TilemapManager.TILE_HEIGHT - getRect ().height )
+			(int) ( ( tx * TilemapManager.TILE_WIDTH ) + ( TilemapManager.TILE_WIDTH - rect.width ) / 2 ),
+			(int) ( ( ty * TilemapManager.TILE_HEIGHT ) + ( TilemapManager.TILE_HEIGHT - rect.height ) / 2 )
 		);
+	}
+	
+	public final void moveOf(int dx, int dy)
+	{
+		rect.x += dx;
+		rect.y += dy;
+		sprite.setLocation ( sprite.x.getAsInt () + dx, sprite.y.getAsInt () + dy );
 	}
 }

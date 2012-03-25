@@ -14,11 +14,13 @@ public class ItemManager
 	private int itemCount = 0;
 	private Timer spawnTimer;
 	private ArrayList<Entity> sprites;
+	private EntityManager entityManager;
 	
-	public final void load(Scene2D scene)
+	public final void load(Scene2D scene, EntityManager entityManager)
 	{
 		this.sprites = new ArrayList<Entity>();
 		
+		this.entityManager = entityManager;
 		this.scene = scene;
 		this.spawnItem();
 	}
@@ -34,14 +36,14 @@ public class ItemManager
 		if(this.itemCount > 20) return;
 		
 		this.sprites.add(item);
-		this.scene.add(item.getSprite ());
+		entityManager.addEntity ( item );
 		this.itemCount++;
 	}
 	
 	public void pickItem(Entity item) 
 	{
 		this.sprites.remove(item);
-		this.scene.remove(item.getSprite ());
+		entityManager.removeEntity ( item );
 	}
 	
 	public void cleanItem() 

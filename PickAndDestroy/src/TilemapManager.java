@@ -7,12 +7,12 @@ public class TilemapManager
 	public static final int GRID_WIDTH = 15;
 	public static final int GRID_HEIGHT = 15;
 	
-	public static final int TILE_WIDTH = 53;
+	public static final double TILE_WIDTH = 53.3;
 	public static final int TILE_HEIGHT = 40;
 	
 	public static final int tileXToPixel ( int tx )
 	{
-		return tx * TILE_WIDTH;
+		return (int) ( tx * TILE_WIDTH );
 	}
 	
 	public static final int tileYToPixel ( int ty )
@@ -22,7 +22,7 @@ public class TilemapManager
 	
 	public static final int pixelXToTile ( int x )
 	{
-		return x / TILE_WIDTH;
+		return (int) ( x / TILE_WIDTH );
 	}
 	
 	public static final int pixelYToTile ( int y )
