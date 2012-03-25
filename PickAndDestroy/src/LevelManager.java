@@ -30,29 +30,25 @@ public class LevelManager
 		addSprite ( Wall.WALL, 9, 2, 1,1, "Silo1x1B.png", -0, -10 );
 		
 		// sprites angle haut gauche
-		addSprite ( Wall.WALL, 3, 5, 1,1, "TowerAnim3F.png", -0,-10 );
+		addSprite ( Wall.WALL, 3, 5, 1,1, "Silo1x1B.png", -0,-10 );
 		addSprite ( Wall.TABLE, 3, 6, 1,1, "PtTableHz.png", 0,-5 );
-		addSprite ( Wall.TABLE, 4, 5, 1,1, "PtTableVt.png", 0,-5 );
-		addSprite ( Wall.TABLE, 5, 5, 1,1, "PtTableHz.png", 0,-5 );
+		addSprite ( Wall.TABLE, 4, 5, 2,1, "GdTableHz.png", 0,-5 );
 
 		// sprites angle bas gauche
 		addSprite ( Wall.TABLE, 3, 8, 1,1, "PtTableHz.png", 0,-5 );
 		addSprite ( Wall.WALL, 3, 9, 1,1, "Silo1x1A.png", -0, -10 );
-		addSprite ( Wall.TABLE, 4, 9, 1,1, "PtTableVt.png", 0,-5 );
-		addSprite ( Wall.TABLE, 5, 9, 1,1, "PtTableHz.png", 0,-5 );
+		addSprite ( Wall.TABLE, 4, 9, 2,1, "PtTableHz.png", 0,-5 );
 		
 		// sprites angle haut droite
-		addSprite ( Wall.TABLE, 9, 5, 1,1, "PtTableHz.png", 0,-5 );
-		addSprite ( Wall.TABLE, 10, 5, 1,1, "PtTableVt.png", 0,-5 );
+		addSprite ( Wall.TABLE, 9, 5, 2,1, "GdTableHz.png", 0,-5 );
 		addSprite ( Wall.WALL, 11, 5, 1,1, "Silo1x1A.png", -0,-10 );
 		addSprite ( Wall.TABLE, 11, 6, 1,1, "PtTableHz.png", 0,-5 );
 
 		// sprites angle bas droite
 		
 		addSprite ( Wall.TABLE, 11, 8, 1,1, "PtTableHz.png", 0,-5 );
-		addSprite ( Wall.TABLE, 9, 9, 1,1, "PtTableVt.png", 0,-5 );
-		addSprite ( Wall.TABLE, 10, 9, 1,1, "PtTableHz.png", 0,-5 );
-		addSprite ( Wall.WALL, 11, 9, 1,1, "TowerAnim3F.png", -0,-10 );
+		addSprite ( Wall.TABLE, 9, 9, 2,1, "GdTableHz.png", 0,-5 );
+		addSprite ( Wall.WALL, 11, 9, 1,1, "Silo1x1B.png", -0,-10 );
 		
 		//sprites barre du bas
 		addSprite ( Wall.WALL, 5, 12, 1,1, "Silo1x1B.png", -0,-10 );
