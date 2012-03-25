@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import pulpcore.math.Rect;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.Group;
 import pulpcore.sprite.Sprite;
@@ -26,7 +27,33 @@ public class EntityManager
 		scene.add(group);
 	}
 	
-	private int totalElapsedTime = 0;
+	public List<Entity> getCollidingEntities ( int x, int y )
+	{
+		List<Entity> list = new ArrayList<Entity>();
+		for ( int i = 0; i < entities.size(); i++ )
+		{
+			Entity e = entities.get(i);
+			if ( e.getRect ().contains ( x, y ) )
+			{
+				list.add ( e );
+			}
+		}
+		return list;
+	}
+	
+	public List<Entity> getCollidingEntities ( Rect r )
+	{
+		List<Entity> list = new ArrayList<Entity>();
+		for ( int i = 0; i < entities.size(); i++ )
+		{
+			Entity e = entities.get(i);
+			if ( e.getRect ().intersects ( r ) )
+			{
+				list.add ( e );
+			}
+		}
+		return list;
+	}
 	
 	public void update(int elapsedTime)
     {

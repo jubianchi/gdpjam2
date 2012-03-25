@@ -6,6 +6,7 @@ public class Wall extends Entity
 
 	public static final int WALL = 0;
 	public static final int TABLE = 1;
+	public static final int FX = 2;
 	
 	public Wall ( int type, String name, int width, int height )
 	{
