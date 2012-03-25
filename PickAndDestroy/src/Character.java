@@ -13,8 +13,8 @@ public class Character {
 	private Sound stepSound;
 	private Playback stepPlayback;
 	
-	private int healthPoint = 0;
-	private int ammoPoint = 0;
+	private int healthPoint = 5;
+	private int ammoPoint = 6;
 	
 	public Character() {
 		sprite = new ImageSprite("ecureuil/frise_face.png", 5, 5);		
@@ -38,6 +38,10 @@ public class Character {
 		}
 	}
 	
+	public int getNbAmmo() {
+		return this.ammoPoint;
+	}
+	
 	public void getHealth(int nb) 
 	{
 		int maxHealth = ConfigManager.gameModesConfig.getValue("maxHealth");
@@ -52,6 +56,10 @@ public class Character {
 		}
 	}
 	
+	public int getNbHealth() {
+		return this.healthPoint;
+	}
+	
 	public void removeAmmo(int nb) {
 		this.ammoPoint -= nb;
 	}
@@ -61,8 +69,8 @@ public class Character {
 			this.healthPoint = 0;
 			
 			//DIE MOTHER FUCKER!!!!
-			stepSound = Sound.load("mort.wav");
-			stepPlayback = stepSound.play();
+			//stepSound = Sound.load("mort.wav");
+			//stepPlayback = stepSound.play();
 		} else {
 			this.healthPoint -= nb;
 		}
