@@ -4,7 +4,7 @@
     Template for PulpCore 0.11.
     Requires Ant 1.7.1.
 -->
-<project name="HelloWorld" default="build-and-run" basedir=".">
+<project name="PickAndDestroy" default="build-and-run" basedir=".">
 
     <property file="build.properties" />
     
@@ -45,11 +45,11 @@
     -->
     <property name="pulpcore.player.wait" value="true" />
     <property name="include.src" value="false" />
-    <property name="project.scene" value="HelloWorld" />
+    <property name="project.scene" value="PickAndDestroy" />
     <property name="project.jar" value="${project.scene}.jar" />
     <property name="project.assets.zip" value="${project.scene}.zip" />    
-    <property name="project.width" value="640" />
-    <property name="project.height" value="480" />
+    <property name="project.width" value="800" />
+    <property name="project.height" value="600" />
     <property name="project.params" value="" />
     <property name="project.codebase" value="" />
     <property name="pulpcore.build" value="debug" />
@@ -321,6 +321,8 @@
         <zip destfile="${build}/${project.assets.zip}" filesonly="true"
             whenempty="create"
             basedir="${build.res}/zip" />
+    	
+    	<copy file="config/gamemodes.txt" tofile="${build}/gamemodes.txt"/>
     </target>
     
     

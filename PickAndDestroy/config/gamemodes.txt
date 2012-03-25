@@ -1,0 +1,15 @@
+enableSound = 1
+
+characterMoveStep = 4
+startAmmo = 6
+startHealth = 6
+maxAmmo = 10
+maxHealth = 10
+
+minQuietPlaytime = 10000
+maxQuietPlaytime = 20000
+quietSpanPlaytime = 1000
+
+minBrutalPlaytime = 15000
+maxBrutalPlaytime = 25000
+brutalSpanPlaytime = 1000

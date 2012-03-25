@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4"/>
-	<classpathentry kind="lib" path="D:/Code/Java/pulpcore-0.11.5/build/pulpcore-applet-debug-0.11.jar"/>
+	<classpathentry kind="lib" path="./../pulpcore-0.11.5/build/pulpcore-applet-debug-0.11.jar"/>
+	<classpathentry kind="lib" path="lib/jorbis-0.0.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
