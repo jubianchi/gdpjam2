@@ -11,9 +11,6 @@ import pulpcore.sound.Sound;
 
 public class ItemManager
 {
-	// public static final int GRID_WIDTH_CASES = 15;
-	// public static final int GRID_HEIGHT_CASES = 15; 
-	
 	private int itemCount = 0;
 	private Timer spawnTimer;
 	private ArrayList<Item> items;
@@ -39,7 +36,7 @@ public class ItemManager
 	
 	public void addItem(Item item) 
 	{
-		if(this.itemCount > 20) return;
+		if(this.itemCount > 20) return;			
 		
 		this.items.add(item);
 		entityManager.addEntity ( item );
@@ -74,16 +71,6 @@ public class ItemManager
 			}
 			
 		}, spawnDelay);
-		
-		/*
-		for(int i = 0, limit = this.items.size(); i < limit; i++)
-		{					
-			entityManager.removeEntity ( this.items.get(i) );								
-		}
-		
-		this.items.clear();
-		this.itemCount = 0;	
-		*/
 	}
 	
 	public void spawnQuietItem() {
@@ -123,7 +110,7 @@ public class ItemManager
 						bulletSound.play();
 						break;
 					case Item.GUN:
-						character.addGun();
+						character.addGun((Gun)item);
 						Sound gunSound = Sound.load("ramasse_arme_speciale.wav");
 						gunSound.play();
 						break;

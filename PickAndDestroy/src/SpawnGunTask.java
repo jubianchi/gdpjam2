@@ -14,9 +14,10 @@ class SpawnGunTask extends TimerTask
 	public SpawnGunTask(ItemManager manager) {
 		this.itemManager = manager;
 		
-		guns.add("pistolet");
-		guns.add("mitraillette");
-		guns.add("fusilpompe");
+		guns.add("pistolet"); //0
+		guns.add("mitraillette"); //1
+		guns.add("fusilpompe"); //2
+		guns.add("sniper"); //3
 	}
 
 	public void run()
@@ -26,9 +27,10 @@ class SpawnGunTask extends TimerTask
 		int x = rand(1, TilemapManager.GRID_WIDTH);
 		int y = rand(1, TilemapManager.GRID_HEIGHT);
 		
-		String gun = this.guns.get(rand(0, this.guns.size() - 1));
+		int gunType = rand(0, this.guns.size() - 1);
+		String gun = this.guns.get(gunType);
 		
-		Item item = new Item ( Item.GUN, gun + ".png", 40, 30 );
+		Gun item = new Gun ( gunType, gun + ".png", 40, 30 );		
 		item.getSprite().setSize(0, 0);
 		item.setLocationOnTilemap ( x, y );
 		item.getSprite().setAnchor(0.5, 0.5);

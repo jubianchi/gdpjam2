@@ -10,7 +10,7 @@ public class Item extends Entity
 	public static final int BULLET = 1;
 	public static final int GUN = 2;
 	
-	private int type;
+	private int type;	
 	
 	public final int getType() { return type; }
 	

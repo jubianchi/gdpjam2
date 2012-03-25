@@ -11,8 +11,14 @@ public class EntityManager
 	private final ArrayList<Entity> entities = new ArrayList<Entity> ();
 	public final List<Entity> getEntities() { return entities; }
 	
+	public static EntityManager shared;
+	
 	private Group group;
 
+	public EntityManager() {
+		EntityManager.shared = this;
+	}
+	
 	public final void load( Scene2D scene )
 	{
 		group = new Group ();
@@ -91,7 +97,7 @@ public class EntityManager
 	public void addEntity(Entity entity)
 	{
 		entities.add ( entity );
-		group.add ( entity.getSprite () );
+		group.add ( entity.getSprite () );		
 	}
 
 	public void removeEntity(Entity entity)
