@@ -60,7 +60,8 @@ public class LevelManager
 		addSprite ( Wall.WALL, 5, 12, 1,1, "Silo1x1B.png", -0,-10 );
 		
 		// FX burn
-		addSprite ( Wall.FX, 7, 8, 1,1, "FXBurn.png", 0,-5 );	
+		addSprite ( Wall.FX, 14, 8, 1,1, "FXBurn.png", 0,-5 );
+		addSprite ( Wall.FX, 7, 1, 1,1, "FXBurn.png", 0,-5 );	
 	}
 
 	private void addSprite ( int type, int x, int y, int sx ,int sy, String name, int tx, int ty )
