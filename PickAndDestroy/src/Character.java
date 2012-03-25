@@ -1,4 +1,7 @@
+import java.util.List;
+
 import pulpcore.Stage;
+import pulpcore.math.Rect;
 import pulpcore.sound.Playback;
 import pulpcore.sound.Sound;
 
@@ -15,10 +18,13 @@ public class Character extends Entity
 	
 	private String currentGun = "pistolet";
 	
-	public Character()
+	private EntityManager entityManager;
+	
+	public Character ( EntityManager entityManager )
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
-		
+
+		this.entityManager = entityManager;
 		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
 		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
 		
@@ -37,57 +43,57 @@ public class Character extends Entity
 	{
 		int maxAmmo = ConfigManager.gameModesConfig.getValue("maxAmmo");
 		
-		if(this.ammoPoint + nb <= maxAmmo)
+		if(ammoPoint + nb <= maxAmmo)
 		{
-			this.ammoPoint += nb;
+			ammoPoint += nb;
 		} 
 		else 
 		{
-			this.ammoPoint = maxAmmo;
+			ammoPoint = maxAmmo;
 		}
 	}
 	
 	public int getNbAmmo() {
-		return this.ammoPoint;
+		return ammoPoint;
 	}
 	
 	public void getHealth(int nb) 
 	{
 		int maxHealth = ConfigManager.gameModesConfig.getValue("maxHealth");
 		
-		if(this.healthPoint + nb <= maxHealth)
+		if(healthPoint + nb <= maxHealth)
 		{
-			this.healthPoint += nb;
+			healthPoint += nb;
 		} 
 		else 
 		{
-			this.healthPoint = maxHealth;
+			healthPoint = maxHealth;
 		}
 	}
 	
 	public int getNbHealth() {
-		return this.healthPoint;
+		return healthPoint;
 	}
 	
 	public void removeAmmo(int nb) {
-		this.ammoPoint -= nb;
+		ammoPoint -= nb;
 	}
 	
 	public void removeHealth(int nb) {
-		if(this.healthPoint - nb <= 0) {
-			this.healthPoint = 0;
+		if(healthPoint - nb <= 0) {
+			healthPoint = 0;
 			
 			//DIE MOTHER FUCKER!!!!
 			Sound dieSound = Sound.load("rire+mort.wav");
 			dieSound.play();
 		} else {
-			this.healthPoint -= nb;
+			healthPoint -= nb;
 		}
 	}
 	
 	public void moveStop() 
 	{
-		switch(this.currentDirection)
+		switch(currentDirection)
 		{
 			case 0:
 				setImage("ecureuil/fixe_dos.png");
@@ -111,9 +117,71 @@ public class Character extends Entity
 	{
 		if(stepPlayback.isPaused()) stepPlayback.setPaused ( false );
 	}
+
+	public void moveOfStep
+	( 	int stepX, int stepY,
+		int px1, int py1,
+		int px2, int py2
+	)
+	{
+		int px3 = ( px1 + px2 ) / 2;
+		int py3 = ( py1 + py2 ) / 2;
+		int colCount =
+					( isWallAtPoint ( px1, py1 ) ? 1 : 0 )
+				+	( isWallAtPoint ( px2, py2 ) ? 1 : 0 )
+				+	( isWallAtPoint ( px3, py3 ) ? 1 : 0 );
+		if ( colCount < 2 )
+		{
+			moveOf ( stepX, stepY );
+		}
+	}
+	
+	public boolean isWallAtPoint ( int x, int y )
+	{
+		List<Entity> list = entityManager.getCollidingEntities ( x, y );
+		for ( int i = 0; i < list.size (); i++ )
+		{
+			Entity e = list.get(i);
+			if ( e.getClass() == Wall.class )
+			{
+				Wall w = (Wall)e;
+				if ( 
+						( w.getType () == Wall.TABLE ) 
+					||	( w.getType () == Wall.WALL )
+					)
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	private boolean isWallAtRect(Rect r)
+	{
+		List<Entity> list = entityManager.getCollidingEntities ( r );
+		for ( int i = 0; i < list.size (); i++ )
+		{
+			Entity e = list.get(i);
+			if ( e.getClass() == Wall.class )
+			{
+				Wall w = (Wall)e;
+				if ( 
+						( w.getType () == Wall.TABLE ) 
+					||	( w.getType () == Wall.WALL )
+					)
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 	public void moveTop() {					
-		this.moveStart();
+		moveStart();
 		
 		if(currentDirection != 0) setImage("ecureuil/frise_dos.png");
 		currentDirection = 0;
@@ -121,12 +189,39 @@ public class Character extends Entity
 		int limit = getRect().height / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
-		if ( this.getRect().y - step > limit )
-		{ this.moveOf ( 0, -step ); }
+		if ( getRect().y - step > limit )
+		{
+			Rect r = new Rect ( getRect () );
+			r.width -= 4;
+			r.x += 2;
+			r.height = 20;
+			r.y -= step;
+			
+			if ( ! isWallAtRect ( r ) )
+			{ moveOf ( 0, -step ); }
+			
+			/*
+			boolean collide = false;
+			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
+			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y );
+
+			if ( ! collide )
+			{
+				moveOf ( 0, -step );
+			}
+			*/
+			/*
+			moveOfStep
+			(
+				0, -step,
+				getRect ().x, getRect ().y,
+				getRect ().x + getRect ().width, getRect ().y
+			);*/
+		}
 	}
 
 	public void moveBottom() {					
-		this.moveStart();
+		moveStart();
 		
 		if(currentDirection != 1) getSprite ().setImage("ecureuil/frise_face.png");
 		currentDirection = 1;
@@ -134,12 +229,31 @@ public class Character extends Entity
 		int limit = (Stage.getHeight() - getRect().height / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
-		if ( this.getRect().y + step < limit )
-		{ this.moveOf ( 0, +step ); }
+		if ( getRect().y + step < limit )
+		{
+			Rect r = new Rect ( getRect () );
+			r.width -= 4;
+			r.x += 2;
+			r.y += r.height - 20 + step;
+			r.height = 20;
+			
+			if ( ! isWallAtRect ( r ) )
+			{ moveOf ( 0, +step ); }
+			
+			/*boolean collide = false;
+			collide |= isWallAtPoint ( getRect ().x, getRect ().y + getRect ().height );
+			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y + getRect ().height );
+
+			if ( ! collide )
+			{
+				moveOf ( 0, +step );
+			}
+			*/
+		}
 	}
 	
 	public void moveLeft() {
-		this.moveStart();
+		moveStart();
 		
 		if(currentDirection != 2) setImage("ecureuil/frise_gauche.png");
 		currentDirection = 2;
@@ -147,13 +261,32 @@ public class Character extends Entity
 		int limit = getRect().width / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
-		if ( this.getRect().x - step > limit )
-		{ this.moveOf ( -step, 0 ); }
+		if ( getRect().x - step > limit )
+		{
+			Rect r = new Rect ( getRect () );
+			r.height -= 4;
+			r.y += 2;
+			r.width = 20;
+			r.x -= step;
+			
+			if ( ! isWallAtRect ( r ) )
+			{ moveOf ( -step, 0 ); }
+			
+			/*
+			boolean collide = false;
+			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
+			collide |= isWallAtPoint ( getRect ().x, getRect ().y + getRect ().height );
+
+			if ( ! collide )
+			{
+				moveOf ( -step, 0 );
+			}*/
+		}
 	}
 	
 	public void moveRight()
 	{
-		this.moveStart();
+		moveStart();
 		
 		if(currentDirection != 3) setImage("ecureuil/frise_droite.png");
 		currentDirection = 3;
@@ -161,9 +294,27 @@ public class Character extends Entity
 		int limit = (Stage.getWidth() - getRect().width / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
-		if ( this.getRect().x + step < limit )
+		if ( getRect().x + step < limit )
 		{
-			this.moveOf ( +step, 0 );
+			Rect r = new Rect ( getRect () );
+			r.height -= 4;
+			r.y += 2;
+			r.x += r.width - 20 + step;
+			r.width = 20;
+			
+			if ( ! isWallAtRect ( r ) )
+			{ moveOf ( +step, 0 ); }
+			
+			/*
+			boolean collide = false;
+			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y );
+			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y + getRect ().height );
+
+			if ( ! collide )
+			{
+				moveOf ( +step, 0 );
+			}
+			*/
 		}
 	}
 

@@ -16,8 +16,8 @@ public class CharacterManager
 		this.itemManager = itemManager;
 		this.characters = new ArrayList<Character>();
 		
-		Character p1 = new Character();
-        Character p2 = new Character();
+		Character p1 = new Character ( entityManager );
+        Character p2 = new Character ( entityManager );
         
         this.addCharacter(scene, p1);
         this.addCharacter(scene, p2);
