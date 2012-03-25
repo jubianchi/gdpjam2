@@ -12,7 +12,6 @@ public class ItemManager
 	// public static final int GRID_WIDTH_CASES = 15;
 	// public static final int GRID_HEIGHT_CASES = 15; 
 	
-	private Scene2D scene;
 	private int itemCount = 0;
 	private Timer spawnTimer;
 	private ArrayList<Item> items;
@@ -25,7 +24,6 @@ public class ItemManager
 		this.items = new ArrayList<Item>();
 		
 		this.entityManager = entityManager;
-		this.scene = scene;
 		this.spawnItem();
 	}
 	
