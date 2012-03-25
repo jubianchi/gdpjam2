@@ -5,6 +5,7 @@ public class PickAndDestroy extends Scene2D
 	MusicManager musicManager;
 	EntityManager entityManager;
 	TilemapManager tilemapManager;
+	LevelManager levelManager;
 	KeyManager keyManager;
 	CharacterManager characterManager;
 	ConfigManager configManager;
@@ -19,16 +20,18 @@ public class PickAndDestroy extends Scene2D
         configManager.load(this);
         
     	tilemapManager = new TilemapManager ();
-        tilemapManager.load ( this );        
-        
-        musicManager = new MusicManager();
+    	tilemapManager.load ( this );        
+
+    	entityManager = new EntityManager ();
+        entityManager.load ( this );
+    	
+    	levelManager = new LevelManager ();
+    	levelManager.load ( this, entityManager );
+
         if(ConfigManager.gameModesConfig.getValue("enableSound") == 1) 
         {        	
             musicManager.load ();
-        }                       
-        
-        entityManager = new EntityManager ();
-        entityManager.load ( this );
+        }        
            
         itemManager = new ItemManager();
         itemManager.load(this, entityManager);
@@ -47,7 +50,9 @@ public class PickAndDestroy extends Scene2D
         hudManager = new HudManager(this, characterManager.getPlayer(0), characterManager.getPlayer(1));
         hudManager.load();
         
-        keyManager = new KeyManager(characterManager.getPlayer(0), characterManager.getPlayer(1));               
+        keyManager = new KeyManager(characterManager.getPlayer(0), characterManager.getPlayer(1));
+        
+        setDirtyRectanglesEnabled ( false );
     }
     
     public void update(int elapsedTime)

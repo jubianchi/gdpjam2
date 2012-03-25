@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import pulpcore.Input;
 import pulpcore.scene.Scene2D;
+import pulpcore.sound.Sound;
 
 
 
@@ -13,7 +14,6 @@ public class ItemManager
 	// public static final int GRID_WIDTH_CASES = 15;
 	// public static final int GRID_HEIGHT_CASES = 15; 
 	
-	private Scene2D scene;
 	private int itemCount = 0;
 	private Timer spawnTimer;
 	private ArrayList<Item> items;
@@ -28,7 +28,6 @@ public class ItemManager
 		this.items = new ArrayList<Item>();
 		
 		this.entityManager = entityManager;
-		this.scene = scene;
 		this.spawnItem();
 	}
 	
@@ -120,12 +119,18 @@ public class ItemManager
 				{
 					case Item.BULLET:
 						character.addBullets();
+						Sound bulletSound = Sound.load("ramasse_munitions.wav");
+						bulletSound.play();
 						break;
 					case Item.GUN:
 						character.addGun();
+						Sound gunSound = Sound.load("ramasse_arme_speciale.wav");
+						gunSound.play();
 						break;
 					case Item.HEART:
 						character.addHeart();
+						Sound heartSound = Sound.load("ramasse_les_pv.wav");
+						heartSound.play();
 						break;
 				}
 				removeItem ( item );
