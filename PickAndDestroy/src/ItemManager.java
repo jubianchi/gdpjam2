@@ -1,8 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import pulpcore.Input;
 import pulpcore.scene.Scene2D;
-import pulpcore.sprite.ImageSprite;
 
 
 
@@ -14,12 +14,14 @@ public class ItemManager
 	private Scene2D scene;
 	private int itemCount = 0;
 	private Timer spawnTimer;
-	private ArrayList<Entity> sprites;
+	private ArrayList<Item> items;
 	private EntityManager entityManager;
+	
+	public final List<Item> getItems() { return items; }
 	
 	public final void load(Scene2D scene, EntityManager entityManager)
 	{
-		this.sprites = new ArrayList<Entity>();
+		this.items = new ArrayList<Item>();
 		
 		this.entityManager = entityManager;
 		this.scene = scene;
@@ -32,24 +34,24 @@ public class ItemManager
 		spawnTimer.scheduleAtFixedRate(new SpawnGoodiesTask(this), 0, 2000);
 	}
 	
-	public void addItem(Entity item) 
+	public void addItem(Item item) 
 	{
 		if(this.itemCount > 20) return;
 		
-		this.sprites.add(item);
+		this.items.add(item);
 		entityManager.addEntity ( item );
 		this.itemCount++;
 	}
 	
-	public void pickItem(Entity item) 
+	public void removeItem(Item item)
 	{
-		this.sprites.remove(item);
+		this.items.remove(item);
 		entityManager.removeEntity ( item );
 	}
 	
 	public void cleanItem() 
 	{
-		for(Entity item : this.sprites) 
+		for(Entity item : this.items) 
 		{
 			this.scene.remove(item.getSprite ());
 		}
@@ -77,4 +79,33 @@ public class ItemManager
 			spawnTimer.scheduleAtFixedRate(new SpawnGunTask(this), 0, 2000);
 		}
     }
+	
+	public final void checkCollisionsWithCharacter ( Character character )
+	{
+		int i = 0;
+		while ( i < getItems().size () )
+		{
+			Item item = getItems ().get ( i );
+			if ( item.getRect ().intersects ( character.getRect () ) )
+			{
+				switch ( item.getType () )
+				{
+					case Item.BULLET:
+						character.addBullets();
+						break;
+					case Item.GUN:
+						character.addGun();
+						break;
+					case Item.HEART:
+						character.addHeart();
+						break;
+				}
+				removeItem ( item );
+			}
+			else
+			{
+				i++;
+			}
+		}
+	}
 }

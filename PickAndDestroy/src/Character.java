@@ -160,4 +160,19 @@ public class Character extends Entity
 		if ( this.getRect().x + step < limit )
 		{ this.moveOf ( +MOVE_STEP, 0 ); }
 	}
+
+	public void addBullets()
+	{
+		ammoPoint += 1;
+	}
+
+	public void addGun()
+	{
+		
+	}
+
+	public void addHeart()
+	{
+		healthPoint += 1;
+	}
 }

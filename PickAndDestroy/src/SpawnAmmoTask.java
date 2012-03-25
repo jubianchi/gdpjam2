@@ -20,7 +20,7 @@ class SpawnAmmoTask extends TimerTask
 		int x = rand(1, TilemapManager.GRID_WIDTH );
 		int y = rand(1, TilemapManager.GRID_HEIGHT);		
 		
-		Entity entity = new Entity ( "bullet.png", 15, 15 );
+		Item entity = new Item ( Item.BULLET, "bullet.png", 15, 15 );
 		entity.setLocationOnTilemap ( x, y );
 		entity.getSprite ().setAnchor ( 0.5, 0.5 );
 		entity.getSprite ().scaleTo(13, 30, 500, Easing.ELASTIC_IN_OUT);

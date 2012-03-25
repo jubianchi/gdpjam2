@@ -20,12 +20,12 @@ class SpawnGunTask extends TimerTask
 		int x = rand(1, TilemapManager.GRID_WIDTH);
 		int y = rand(1, TilemapManager.GRID_HEIGHT);
 		
-		Entity entity = new Entity ( "pistolet.png", 40, 30 );
-		entity.getSprite().setSize(0, 0);
-		entity.setLocationOnTilemap ( x, y );
-		entity.getSprite().setAnchor(0.5, 0.5);
-		entity.getSprite().scaleTo(47.25, 30, 500, Easing.ELASTIC_IN_OUT);
+		Item item = new Item ( Item.GUN, "pistolet.png", 40, 30 );
+		item.getSprite().setSize(0, 0);
+		item.setLocationOnTilemap ( x, y );
+		item.getSprite().setAnchor(0.5, 0.5);
+		item.getSprite().scaleTo(47.25, 30, 500, Easing.ELASTIC_IN_OUT);
 		
-		itemManager.addItem(entity);
+		itemManager.addItem(item);
 	}
 }

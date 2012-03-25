@@ -38,7 +38,7 @@ public class MusicManager
     	// System.out.println("Music time : " + musicElapsedTime);
     	if ( musicElapsedTime >= musicSwitchTime )
     	{
-    		System.out.println("Switching music at " + musicElapsedTime );
+    		//System.out.println("Switching music at " + musicElapsedTime );
 	    	if ( playingQuietMusic )
 	    		playBrutalMusic();
 	    	else
@@ -52,7 +52,7 @@ public class MusicManager
     {
     	if ( musicPlayback != null )
     	{
-    		System.out.println("Stopping music...");
+    		//System.out.println("Stopping music...");
 
     		musicPlayback.setPaused ( true );
     		musicElapsedTime = 0;
@@ -63,7 +63,7 @@ public class MusicManager
 	{
 		stopMusic();
 		
-		System.out.println("Playing quiet music...");
+		//System.out.println("Playing quiet music...");
 		
 		musicPlayback = quietMusicPlayback;
 		musicSwitchTime = ConfigManager.gameModesConfig.getValue("minQuietPlaytime");
@@ -75,7 +75,7 @@ public class MusicManager
 	{
 		stopMusic();
 		
-		System.out.println("Playing brutal music...");
+		//System.out.println("Playing brutal music...");
 		
 		musicPlayback = brutalMusicPlayback;
 		musicSwitchTime = ConfigManager.gameModesConfig.getValue("minBrutalPlaytime");
