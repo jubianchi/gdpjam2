@@ -22,7 +22,7 @@ public class Character extends Entity
 		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
 		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
 		
-		stepSound = Sound.load("Bruit de pas.wav");
+		stepSound = Sound.load("bruit_de_pas.wav");
 		stepPlayback = stepSound.play();
 		stepPlayback.setPaused ( true );	
 	}
@@ -78,7 +78,7 @@ public class Character extends Entity
 			this.healthPoint = 0;
 			
 			//DIE MOTHER FUCKER!!!!
-			Sound dieSound = Sound.load("Rire_Mort.wav");
+			Sound dieSound = Sound.load("rire+mort.wav");
 			dieSound.play();
 		} else {
 			this.healthPoint -= nb;

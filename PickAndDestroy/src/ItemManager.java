@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Timer;
 import pulpcore.Input;
 import pulpcore.scene.Scene2D;
+import pulpcore.sound.Sound;
 
 
 
@@ -93,12 +94,18 @@ public class ItemManager
 				{
 					case Item.BULLET:
 						character.addBullets();
+						Sound bulletSound = Sound.load("ramasse_munitions.wav");
+						bulletSound.play();
 						break;
 					case Item.GUN:
 						character.addGun();
+						Sound gunSound = Sound.load("ramasse_arme_speciale.wav");
+						gunSound.play();
 						break;
 					case Item.HEART:
 						character.addHeart();
+						Sound heartSound = Sound.load("ramasse_les_pv.wav");
+						heartSound.play();
 						break;
 				}
 				removeItem ( item );

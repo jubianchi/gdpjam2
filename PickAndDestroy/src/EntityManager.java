@@ -19,11 +19,7 @@ public class EntityManager
 	{
 		group = new Group ();
 
-		// sprites 2x2
-		addSprite ( 2, 2, 2,2, "2x2Obj_01.png", 0, 0 );
-		addSprite ( 11, 11, 2,2, "2x2Obj_01.png", 0,-5 );
-		addSprite ( 2, 11, 2,2, "2x2Obj_01.png", 0,-5 );
-		addSprite ( 11, 2, 2,2, "2x2Obj_01.png", 0,-5 );
+
 		
 		//sprites barre du haut
 		addSprite ( 5, 2, 1,1, "1x1ObjP2.png", -0, -10 );
@@ -64,6 +60,11 @@ public class EntityManager
 		addSprite ( 8, 12, 1,1, "PtTableHz.png", 0,-5 );
 		addSprite ( 9, 12, 1,1, "1x1ObjP2.png", -0,-10 );			
 		
+		// sprites 2x2
+		addSprite ( 2, 2, 2,2, "2x2Obj_01.png", 0, 0 );
+		addSprite ( 11, 11, 2,2, "2x2Obj_01.png", 0,-5 );
+		addSprite ( 2, 11, 2,2, "2x2Obj_01.png", 0,-5 );
+		addSprite ( 11, 2, 2,2, "2x2Obj_01.png", 0,-5 );
 		// addSprite ( 200, 20 );
 		// addSprite ( 200, 2100 );
 
