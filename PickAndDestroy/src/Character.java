@@ -151,7 +151,8 @@ public class Character extends Entity
 		{ this.moveOf ( -step, 0 ); }
 	}
 	
-	public void moveRight() {
+	public void moveRight()
+	{
 		this.moveStart();
 		
 		if(currentDirection != 3) setImage("ecureuil/frise_droite.png");
@@ -161,7 +162,9 @@ public class Character extends Entity
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
 		if ( this.getRect().x + step < limit )
-		{ this.moveOf ( +step, 0 ); }
+		{
+			this.moveOf ( +step, 0 );
+		}
 	}
 
 	public void addBullets()

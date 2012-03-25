@@ -28,6 +28,9 @@ public class PickAndDestroy extends Scene2D
     	levelManager = new LevelManager ();
     	levelManager.load ( this, entityManager );
 
+    	musicManager = new MusicManager ();
+    	musicManager.load ();
+    	
         if(ConfigManager.gameModesConfig.getValue("enableSound") == 1) 
         {        	
             musicManager.load ();
