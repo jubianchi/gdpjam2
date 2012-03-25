@@ -1,6 +1,8 @@
 enableSound = 1
 
 characterMoveStep = 4
+startAmmo = 6
+startHealth = 6
 maxAmmo = 10
 maxHealth = 10
 

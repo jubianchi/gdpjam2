@@ -24,18 +24,18 @@ public class CharacterManager
 	}
 	
 	public void addCharacter(Scene2D scene, Character character) {	
-		switch(this.characters.size()) {
+		switch(this.characters.size()) {			
 			case 1:
-				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, TilemapManager.GRID_HEIGHT-1 );
-				break;
-			case 2:
+				character.setLocationOnTilemap ( 0,0 );
+				break;	
+			/*case 2:
 				character.setLocationOnTilemap ( 0, TilemapManager.GRID_HEIGHT-1 );
 				break;
 			case 3:
 				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, 0 );
-				break;
+				break;*/			
 			default:
-				character.setLocationOnTilemap ( 0,0 );
+				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, TilemapManager.GRID_HEIGHT-1 );
 				break;
 		}
 		
