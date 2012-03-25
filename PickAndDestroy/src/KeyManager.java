@@ -23,6 +23,10 @@ public class KeyManager {
         	player1.moveStop();
         }
 		
+		if(Input.isDown(Input.KEY_RIGHT_ALT)) {
+			player1.shoot();
+		}
+		
 		if(Input.isDown(Input.KEY_Q)) {	        
 	        player2.moveLeft();
         } else if(Input.isDown(Input.KEY_D)) {        	
@@ -34,6 +38,10 @@ public class KeyManager {
         } else {
         	player2.moveStop();
         }
+		
+		if(Input.isDown(Input.KEY_LEFT_ALT)) {
+			player1.shoot();
+		}
 		
 		if(Input.isDown(Input.KEY_F5)) {
 			player1.removeHealth(1);

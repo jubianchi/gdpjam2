@@ -16,9 +16,9 @@ public class LevelManager
 	{
 		// sprites 2x2
 		addSprite ( Wall.WALL, 2, 2, 2,2, "2x2Obj_01.png", 0, 0 );
-		addSprite ( Wall.WALL, 11, 11, 2,2, "2x2Obj_01.png", 0,-5 );
+		addSprite ( Wall.WALL, 11, 11, 2,2, "2x2Obj_03.png", 0,-5 );
 		addSprite ( Wall.WALL, 2, 11, 2,2, "2x2Obj_01.png", 0,-5 );
-		addSprite ( Wall.WALL, 11, 2, 2,2, "2x2Obj_01.png", 0,-5 );
+		addSprite ( Wall.WALL, 11, 2, 2,2, "2x2Obj_03.png", 0,-5 );
 		
 		//sprites barre du haut
 		addSprite ( Wall.WALL, 5, 2, 1,1, "1x1ObjP2.png", -0, -10 );

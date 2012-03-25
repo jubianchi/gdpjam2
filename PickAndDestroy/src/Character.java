@@ -16,8 +16,7 @@ public class Character extends Entity
 	private int healthPoint;
 	private int ammoPoint;
 	
-	private String currentGun = "pistolet";
-	
+	private Gun currentGun = new Gun(Gun.PISTOLET,  "pistolet.png", 40, 30);
 	private EntityManager entityManager;
 	
 	public Character ( EntityManager entityManager )
@@ -323,11 +322,17 @@ public class Character extends Entity
 		getAmmo(1);
 	}
 
-	public void addGun()
+	public void addGun(Gun item)
 	{
-		
+		getAmmo(3);
 	}
 
+	public void shoot() {
+		if(this.getNbAmmo() > 0) {
+			this.currentGun.shoot(this);
+		}
+	}
+	
 	public void addHeart()
 	{
 		getHealth(1);
