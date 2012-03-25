@@ -1,3 +1,4 @@
+import pulpcore.math.Rect;
 import pulpcore.scene.Scene2D;
 import pulpcore.sprite.ImageSprite;
 
@@ -38,5 +39,11 @@ public class TilemapManager
 
 	public final void update( int elapsedTime )
 	{
+	}
+
+	public static Rect rect = new Rect ( 0,0,800,600 );
+	public static Rect getRect()
+	{
+		return rect;
 	}
 }
