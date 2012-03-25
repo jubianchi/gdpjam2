@@ -16,8 +16,9 @@ public class EntityManager
 	
 	private Group group;
 
-	public EntityManager() {
-		EntityManager.shared = this;
+	public EntityManager()
+	{
+		shared = this;
 	}
 	
 	public final void load( Scene2D scene )

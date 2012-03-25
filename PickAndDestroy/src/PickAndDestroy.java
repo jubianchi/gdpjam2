@@ -13,6 +13,7 @@ public class PickAndDestroy extends Scene2D
 	DebugManager debugManager;
 	HudManager hudManager;
 	PhaseManager phaseManager;
+	ShootManager shootManager;
 	
     public void load()
     {
@@ -29,11 +30,12 @@ public class PickAndDestroy extends Scene2D
     	levelManager.load ( this, entityManager );
 
     	musicManager = new MusicManager ();
+    	musicManager.load ();
         if(ConfigManager.gameModesConfig.getValue("enableSound") == 1) 
         {        	
-            musicManager.load ();
+            
         }        
-           
+
         itemManager = new ItemManager();
         itemManager.load(this, entityManager);
         
@@ -52,6 +54,9 @@ public class PickAndDestroy extends Scene2D
         hudManager.load();
         
         keyManager = new KeyManager(characterManager.getPlayer(0), characterManager.getPlayer(1));
+        
+        shootManager = new ShootManager();
+        shootManager.load(this, entityManager);
         
         setDirtyRectanglesEnabled ( false );
     }
@@ -76,6 +81,8 @@ public class PickAndDestroy extends Scene2D
     	debugManager.update(elapsedTime);
 
     	hudManager.update(elapsedTime);
+    	
+    	shootManager.update (elapsedTime );
     }
     
 }
