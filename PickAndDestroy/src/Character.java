@@ -4,21 +4,22 @@ import pulpcore.sound.Sound;
 
 
 public class Character extends Entity
-{
-	public static final int MOVE_STEP = 4;
-	
-	// private ImageSprite sprite;
+{	
 	private int currentDirection = 0;
 	
 	private Sound stepSound;
 	private Playback stepPlayback;
 
-	private int healthPoint = 5;
-	private int ammoPoint = 6;
+	private int healthPoint;
+	private int ammoPoint;
 	
 	public Character()
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
+		
+		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
+		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
+		
 		stepSound = Sound.load("Bruit de pas.wav");
 		stepPlayback = stepSound.play();
 		stepPlayback.setPaused ( true );	
@@ -75,8 +76,8 @@ public class Character extends Entity
 			this.healthPoint = 0;
 			
 			//DIE MOTHER FUCKER!!!!
-			//stepSound = Sound.load("mort.wav");
-			//stepPlayback = stepSound.play();
+			Sound dieSound = Sound.load("Rire_Mort.wav");
+			dieSound.play();
 		} else {
 			this.healthPoint -= nb;
 		}
@@ -119,7 +120,7 @@ public class Character extends Entity
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
 		if ( this.getRect().y - step > limit )
-		{ this.moveOf ( 0, -MOVE_STEP ); }
+		{ this.moveOf ( 0, -step ); }
 	}
 
 	public void moveBottom() {					
@@ -132,7 +133,7 @@ public class Character extends Entity
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
 		if ( this.getRect().y + step < limit )
-		{ this.moveOf ( 0, +MOVE_STEP ); }
+		{ this.moveOf ( 0, +step ); }
 	}
 	
 	public void moveLeft() {
@@ -145,7 +146,7 @@ public class Character extends Entity
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
 		if ( this.getRect().x - step > limit )
-		{ this.moveOf ( -MOVE_STEP, 0 ); }
+		{ this.moveOf ( -step, 0 ); }
 	}
 	
 	public void moveRight() {
@@ -158,6 +159,6 @@ public class Character extends Entity
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
 		
 		if ( this.getRect().x + step < limit )
-		{ this.moveOf ( +MOVE_STEP, 0 ); }
+		{ this.moveOf ( +step, 0 ); }
 	}
 }
