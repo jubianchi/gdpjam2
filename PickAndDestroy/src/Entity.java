@@ -9,7 +9,7 @@ public class Entity
 	
 	public final ImageSprite getSprite() { return sprite; }
 	public final Rect getRect() { return rect; }
-
+	
 	public Entity ( String name, int width, int height )
 	{
 		sprite = new ImageSprite ( name, 0, 0 );
@@ -40,5 +40,13 @@ public class Entity
 		rect.x += dx;
 		rect.y += dy;
 		sprite.setLocation ( sprite.x.getAsInt () + dx, sprite.y.getAsInt () + dy );
+	}
+	
+	public final void moveTo(int x, int y, int duration)
+	{
+		rect.x = x;
+		rect.y = y;				
+		
+		sprite.moveTo ( x, y, duration );
 	}
 }

@@ -15,10 +15,12 @@ public class LevelManager
 	private void createLevel()
 	{
 		// sprites 2x2
+
 		addSprite ( Wall.WALL, 2, 2, 2,2, "Silo2x2A.png", 0, 0 );
 		addSprite ( Wall.WALL, 11, 11, 2,2, "Silo2x2B.png", 0,-5 );
 		addSprite ( Wall.WALL, 2, 11, 2,2, "Silo2x2C.png", 0,-5 );
 		addSprite ( Wall.WALL, 11, 2, 2,2, "Silo2x2D.png", 0,-5 );
+
 		
 		//sprites barre du haut
 		addSprite ( Wall.WALL, 5, 2, 1,1, "Silo1x1A.png", -0, -10 );
