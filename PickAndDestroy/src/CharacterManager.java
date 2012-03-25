@@ -8,10 +8,12 @@ public class CharacterManager
 {
 	private ArrayList<Character> characters;
 	private EntityManager entityManager;
+	private ItemManager itemManager;
 	
-	public final void load(Scene2D scene, EntityManager entityManager)
+	public final void load(Scene2D scene, EntityManager entityManager, ItemManager itemManager )
 	{
 		this.entityManager = entityManager;
+		this.itemManager = itemManager;
 		this.characters = new ArrayList<Character>();
 		
 		Character p1 = new Character();
@@ -48,5 +50,7 @@ public class CharacterManager
 	
 	public final void update( int elapsedTime )
 	{
+		itemManager.checkCollisionsWithCharacter ( characters.get ( 0 ) );
+		itemManager.checkCollisionsWithCharacter ( characters.get ( 1 ) );
 	}
 }

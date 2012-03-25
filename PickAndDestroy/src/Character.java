@@ -13,6 +13,8 @@ public class Character extends Entity
 	private int healthPoint;
 	private int ammoPoint;
 	
+	private String currentGun = "pistolet";
+	
 	public Character()
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
@@ -160,5 +162,20 @@ public class Character extends Entity
 		
 		if ( this.getRect().x + step < limit )
 		{ this.moveOf ( +step, 0 ); }
+	}
+
+	public void addBullets()
+	{
+		ammoPoint += 1;
+	}
+
+	public void addGun()
+	{
+		
+	}
+
+	public void addHeart()
+	{
+		healthPoint += 1;
 	}
 }
