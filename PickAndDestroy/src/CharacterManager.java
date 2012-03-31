@@ -1,59 +1,58 @@
-import java.util.ArrayList;
-
-import pulpcore.Stage;
+import pulpcore.Input;
 import pulpcore.scene.Scene2D;
 
-
-public class CharacterManager 
+public class CharacterManager
 {
-	private ArrayList<Character> characters;
-	private EntityManager entityManager;
-	private ItemManager itemManager;
-	
-	public final void load(Scene2D scene, EntityManager entityManager, ItemManager itemManager )
+	private Character	player1;
+	private Character	player2;
+	private ItemManager	itemManager;
+
+	public final void load(Scene2D scene, EntityManager entityManager, ItemManager itemManager)
 	{
-		this.entityManager = entityManager;
 		this.itemManager = itemManager;
-		this.characters = new ArrayList<Character>();
-		
-		Character p1 = new Character ( entityManager );
-        Character p2 = new Character ( entityManager );
-        
-        this.addCharacter(scene, p1);
-        this.addCharacter(scene, p2);
+
+		player1 = new Character ();
+		player2 = new Character ();
+
+		entityManager.addEntity ( player1 );
+		entityManager.addEntity ( player2 );
+
+		player1.setLocationOnTilemap ( 0, 0 );
+		player1.setLocationOnTilemap ( TilemapManager.GRID_WIDTH - 1, TilemapManager.GRID_HEIGHT - 1 );
 	}
-	
-	public void addCharacter(Scene2D scene, Character character) {	
-		switch(this.characters.size()) {			
-			case 1:
-				character.setLocationOnTilemap ( 0,0 );
-				break;	
-			/*case 2:
-				character.setLocationOnTilemap ( 0, TilemapManager.GRID_HEIGHT-1 );
-				break;
-			case 3:
-				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, 0 );
-				break;*/			
-			default:
-				character.setLocationOnTilemap ( TilemapManager.GRID_WIDTH-1, TilemapManager.GRID_HEIGHT-1 );
-				break;
-		}
-		
-		this.characters.add(character);
-		entityManager.addEntity ( character );
-	}
-	
+
 	public Character getPlayer(int index)
 	{
-		return this.characters.get(index);
+		if (index == 0) return player1;
+		else if (index == 1) return player2;
+		else throw new IndexOutOfBoundsException ( "Player index is invalid" );
 	}
-	
-	public final void update( int elapsedTime )
+
+	public final void update(int elapsedTime)
 	{
-		characters.get ( 0 ).update ( elapsedTime );
-		characters.get ( 1 ).update ( elapsedTime );
-		
-		itemManager.checkCollisionsWithCharacter ( characters.get ( 0 ) );
-		itemManager.checkCollisionsWithCharacter ( characters.get ( 1 ) );
+		if (Input.isDown ( Input.KEY_LEFT )) player1.moveLeft ();
+		else if (Input.isDown ( Input.KEY_RIGHT )) player1.moveRight ();
+		else if (Input.isDown ( Input.KEY_UP )) player1.moveTop ();
+		else if (Input.isDown ( Input.KEY_DOWN )) player1.moveBottom ();
+		else player1.moveStop ();
+
+		if (Input.isDown ( Input.KEY_RIGHT_ALT )) player1.shoot ();
+
+		if (Input.isDown ( Input.KEY_Q )) player2.moveLeft ();
+		else if (Input.isDown ( Input.KEY_D )) player2.moveRight ();
+		else if (Input.isDown ( Input.KEY_Z )) player2.moveTop ();
+		else if (Input.isDown ( Input.KEY_S )) player2.moveBottom ();
+		else player2.moveStop ();
+
+		if (Input.isDown ( Input.KEY_LEFT_ALT )) player2.shoot ();
+
+		if (Input.isDown ( Input.KEY_F5 )) player1.removeHealth ( 1 );
+		if (Input.isDown ( Input.KEY_F6 )) player2.removeHealth ( 1 );
+
+		player1.update ( elapsedTime );
+		player2.update ( elapsedTime );
+
+		itemManager.checkCollisionsWithCharacter ( player1 );
+		itemManager.checkCollisionsWithCharacter ( player2 );
 	}
 }

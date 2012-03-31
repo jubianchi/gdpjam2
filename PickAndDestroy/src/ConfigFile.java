@@ -10,50 +10,47 @@ import pulpcore.CoreSystem;
 
 public class ConfigFile
 {
-	String name;
-	
-	Hashtable<String,Integer> map = new Hashtable<String,Integer> ();
-	
-	public ConfigFile ( String name )
+	String						name;
+
+	Hashtable<String, Integer>	map	= new Hashtable<String, Integer> ();
+
+	public ConfigFile(String name)
 	{
 		this.name = name;
 	}
-	
-	public final int getValue ( String name )
+
+	public final int getValue(String name)
 	{
 		Integer i = (Integer) map.get ( name );
-		if ( i == null )
-		{
-			throw new IllegalArgumentException ( "Unknown config variable name : " + name );
-		}
+		if (i == null) { throw new IllegalArgumentException ( "Unknown config variable name : " + name ); }
 		return i;
 	}
-	
+
 	public final void reloadFile()
 	{
 		String line;
 		URL url = null;
 		try
 		{
-			url = new URL( CoreSystem.getBaseURL(), name );
+			url = new URL ( CoreSystem.getBaseURL (), name );
 		}
-		catch(MalformedURLException e)
+		catch (MalformedURLException e)
 		{
 			throw new IllegalArgumentException ( "Unknown config filename : " + name );
 		}
-		
+
 		try
 		{
 			map.clear ();
-			InputStream in = url.openStream();
-			BufferedReader bf = new BufferedReader(new InputStreamReader(in));
+			InputStream in = url.openStream ();
+			BufferedReader bf = new BufferedReader ( new InputStreamReader ( in ) );
 			int lineNumber = 0;
-			while((line = bf.readLine()) != null)
+			while ((line = bf.readLine ()) != null)
 			{
-				if ( line.trim ().length () > 0 )
+				if (line.trim ().length () > 0)
 				{
 					String[] tokens = line.split ( "=" );
-					if ( tokens.length != 2 )
+					if (tokens.length != 2)
 					{
 						System.out.println ( "Error on line " + lineNumber );
 					}
@@ -66,7 +63,7 @@ public class ConfigFile
 							Integer valueAsInt = Integer.parseInt ( value );
 							map.put ( name, valueAsInt );
 						}
-						catch ( Exception e )
+						catch (Exception e)
 						{
 							System.out.println ( "Error on line " + lineNumber + " value is not a number" );
 						}
@@ -76,10 +73,10 @@ public class ConfigFile
 				lineNumber++;
 			}
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
-			e.printStackTrace();
+			e.printStackTrace ();
 		}
 	}
-	
+
 }

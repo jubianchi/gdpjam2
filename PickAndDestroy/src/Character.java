@@ -1,149 +1,157 @@
-import java.util.List;
-
 import pulpcore.Stage;
 import pulpcore.math.Rect;
 import pulpcore.sound.Playback;
 import pulpcore.sound.Sound;
 
-
 public class Character extends Entity
-{	
-	public static final int UP = 0;
-	public static final int DOWN = 1;
-	public static final int LEFT = 2;
-	public static final int RIGHT = 3;
-	
-	private int currentDirection = UP;
-	
-	private Sound stepSound;
-	private Playback stepPlayback;
+{
+	public static final int	UP					= 0;
+	public static final int	DOWN				= 1;
+	public static final int	LEFT				= 2;
+	public static final int	RIGHT				= 3;
 
-	private int healthPoint;
-	private int ammoPoint;
-	
-	private Gun currentGun = new Gun(Gun.SNIPER,  "pistolet.png", 40, 30);
-	private EntityManager entityManager;
-	
-	public Character ( EntityManager entityManager )
+	private int				currentDirection	= UP;
+
+	private Sound			stepSound;
+	private Playback		stepPlayback;
+
+	private int				healthPoint;
+	private int				ammoPoint;
+
+	private Gun				currentGun			= new Gun ( Gun.SNIPER, "pistolet.png", 40, 30 );
+
+	public Character()
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
 
-		this.entityManager = entityManager;
-		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
-		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
-		
-		stepSound = Sound.load("bruit_de_pas.wav");
-		stepPlayback = stepSound.play();
-		stepPlayback.setPaused ( true );	
+		this.healthPoint = ConfigManager.gameModesConfig.getValue ( "startHealth" );
+		this.ammoPoint = ConfigManager.gameModesConfig.getValue ( "startAmmo" );
+
+		stepSound = Sound.load ( "bruit_de_pas.wav" );
+		stepPlayback = stepSound.play ();
+		stepPlayback.setPaused ( true );
 	}
 
-	public final int getDirection() { return currentDirection; }
-	
-	public void setImage ( String name )
+	public final int getDirection()
 	{
-		getSprite().setImage(name);
+		return currentDirection;
+	}
+
+	public void setImage(String name)
+	{
+		getSprite ().setImage ( name );
 		getSprite ().setAnchor ( 0.5, 0.65 );
 	}
-	
-	public void getAmmo(int nb) 
+
+	public void getAmmo(int nb)
 	{
-		int maxAmmo = ConfigManager.gameModesConfig.getValue("maxAmmo");
-		
-		if(ammoPoint + nb <= maxAmmo)
+		int maxAmmo = ConfigManager.gameModesConfig.getValue ( "maxAmmo" );
+
+		if (ammoPoint + nb <= maxAmmo)
 		{
 			ammoPoint += nb;
-		} 
-		else 
+		}
+		else
 		{
 			ammoPoint = maxAmmo;
 		}
 	}
-	
-	public int getNbAmmo() {
+
+	public int getNbAmmo()
+	{
 		return ammoPoint;
 	}
-	
-	public void getHealth(int nb) 
+
+	public void getHealth(int nb)
 	{
-		int maxHealth = ConfigManager.gameModesConfig.getValue("maxHealth");
-		
-		if(healthPoint + nb <= maxHealth)
+		int maxHealth = ConfigManager.gameModesConfig.getValue ( "maxHealth" );
+
+		if (healthPoint + nb <= maxHealth)
 		{
 			healthPoint += nb;
-		} 
-		else 
+		}
+		else
 		{
 			healthPoint = maxHealth;
 		}
 	}
-	
-	public int getNbHealth() {
+
+	public int getNbHealth()
+	{
 		return healthPoint;
 	}
-	
-	public void removeAmmo(int nb) {
+
+	public void removeAmmo(int nb)
+	{
 		ammoPoint -= nb;
 	}
-	
-	public void removeHealth(int nb) {
-		if(healthPoint - nb <= 0) {
+
+	public void removeHealth(int nb)
+	{
+		if (healthPoint - nb <= 0)
+		{
 			healthPoint = 0;
-			
-			//DIE MOTHER FUCKER!!!!
-			Sound dieSound = Sound.load("rire+mort.wav");
-			dieSound.play();
-		} else {
+
+			// DIE MOTHER FUCKER!!!!
+			Sound dieSound = Sound.load ( "rire+mort.wav" );
+			dieSound.play ();
+		}
+		else
+		{
 			healthPoint -= nb;
 		}
 	}
-	
-	public void moveStop() 
+
+	public void moveStop()
 	{
-		switch(currentDirection)
+		switch (currentDirection)
 		{
 			case UP:
-				setImage("ecureuil/fixe_dos.png");
+				setImage ( "ecureuil/fixe_dos.png" );
 				break;
 			case DOWN:
-				setImage("ecureuil/fixe_face.png");
+				setImage ( "ecureuil/fixe_face.png" );
 				break;
 			case LEFT:
-				setImage("ecureuil/fixe_gauche.png");
+				setImage ( "ecureuil/fixe_gauche.png" );
 				break;
 			case RIGHT:
-				setImage("ecureuil/fixe_droite.png");
-				break;				
+				setImage ( "ecureuil/fixe_droite.png" );
+				break;
 		}
-		
+
 		stepPlayback.setPaused ( true );
-		stepPlayback.rewind();
+		stepPlayback.rewind ();
 	}
-	
-	public void moveStart() 
+
+	public void moveStart()
 	{
-		if(stepPlayback.isPaused()) stepPlayback.setPaused ( false );
+		if (stepPlayback.isPaused ()) stepPlayback.setPaused ( false );
 	}
-	
-	public void moveTop() {					
-		moveStart();
-		
-		if(currentDirection != UP) setImage("ecureuil/frise_dos.png");
+
+	public void moveTop()
+	{
+		moveStart ();
+
+		if (currentDirection != UP) setImage ( "ecureuil/frise_dos.png" );
 		currentDirection = UP;
-		
-		int limit = getRect().height / 2;
-		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		
-		if ( getRect().y - step > limit )
+
+		int limit = getRect ().height / 2;
+		int step = ConfigManager.gameModesConfig.getValue ( "characterMoveStep" );
+
+		if (getRect ().y - step > limit)
 		{
 			Rect r = new Rect ( getRect () );
 			r.width -= 4;
 			r.x += 2;
 			r.height = 20;
 			r.y -= step;
-			
-			if ( ! isWallAtRect ( r ) )
-			{ moveOf ( 0, -step ); }
-			
+
+			if (!isWallAtRect ( r ))
+			{
+				moveOf ( 0, -step );
+			}
+
 			/*
 			boolean collide = false;
 			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
@@ -164,26 +172,29 @@ public class Character extends Entity
 		}
 	}
 
-	public void moveBottom() {					
-		moveStart();
-		
-		if(currentDirection != DOWN) getSprite ().setImage("ecureuil/frise_face.png");
+	public void moveBottom()
+	{
+		moveStart ();
+
+		if (currentDirection != DOWN) getSprite ().setImage ( "ecureuil/frise_face.png" );
 		currentDirection = DOWN;
-		
-		int limit = (Stage.getHeight() - getRect().height / 2);
-		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		
-		if ( getRect().y + step < limit )
+
+		int limit = (Stage.getHeight () - getRect ().height / 2);
+		int step = ConfigManager.gameModesConfig.getValue ( "characterMoveStep" );
+
+		if (getRect ().y + step < limit)
 		{
 			Rect r = new Rect ( getRect () );
 			r.width -= 4;
 			r.x += 2;
 			r.y += r.height - 20 + step;
 			r.height = 20;
-			
-			if ( ! isWallAtRect ( r ) )
-			{ moveOf ( 0, +step ); }
-			
+
+			if (!isWallAtRect ( r ))
+			{
+				moveOf ( 0, +step );
+			}
+
 			/*boolean collide = false;
 			collide |= isWallAtPoint ( getRect ().x, getRect ().y + getRect ().height );
 			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y + getRect ().height );
@@ -195,27 +206,30 @@ public class Character extends Entity
 			*/
 		}
 	}
-	
-	public void moveLeft() {
-		moveStart();
-		
-		if(currentDirection != LEFT) setImage("ecureuil/frise_gauche.png");
+
+	public void moveLeft()
+	{
+		moveStart ();
+
+		if (currentDirection != LEFT) setImage ( "ecureuil/frise_gauche.png" );
 		currentDirection = LEFT;
-		
-		int limit = getRect().width / 2;
-		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		
-		if ( getRect().x - step > limit )
+
+		int limit = getRect ().width / 2;
+		int step = ConfigManager.gameModesConfig.getValue ( "characterMoveStep" );
+
+		if (getRect ().x - step > limit)
 		{
 			Rect r = new Rect ( getRect () );
 			r.height -= 4;
 			r.y += 2;
 			r.width = 20;
 			r.x -= step;
-			
-			if ( ! isWallAtRect ( r ) )
-			{ moveOf ( -step, 0 ); }
-			
+
+			if (!isWallAtRect ( r ))
+			{
+				moveOf ( -step, 0 );
+			}
+
 			/*
 			boolean collide = false;
 			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
@@ -227,28 +241,30 @@ public class Character extends Entity
 			}*/
 		}
 	}
-	
+
 	public void moveRight()
 	{
-		moveStart();
-		
-		if(currentDirection != RIGHT) setImage("ecureuil/frise_droite.png");
+		moveStart ();
+
+		if (currentDirection != RIGHT) setImage ( "ecureuil/frise_droite.png" );
 		currentDirection = RIGHT;
-		
-		int limit = (Stage.getWidth() - getRect().width / 2);
-		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
-		
-		if ( getRect().x + step < limit )
+
+		int limit = (Stage.getWidth () - getRect ().width / 2);
+		int step = ConfigManager.gameModesConfig.getValue ( "characterMoveStep" );
+
+		if (getRect ().x + step < limit)
 		{
 			Rect r = new Rect ( getRect () );
 			r.height -= 4;
 			r.y += 2;
 			r.x += r.width - 20 + step;
 			r.width = 20;
-			
-			if ( ! isWallAtRect ( r ) )
-			{ moveOf ( +step, 0 ); }
-			
+
+			if (!isWallAtRect ( r ))
+			{
+				moveOf ( +step, 0 );
+			}
+
 			/*
 			boolean collide = false;
 			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y );
@@ -264,66 +280,54 @@ public class Character extends Entity
 
 	public void addBullets()
 	{
-		getAmmo(1);
+		getAmmo ( 1 );
 	}
 
 	public void addGun(Gun item)
 	{
-		getAmmo(3);
+		getAmmo ( 3 );
 	}
-	
-	private int delayForNextShoot = 0;
 
-	public void update ( int elapsedTime )
+	private int	delayForNextShoot	= 0;
+
+	public void update(int elapsedTime)
 	{
 		delayForNextShoot -= elapsedTime;
 	}
-	
+
 	public void shoot()
 	{
-		if ( this.getNbAmmo() > 0 )
+		if (this.getNbAmmo () > 0)
 		{
-			if ( delayForNextShoot <= 0 )
+			if (delayForNextShoot <= 0)
 			{
-				this.currentGun.shoot(this);
-				delayForNextShoot = this.currentGun.getNextShootDelay();
+				this.currentGun.shoot ( this );
+				delayForNextShoot = this.currentGun.getNextShootDelay ();
 			}
 		}
 	}
-	
+
 	public void addHeart()
 	{
-		getHealth(1);
+		getHealth ( 1 );
 	}
 
 	public final void setShootLocation(Shoot shoot)
 	{
-		switch ( currentDirection )
+		switch (currentDirection)
 		{
 			case UP:
-				shoot.setLocation
-				(
-					getRect ().x + ( getRect ().width / 2 ) - (shoot.getRect ().width / 2),
-					getRect ().y - (shoot.getRect ().height / 2)
-				);
+				shoot.setLocation ( getRect ().x + (getRect ().width / 2) - (shoot.getRect ().width / 2), getRect ().y - (shoot.getRect ().height / 2) );
+				break;
 			case DOWN:
-				shoot.setLocation
-				(
-					getRect ().x + ( getRect ().width / 2 ) - (shoot.getRect ().width / 2),
-					getRect ().y + getRect ().height - (shoot.getRect ().height / 2)
-				);
+				shoot.setLocation ( getRect ().x + (getRect ().width / 2) - (shoot.getRect ().width / 2), getRect ().y + getRect ().height - (shoot.getRect ().height / 2) );
+				break;
 			case LEFT:
-				shoot.setLocation
-				(
-					getRect ().x - (shoot.getRect ().width / 2),
-					getRect ().y + ( getRect().height / 2 ) - (shoot.getRect ().height / 2)
-				);
+				shoot.setLocation ( getRect ().x - (shoot.getRect ().width / 2), getRect ().y + (getRect ().height / 2) - (shoot.getRect ().height / 2) );
+				break;
 			case RIGHT:
-				shoot.setLocation
-				(
-					getRect ().x + getRect ().width - (shoot.getRect ().width / 2),
-					getRect ().y + ( getRect().height / 2 ) - (shoot.getRect ().height / 2)
-				);
+				shoot.setLocation ( getRect ().x + getRect ().width - (shoot.getRect ().width / 2), getRect ().y + (getRect ().height / 2) - (shoot.getRect ().height / 2) );
+				break;
 		}
 	}
 }
