@@ -23,11 +23,11 @@ public class Character extends Entity
 	
 	public String spriteSet = "ecureuil";
 	
-	public Character ( EntityManager entityManager )
+	public Character ()
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
 		
-		this.entityManager = entityManager;
+		this.entityManager = EntityManager.shared;
 		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
 		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
 		
@@ -36,6 +36,10 @@ public class Character extends Entity
 		stepPlayback.setPaused ( true );	
 	}
 
+	public int getDirection() {
+		return this.currentDirection;
+	}
+	
 	public void setImage(String name)
 	{
 		getSprite ().setImage ( name );
