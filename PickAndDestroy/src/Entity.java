@@ -1,3 +1,5 @@
+import java.util.List;
+
 import pulpcore.math.Rect;
 import pulpcore.sprite.ImageSprite;
 
@@ -9,12 +11,34 @@ public class Entity
 	
 	public final ImageSprite getSprite() { return sprite; }
 	public final Rect getRect() { return rect; }
-
+	
 	public Entity ( String name, int width, int height )
 	{
 		sprite = new ImageSprite ( name, 0, 0 );
 		sprite.setAnchor(0.5, 0.5);
 		rect = new Rect ( 0,0, width, height );
+	}
+	
+	public boolean isWallAtRect(Rect r)
+	{
+		List<Entity> list = EntityManager.shared.getCollidingEntities ( r );
+		for ( int i = 0; i < list.size (); i++ )
+		{
+			Entity e = list.get(i);
+			if ( e.getClass() == Wall.class )
+			{
+				Wall w = (Wall)e;
+				if ( 
+						( w.getType () == Wall.TABLE ) 
+					||	( w.getType () == Wall.WALL )
+					)
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	public final void setLocation ( int x, int y )
@@ -40,5 +64,13 @@ public class Entity
 		rect.x += dx;
 		rect.y += dy;
 		sprite.setLocation ( sprite.x.getAsInt () + dx, sprite.y.getAsInt () + dy );
+	}
+	
+	public final void moveTo(int x, int y, int duration)
+	{
+		rect.x = x;
+		rect.y = y;				
+		
+		sprite.moveTo ( x, y, duration );
 	}
 }

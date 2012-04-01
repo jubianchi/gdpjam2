@@ -8,7 +8,12 @@ import pulpcore.sound.Sound;
 
 public class Character extends Entity
 {	
-	private int currentDirection = 0;
+	public static final int UP = 0;
+	public static final int DOWN = 1;
+	public static final int LEFT = 2;
+	public static final int RIGHT = 3;
+	
+	private int currentDirection = UP;
 	
 	private Sound stepSound;
 	private Playback stepPlayback;
@@ -16,14 +21,15 @@ public class Character extends Entity
 	private int healthPoint;
 	private int ammoPoint;
 	
-	private String currentGun = "pistolet";
-	
+	private Gun currentGun = new Gun(Gun.GUN,  "pistolet.png", 40, 30);
 	private EntityManager entityManager;
+	
+	public String spriteSet = "ecureuil";
 	
 	public Character ( EntityManager entityManager )
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
-
+		
 		this.entityManager = entityManager;
 		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
 		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
@@ -33,10 +39,16 @@ public class Character extends Entity
 		stepPlayback.setPaused ( true );	
 	}
 
+	public final int getDirection() { return currentDirection; }
+	
 	public void setImage ( String name )
 	{
 		getSprite().setImage(name);
 		getSprite ().setAnchor ( 0.5, 0.65 );
+	}
+	
+	public String getSpriteSetArme() {
+		return this.currentGun.getSpriteName() + "/";
 	}
 	
 	public void getAmmo(int nb) 
@@ -95,17 +107,17 @@ public class Character extends Entity
 	{
 		switch(currentDirection)
 		{
-			case 0:
-				setImage("ecureuil/fixe_dos.png");
+			case UP:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "fixe_dos.png");
 				break;
-			case 1:
-				setImage("ecureuil/fixe_face.png");
+			case DOWN:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "fixe_face.png");
 				break;
-			case 2:
-				setImage("ecureuil/fixe_gauche.png");
+			case LEFT:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "fixe_gauche.png");
 				break;
-			case 3:
-				setImage("ecureuil/fixe_droite.png");
+			case RIGHT:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "fixe_droite.png");
 				break;				
 		}
 		
@@ -117,74 +129,12 @@ public class Character extends Entity
 	{
 		if(stepPlayback.isPaused()) stepPlayback.setPaused ( false );
 	}
-
-	public void moveOfStep
-	( 	int stepX, int stepY,
-		int px1, int py1,
-		int px2, int py2
-	)
-	{
-		int px3 = ( px1 + px2 ) / 2;
-		int py3 = ( py1 + py2 ) / 2;
-		int colCount =
-					( isWallAtPoint ( px1, py1 ) ? 1 : 0 )
-				+	( isWallAtPoint ( px2, py2 ) ? 1 : 0 )
-				+	( isWallAtPoint ( px3, py3 ) ? 1 : 0 );
-		if ( colCount < 2 )
-		{
-			moveOf ( stepX, stepY );
-		}
-	}
-	
-	public boolean isWallAtPoint ( int x, int y )
-	{
-		List<Entity> list = entityManager.getCollidingEntities ( x, y );
-		for ( int i = 0; i < list.size (); i++ )
-		{
-			Entity e = list.get(i);
-			if ( e.getClass() == Wall.class )
-			{
-				Wall w = (Wall)e;
-				if ( 
-						( w.getType () == Wall.TABLE ) 
-					||	( w.getType () == Wall.WALL )
-					)
-				{
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-	
-	private boolean isWallAtRect(Rect r)
-	{
-		List<Entity> list = entityManager.getCollidingEntities ( r );
-		for ( int i = 0; i < list.size (); i++ )
-		{
-			Entity e = list.get(i);
-			if ( e.getClass() == Wall.class )
-			{
-				Wall w = (Wall)e;
-				if ( 
-						( w.getType () == Wall.TABLE ) 
-					||	( w.getType () == Wall.WALL )
-					)
-				{
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
 	
 	public void moveTop() {					
 		moveStart();
 		
-		if(currentDirection != 0) setImage("ecureuil/frise_dos.png");
-		currentDirection = 0;
+		if(currentDirection != UP) setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_dos.png");
+		currentDirection = UP;
 		
 		int limit = getRect().height / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
@@ -223,8 +173,8 @@ public class Character extends Entity
 	public void moveBottom() {					
 		moveStart();
 		
-		if(currentDirection != 1) getSprite ().setImage("ecureuil/frise_face.png");
-		currentDirection = 1;
+		if(currentDirection != DOWN) getSprite ().setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_face.png");
+		currentDirection = DOWN;
 		
 		int limit = (Stage.getHeight() - getRect().height / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
@@ -255,8 +205,8 @@ public class Character extends Entity
 	public void moveLeft() {
 		moveStart();
 		
-		if(currentDirection != 2) setImage("ecureuil/frise_gauche.png");
-		currentDirection = 2;
+		if(currentDirection != LEFT) setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_gauche.png");
+		currentDirection = LEFT;
 		
 		int limit = getRect().width / 2;
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
@@ -288,8 +238,8 @@ public class Character extends Entity
 	{
 		moveStart();
 		
-		if(currentDirection != 3) setImage("ecureuil/frise_droite.png");
-		currentDirection = 3;
+		if(currentDirection != RIGHT) setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_droite.png");
+		currentDirection = RIGHT;
 		
 		int limit = (Stage.getWidth() - getRect().width / 2);
 		int step = ConfigManager.gameModesConfig.getValue("characterMoveStep");
@@ -323,13 +273,80 @@ public class Character extends Entity
 		getAmmo(1);
 	}
 
-	public void addGun()
+	public void addGun(Gun item)
 	{
+		this.currentGun = item;		
+		getAmmo(3);
 		
+		switch(currentDirection)
+		{
+			case UP:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_dos.png");
+				break;
+			case DOWN:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_face.png");
+				break;
+			case LEFT:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_gauche.png");
+				break;
+			case RIGHT:
+				setImage(spriteSet + "/" + this.getSpriteSetArme() + "frise_droite.png");
+				break;				
+		}
 	}
+	
+	private int delayForNextShoot = 0;
 
+	public void update ( int elapsedTime )
+	{
+		delayForNextShoot -= elapsedTime;
+	}
+	
+	public void shoot()
+	{
+		if ( this.getNbAmmo() > 0 )
+		{
+			if ( delayForNextShoot <= 0 )
+			{
+				this.currentGun.shoot(this);
+				delayForNextShoot = this.currentGun.getNextShootDelay();
+			}
+		}
+	}
+	
 	public void addHeart()
 	{
 		getHealth(1);
+	}
+
+	public final void setShootLocation(Shoot shoot)
+	{
+		switch ( currentDirection )
+		{
+			case UP:
+				shoot.setLocation
+				(
+					getRect ().x + ( getRect ().width / 2 ) - (shoot.getRect ().width / 2),
+					getRect ().y - (shoot.getRect ().height / 2)
+				);
+			case DOWN:
+				shoot.setLocation
+				(
+					getRect ().x + ( getRect ().width / 2 ) - (shoot.getRect ().width / 2),
+					getRect ().y + getRect ().height - (shoot.getRect ().height / 2)
+				);
+			case LEFT:
+				shoot.setLocation
+				(
+					getRect ().x - (shoot.getRect ().width / 2),
+					getRect ().y + ( getRect().height / 2 ) - (shoot.getRect ().height / 2)
+				);
+			case RIGHT:
+				shoot.setLocation
+				(
+					getRect ().x + getRect ().width - (shoot.getRect ().width / 2),
+					getRect ().y + ( getRect().height / 2 ) - (shoot.getRect ().height / 2)
+				);
+		}
 	}
 }

@@ -50,6 +50,9 @@ public class CharacterManager
 	
 	public final void update( int elapsedTime )
 	{
+		characters.get ( 0 ).update ( elapsedTime );
+		characters.get ( 1 ).update ( elapsedTime );
+		
 		itemManager.checkCollisionsWithCharacter ( characters.get ( 0 ) );
 		itemManager.checkCollisionsWithCharacter ( characters.get ( 1 ) );
 	}
