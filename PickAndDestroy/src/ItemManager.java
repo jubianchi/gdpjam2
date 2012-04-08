@@ -93,10 +93,14 @@ public class ItemManager
 
 	private final void spawnItem(Item item, int popupTime)
 	{
-		int x = rand ( 1, TilemapManager.GRID_WIDTH );
-		int y = rand ( 1, TilemapManager.GRID_HEIGHT );
-
-		item.setLocationOnTilemap ( x, y );
+		do
+		{
+			int x = rand ( 1, TilemapManager.GRID_WIDTH );
+			int y = rand ( 1, TilemapManager.GRID_HEIGHT );
+			item.setLocationOnTilemap ( x, y );
+		}
+		while ( item.isHittingWallOrTable () );
+		
 		int spriteWidth = item.getSprite ().width.getAsInt ();
 		int spriteHeight = item.getSprite ().height.getAsInt ();
 		item.getSprite ().setSize ( 0, 0 );
@@ -116,7 +120,7 @@ public class ItemManager
 				switch (item.getType ())
 				{
 					case Item.BULLET:
-						character.addBullets ();
+						character.addAmmo ( ConfigManager.gameModesConfig.getValue ( "ammoPointPerAmmoItem" ) );
 						Sound bulletSound = Sound.load ( "ramasse_munitions.wav" );
 						bulletSound.play ();
 						break;
@@ -126,7 +130,7 @@ public class ItemManager
 						gunSound.play ();
 						break;
 					case Item.HEART:
-						character.addHeart ();
+						character.addHealth ( ConfigManager.gameModesConfig.getValue ( "heartPointPerHeartItem" ) );
 						Sound heartSound = Sound.load ( "ramasse_les_pv.wav" );
 						heartSound.play ();
 						break;

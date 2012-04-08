@@ -1,12 +1,15 @@
 enableSound = 1
 
-spawnDelay = 1000
+spawnDelay = 1200
 
 characterMoveStep = 4
 startAmmo = 6
-startHealth = 6
-maxAmmo = 10
-maxHealth = 10
+startHealth = 3
+maxAmmo = 20
+maxHealth = 8
+
+ammoPointPerAmmoItem = 2
+heartPointPerHeartItem = 1
 
 minQuietPlaytime = 10000
 maxQuietPlaytime = 20000
@@ -15,3 +18,8 @@ quietSpanPlaytime = 1000
 minBrutalPlaytime = 15000
 maxBrutalPlaytime = 25000
 brutalSpanPlaytime = 1000
+
+gunHitPoints = 1
+machineGunHitPoints = 1
+shotGunHitPoints = 2
+sniperHitPoints = 3

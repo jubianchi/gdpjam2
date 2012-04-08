@@ -16,10 +16,10 @@ public class MusicManager
 		quietMusic = Sound.load ( "Bande son calme.ogg" );
 		brutalMusic = Sound.load ( "Bande son metal.ogg" );
 
-		quietMusicPlayback = quietMusic.play ();
+		quietMusicPlayback = quietMusic.loop ();
 		quietMusicPlayback.setPaused ( true );
 
-		brutalMusicPlayback = brutalMusic.play ();
+		brutalMusicPlayback = brutalMusic.loop ();
 		brutalMusicPlayback.setPaused ( true );
 	}
 
@@ -27,42 +27,31 @@ public class MusicManager
 	{
 		if (musicPlayback != null)
 		{
-			// System.out.println("Stopping music...");
-
 			musicPlayback.setPaused ( true );
-			// musicElapsedTime = 0;
 		}
 	}
 
 	public final void playQuietMusic()
 	{
 		stopMusic ();
-
-		// System.out.println("Playing quiet music...");
-
 		musicPlayback = quietMusicPlayback;
-		// musicSwitchTime = ConfigManager.gameModesConfig.getValue("minQuietPlaytime");
-		// musicSpanTime = ConfigManager.gameModesConfig.getValue("quietSpanPlaytime");
 		musicPlayback.setPaused ( false );
 	}
 
 	public final void playBrutalMusic()
 	{
 		stopMusic ();
-
-		// System.out.println("Playing brutal music...");
-
 		musicPlayback = brutalMusicPlayback;
-		// musicSwitchTime = ConfigManager.gameModesConfig.getValue("minBrutalPlaytime");
-		// musicSpanTime = ConfigManager.gameModesConfig.getValue("brutalSpanPlaytime");
 		musicPlayback.setPaused ( false );
 	}
 
 	public final void update(int elapsedTime)
 	{
-		if (musicPlayback.isFinished ())
-		{
-			musicPlayback.rewind ();
-		}
+	}
+
+	public void releaseResources()
+	{
+		quietMusicPlayback.stop ();
+		brutalMusicPlayback.stop ();
 	}
 }

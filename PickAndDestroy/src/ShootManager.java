@@ -20,6 +20,9 @@ public class ShootManager
 
 	public final void update(int elapsedTime)
 	{
+		Character player1 = CharacterManager.shared.getPlayer ( 0 );
+		Character player2 = CharacterManager.shared.getPlayer ( 1 );
+		
 		ArrayList<Shoot> removed = new ArrayList<Shoot> ();
 
 		for (int i = 0; i < shoots.size (); i++)
@@ -27,11 +30,23 @@ public class ShootManager
 			Shoot s = shoots.get ( i );
 			s.update ( elapsedTime );
 
-			if (!s.getRect ().intersects ( TilemapManager.getRect () ))
+			if ( s.getRect ().intersects ( player1.getRect () ) ) // collide player 1
+			{
+				removed.add ( s );
+				player1.hitBy ( s.getHitPoints() );
+			}
+			else
+			if ( s.getRect ().intersects ( player2.getRect () ) ) // collide player 2
+			{
+				removed.add ( s );
+				player2.hitBy ( s.getHitPoints() );
+			}
+			else
+			if (!s.getRect ().intersects ( TilemapManager.getRect () )) // out of tilemap
 			{
 				removed.add ( s );
 			}
-			else if (s.isWallAtRect ( s.getRect () ))
+			else if (Entity.isWallAtRect ( s.getRect () )) // collide a wall
 			{
 				removed.add ( s );
 			}

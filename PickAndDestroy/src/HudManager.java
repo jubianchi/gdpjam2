@@ -8,83 +8,83 @@ import pulpcore.sprite.Label;
 
 public class HudManager
 {
-	private Character	player1;
-	private Character	player2;
+	private Character	rightPlayer;
+	private Character	leftPlayer;
 	private Scene2D		scene;
 
 	private CoreFont	messageFont;
 	private Group		hud;
 
-	private Label		healthLabelPlayer1;
-	private Label		ammoLabelPlayer1;
+	private Label		healthLabelRightPlayer;
+	private Label		ammoLabelRightPlayer;
 
-	private Label		healthLabelPlayer2;
-	private Label		ammoLabelPlayer2;
+	private Label		healthLabelLeftPlayer;
+	private Label		ammoLabelLeftPlayer;
 
-	public HudManager(Scene2D scene, Character player1, Character player2)
+	public HudManager(Scene2D scene, Character leftPlayer, Character rightPlayer )
 	{
 		this.scene = scene;
-		this.player1 = player1;
-		this.player2 = player2;
+		this.rightPlayer = rightPlayer;
+		this.leftPlayer = leftPlayer;
 
 		hud = new Group ();
-		messageFont = CoreFont.load ( "complex.font.png" );
+		messageFont = CoreFont.load ( "hud.font.png" );
 	}
 
 	public final void load()
 	{
 		FilledSprite bg = new FilledSprite ( Colors.BLACK );
-		bg.alpha.set ( 110 );
-		bg.setSize ( 800, 50 );
-		bg.setLocation ( 0, 550 );
+		bg.alpha.set ( 128 );
+		bg.setSize ( 800, 35 );
+		bg.setLocation ( 0, 600 - bg.height.getAsInt () );
 		hud.add ( bg );
 
-		this.makePlayer1Hud ();
-		this.makePlayer2Hud ();
+		this.makeRightPlayerHud ();
+		this.makeLeftPlayerHud ();
 
 		this.scene.add ( hud );
 	}
 
-	public void makePlayer2Hud()
+	public void makeLeftPlayerHud()
 	{
-		ImageSprite coeur = new ImageSprite ( "coeur.png", 10, 550 );
-		coeur.setSize ( 50, 50 );
-		healthLabelPlayer2 = new Label ( messageFont, "" + this.player2.getNbHealth (), 70, 545 );
+		ImageSprite coeur = new ImageSprite ( "coeur.png", 10, 560 );
+		coeur.setSize ( 40, 40 );
+		healthLabelLeftPlayer = new Label ( messageFont, "" + this.leftPlayer.getNbHealth (), 50, 545 );
 
-		ImageSprite bullet = new ImageSprite ( "bullet.png", 140, 550 );
-		bullet.setSize ( 50, 50 );
-		ammoLabelPlayer2 = new Label ( messageFont, "" + this.player2.getNbAmmo (), 200, 545 );
+		ImageSprite bullet = new ImageSprite ( "bullet.png", 90, 560 );
+		bullet.setSize ( 40, 40 );
+		ammoLabelLeftPlayer = new Label ( messageFont, "" + this.leftPlayer.getNbAmmo (), 130, 545 );
 
 		hud.add ( coeur );
-		hud.add ( healthLabelPlayer2 );
+		hud.add ( healthLabelLeftPlayer );
 
 		hud.add ( bullet );
-		hud.add ( ammoLabelPlayer2 );
+		hud.add ( ammoLabelLeftPlayer );
 	}
 
-	public void makePlayer1Hud()
+	public void makeRightPlayerHud()
 	{
-		ImageSprite coeur = new ImageSprite ( "coeur.png", 560, 550 );
-		coeur.setSize ( 50, 50 );
-		healthLabelPlayer1 = new Label ( messageFont, "" + this.player1.getNbHealth (), 620, 545 );
+		ImageSprite coeur = new ImageSprite ( "coeur.png", 600, 560 );
+		coeur.setSize ( 40, 40 );
+		healthLabelRightPlayer = new Label ( messageFont, "" + this.rightPlayer.getNbHealth (), 640, 545 );
 
-		ImageSprite bullet = new ImageSprite ( "bullet.png", 680, 550 );
-		bullet.setSize ( 50, 50 );
-		ammoLabelPlayer1 = new Label ( messageFont, "" + this.player1.getNbAmmo (), 740, 545 );
+		ImageSprite bullet = new ImageSprite ( "bullet.png", 680, 560 );
+		bullet.setSize ( 40, 40 );
+		ammoLabelRightPlayer = new Label ( messageFont, "" + this.rightPlayer.getNbAmmo (), 720, 545 );
 
 		hud.add ( coeur );
-		hud.add ( healthLabelPlayer1 );
+		hud.add ( healthLabelRightPlayer );
 
 		hud.add ( bullet );
-		hud.add ( ammoLabelPlayer1 );
+		hud.add ( ammoLabelRightPlayer );
 	}
 
 	public final void update(int elapsedTime)
 	{
-		healthLabelPlayer1.setText ( "" + this.player1.getNbHealth () );
-		ammoLabelPlayer1.setText ( "" + this.player1.getNbAmmo () );
+		healthLabelRightPlayer.setText ( "" + this.rightPlayer.getNbHealth () );
+		ammoLabelRightPlayer.setText ( "" + this.rightPlayer.getNbAmmo () );
 
-		healthLabelPlayer2.setText ( "" + this.player2.getNbHealth () );
-		ammoLabelPlayer2.setText ( "" + this.player2.getNbAmmo () );
+		healthLabelLeftPlayer.setText ( "" + this.leftPlayer.getNbHealth () );
+		ammoLabelLeftPlayer.setText ( "" + this.leftPlayer.getNbAmmo () );
 	}
 }

@@ -10,7 +10,7 @@ public class Character extends Entity
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
 	
-	private int currentDirection = UP;
+	private int currentDirection;
 	
 	private Sound stepSound;
 	private Playback stepPlayback;
@@ -19,21 +19,20 @@ public class Character extends Entity
 	private int ammoPoint;
 	
 	private Gun currentGun = new Gun(Gun.GUN,  "pistolet.png", 40, 30);
-	private EntityManager entityManager;
 	
 	public String spriteSet = "ecureuil";
 	
-	public Character ()
+	public Character ( int direction )
 	{
 		super ( "ecureuil/frise_face.png", 40, 30 );
-		
-		this.entityManager = EntityManager.shared;
+	
+		this.currentDirection = direction;
 		this.healthPoint = ConfigManager.gameModesConfig.getValue("startHealth");
 		this.ammoPoint = ConfigManager.gameModesConfig.getValue("startAmmo");
 		
 		stepSound = Sound.load("bruit_de_pas.wav");
-		stepPlayback = stepSound.play();
-		stepPlayback.setPaused ( true );	
+		
+		moveStop ();
 	}
 
 	public int getDirection() {
@@ -50,7 +49,7 @@ public class Character extends Entity
 		return this.currentGun.getSpriteName() + "/";
 	}
 	
-	public void getAmmo(int nb) 
+	public void addAmmo(int nb) 
 	{
 		int maxAmmo = ConfigManager.gameModesConfig.getValue ( "maxAmmo" );
 
@@ -69,7 +68,7 @@ public class Character extends Entity
 		return ammoPoint;
 	}
 
-	public void getHealth(int nb)
+	public void addHealth(int nb)
 	{
 		int maxHealth = ConfigManager.gameModesConfig.getValue ( "maxHealth" );
 
@@ -93,20 +92,10 @@ public class Character extends Entity
 		ammoPoint -= nb;
 	}
 
-	public void removeHealth(int nb)
+	public void hitBy ( int hitPoints )
 	{
-		if (healthPoint - nb <= 0)
-		{
-			healthPoint = 0;
-
-			// DIE MOTHER FUCKER!!!!
-			Sound dieSound = Sound.load ( "rire+mort.wav" );
-			dieSound.play ();
-		}
-		else
-		{
-			healthPoint -= nb;
-		}
+		Sound.load("degats.wav").play ();
+		healthPoint = Math.max ( healthPoint - hitPoints, 0 );
 	}
 
 	public void moveStop()
@@ -127,13 +116,18 @@ public class Character extends Entity
 				break;				
 		}
 
-		stepPlayback.setPaused ( true );
-		stepPlayback.rewind ();
+		if ( stepPlayback != null )
+		{
+			stepPlayback.setPaused ( true );
+		}
 	}
 
 	public void moveStart()
 	{
-		if (stepPlayback.isPaused ()) stepPlayback.setPaused ( false );
+		if ( stepPlayback == null )
+			stepPlayback = stepSound.loop ();
+		else
+			stepPlayback.setPaused ( false );
 	}
 	
 	public void moveTop() {					
@@ -153,28 +147,10 @@ public class Character extends Entity
 			r.height = 20;
 			r.y -= step;
 
-			if (!isWallAtRect ( r ))
+			if (!isWallOrTableAtRect ( r ))
 			{
 				moveOf ( 0, -step );
 			}
-
-			/*
-			boolean collide = false;
-			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
-			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y );
-
-			if ( ! collide )
-			{
-				moveOf ( 0, -step );
-			}
-			*/
-			/*
-			moveOfStep
-			(
-				0, -step,
-				getRect ().x, getRect ().y,
-				getRect ().x + getRect ().width, getRect ().y
-			);*/
 		}
 	}
 
@@ -195,20 +171,10 @@ public class Character extends Entity
 			r.y += r.height - 20 + step;
 			r.height = 20;
 
-			if (!isWallAtRect ( r ))
+			if (!isWallOrTableAtRect ( r ))
 			{
 				moveOf ( 0, +step );
 			}
-
-			/*boolean collide = false;
-			collide |= isWallAtPoint ( getRect ().x, getRect ().y + getRect ().height );
-			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y + getRect ().height );
-
-			if ( ! collide )
-			{
-				moveOf ( 0, +step );
-			}
-			*/
 		}
 	}
 	
@@ -229,20 +195,10 @@ public class Character extends Entity
 			r.width = 20;
 			r.x -= step;
 
-			if (!isWallAtRect ( r ))
+			if (!isWallOrTableAtRect ( r ))
 			{
 				moveOf ( -step, 0 );
 			}
-
-			/*
-			boolean collide = false;
-			collide |= isWallAtPoint ( getRect ().x, getRect ().y );
-			collide |= isWallAtPoint ( getRect ().x, getRect ().y + getRect ().height );
-
-			if ( ! collide )
-			{
-				moveOf ( -step, 0 );
-			}*/
 		}
 	}
 
@@ -264,33 +220,17 @@ public class Character extends Entity
 			r.x += r.width - 20 + step;
 			r.width = 20;
 
-			if (!isWallAtRect ( r ))
+			if (!isWallOrTableAtRect ( r ))
 			{
 				moveOf ( +step, 0 );
 			}
-
-			/*
-			boolean collide = false;
-			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y );
-			collide |= isWallAtPoint ( getRect ().x + getRect ().width, getRect ().y + getRect ().height );
-
-			if ( ! collide )
-			{
-				moveOf ( +step, 0 );
-			}
-			*/
 		}
-	}
-
-	public void addBullets()
-	{
-		getAmmo ( 1 );
 	}
 
 	public void addGun(Gun item)
 	{
 		this.currentGun = item;		
-		getAmmo(3);
+		addAmmo(3);
 		
 		switch(currentDirection)
 		{
@@ -326,11 +266,6 @@ public class Character extends Entity
 				delayForNextShoot = this.currentGun.getNextShootDelay ();
 			}
 		}
-	}
-
-	public void addHeart()
-	{
-		getHealth ( 1 );
 	}
 
 	public final void setShootLocation(Shoot shoot)

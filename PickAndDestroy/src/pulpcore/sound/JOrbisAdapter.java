@@ -113,9 +113,9 @@ public class JOrbisAdapter extends Sound {
                 while (framesRemaining > 0) {
                     int f = file.read(dest, destOffset, destChannels, framesRemaining);
                     if (f < 0) {
-                        if (Build.DEBUG) {
-                            CoreSystem.print("Couldn't fully decompress Ogg Vorbis file: " +
-                                    filename);
+                        if (Build.DEBUG)
+                        {
+                            CoreSystem.print("Couldn't fully decompress Ogg Vorbis file: " + filename);
                         }
                         for (int i = 0; i < framesRemaining*frameSize; i++) {
                             dest[destOffset++] = 0;

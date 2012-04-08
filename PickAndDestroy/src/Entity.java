@@ -24,8 +24,13 @@ public class Entity
 		sprite.setAnchor ( 0.5, 0.5 );
 		rect = new Rect ( 0, 0, width, height );
 	}
+	
+	public final boolean isHittingWallOrTable()
+	{
+		return isWallOrTableAtRect ( this.getRect () );
+	}
 
-	public boolean isWallAtRect(Rect r)
+	public static final boolean isWallOrTableAtRect(Rect r)
 	{
 		List<Entity> list = EntityManager.shared.getCollidingEntities ( r );
 		for (int i = 0; i < list.size (); i++)
@@ -35,6 +40,22 @@ public class Entity
 			{
 				Wall w = (Wall) e;
 				if ((w.getType () == Wall.TABLE) || (w.getType () == Wall.WALL)) { return true; }
+			}
+		}
+
+		return false;
+	}
+	
+	public static final boolean isWallAtRect(Rect r)
+	{
+		List<Entity> list = EntityManager.shared.getCollidingEntities ( r );
+		for (int i = 0; i < list.size (); i++)
+		{
+			Entity e = list.get ( i );
+			if (e.getClass () == Wall.class)
+			{
+				Wall w = (Wall) e;
+				if ( w.getType () == Wall.WALL ) { return true; }
 			}
 		}
 
@@ -52,7 +73,11 @@ public class Entity
 
 	public final void setLocationOnTilemap(int tx, int ty)
 	{
-		setLocation ( (int) ((tx * TilemapManager.TILE_WIDTH) + (TilemapManager.TILE_WIDTH - rect.width) / 2), (int) ((ty * TilemapManager.TILE_HEIGHT) + (TilemapManager.TILE_HEIGHT - rect.height) / 2) );
+		setLocation
+		(
+			(int) ((tx * TilemapManager.TILE_WIDTH) + (TilemapManager.TILE_WIDTH - rect.width) / 2),
+			(int) ((ty * TilemapManager.TILE_HEIGHT) + (TilemapManager.TILE_HEIGHT - rect.height) / 2)
+		);
 	}
 
 	public final void moveOf(int dx, int dy)
